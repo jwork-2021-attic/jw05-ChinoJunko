@@ -1,0 +1,1167 @@
+
+Texture.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1, 111
+  size: 700, 400
+  orig: 700, 400
+  offset: 0, 0
+  index: -1
+gametitle
+  rotate: false
+  xy: 1, 9
+  size: 200, 100
+  orig: 200, 100
+  offset: 0, 0
+  index: -1
+exitbutton
+  rotate: false
+  xy: 703, 411
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+startbutton
+  rotate: false
+  xy: 203, 9
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+big_demon_idle_anim
+  rotate: false
+  xy: 805, 475
+  size: 128, 36
+  orig: 128, 36
+  offset: 0, 0
+  index: -1
+big_demon_run_anim
+  rotate: false
+  xy: 305, 73
+  size: 128, 36
+  orig: 128, 36
+  offset: 0, 0
+  index: -1
+big_zombie_idle_anim
+  rotate: false
+  xy: 805, 439
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+big_zombie_run_anim
+  rotate: false
+  xy: 305, 37
+  size: 128, 34
+  orig: 128, 34
+  offset: 0, 0
+  index: -1
+ogre_idle_anim
+  rotate: false
+  xy: 435, 77
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+ogre_run_anim
+  rotate: false
+  xy: 435, 43
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+emptybutton
+  rotate: false
+  xy: 703, 359
+  size: 100, 50
+  orig: 100, 50
+  offset: 0, 0
+  index: -1
+doors_all
+  rotate: false
+  xy: 935, 476
+  size: 64, 35
+  orig: 64, 35
+  offset: 0, 0
+  index: -1
+elf_f_idle_anim
+  rotate: false
+  xy: 805, 409
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+elf_f_run_anim
+  rotate: false
+  xy: 565, 81
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+elf_m_idle_anim
+  rotate: false
+  xy: 703, 329
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+elf_m_run_anim
+  rotate: false
+  xy: 935, 446
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+knight_f_idle_anim
+  rotate: false
+  xy: 805, 379
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+knight_f_run_anim
+  rotate: false
+  xy: 565, 51
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+knight_m_idle_anim
+  rotate: false
+  xy: 631, 81
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+knight_m_run_anim
+  rotate: false
+  xy: 703, 299
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+lizard_f_idle_anim
+  rotate: false
+  xy: 631, 51
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+lizard_f_run_anim
+  rotate: false
+  xy: 703, 269
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+lizard_m_idle_anim
+  rotate: false
+  xy: 703, 239
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+lizard_m_run_anim
+  rotate: false
+  xy: 703, 209
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+wizzard_f_idle_anim
+  rotate: false
+  xy: 703, 179
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+wizzard_f_run_anim
+  rotate: false
+  xy: 703, 149
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+wizzard_m_idle_anim
+  rotate: false
+  xy: 703, 119
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+wizzard_m_run_anim
+  rotate: false
+  xy: 305, 7
+  size: 64, 28
+  orig: 64, 28
+  offset: 0, 0
+  index: -1
+chort_idle_anim
+  rotate: false
+  xy: 871, 413
+  size: 64, 24
+  orig: 64, 24
+  offset: 0, 0
+  index: -1
+chort_run_anim
+  rotate: false
+  xy: 871, 387
+  size: 64, 24
+  orig: 64, 24
+  offset: 0, 0
+  index: -1
+masked_orc_idle_anim
+  rotate: false
+  xy: 805, 357
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+masked_orc_run_anim
+  rotate: false
+  xy: 871, 365
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+necromancer_idle_anim
+  rotate: false
+  xy: 371, 15
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+necromancer_run_anim
+  rotate: false
+  xy: 371, 15
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+orc_shaman_idle_anim
+  rotate: false
+  xy: 437, 21
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+orc_shaman_run_anim
+  rotate: false
+  xy: 503, 21
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+orc_warrior_idle_anim
+  rotate: false
+  xy: 569, 29
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+orc_warrior_run_anim
+  rotate: false
+  xy: 635, 29
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+wogol_idle_anim
+  rotate: false
+  xy: 937, 424
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+wogol_run_anim
+  rotate: false
+  xy: 937, 402
+  size: 64, 20
+  orig: 64, 20
+  offset: 0, 0
+  index: -1
+floor_spikes_anim
+  rotate: false
+  xy: 937, 384
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+goblin_idle_anim
+  rotate: false
+  xy: 937, 366
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+goblin_run_anim
+  rotate: false
+  xy: 703, 101
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ice_zombie_idle_anim
+  rotate: false
+  xy: 697, 83
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+ice_zombie_run_anim
+  rotate: false
+  xy: 697, 83
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+imp_idle_anim
+  rotate: false
+  xy: 697, 65
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+imp_run_anim
+  rotate: false
+  xy: 871, 347
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+muddy_idle_anim
+  rotate: false
+  xy: 937, 348
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+muddy_run_anim
+  rotate: false
+  xy: 937, 348
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+skelet_idle_anim
+  rotate: false
+  xy: 569, 11
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+skelet_run_anim
+  rotate: false
+  xy: 635, 11
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+swampy_idle_anim
+  rotate: false
+  xy: 437, 3
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+swampy_run_anim
+  rotate: false
+  xy: 437, 3
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+tiny_zombie_idle_anim
+  rotate: false
+  xy: 503, 3
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+coin_anim
+  rotate: false
+  xy: 569, 1
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: -1
+doors_leaf_closed
+  rotate: false
+  xy: 769, 325
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+tiny_zombie_run_anim
+  rotate: false
+  xy: 803, 339
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+zombie_idle_anim
+  rotate: false
+  xy: 803, 321
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+zombie_run_anim
+  rotate: false
+  xy: 803, 321
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
+doors_leaf_open
+  rotate: false
+  xy: 769, 291
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+chest_empty_open_anim
+  rotate: false
+  xy: 803, 303
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+chest_full_open_anim
+  rotate: false
+  xy: 869, 329
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+chest_mimic_open_anim
+  rotate: false
+  xy: 803, 285
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+wall_fountain_basin_blue_anim
+  rotate: false
+  xy: 869, 311
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+wall_fountain_basin_red_anim
+  rotate: false
+  xy: 701, 47
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+wall_fountain_mid_blue_anim
+  rotate: false
+  xy: 701, 29
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+wall_fountain_mid_red_anim
+  rotate: false
+  xy: 701, 11
+  size: 48, 16
+  orig: 48, 16
+  offset: 0, 0
+  index: -1
+doors_frame_left
+  rotate: false
+  xy: 1001, 479
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+doors_frame_righ
+  rotate: false
+  xy: 919, 313
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+weapon_big_hammer
+  rotate: false
+  xy: 769, 252
+  size: 10, 37
+  orig: 10, 37
+  offset: 0, 0
+  index: -1
+elf_f_hit_anim
+  rotate: false
+  xy: 937, 318
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+elf_m_hit_anim
+  rotate: false
+  xy: 1001, 449
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+knight_f_hit_anim
+  rotate: false
+  xy: 781, 261
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+knight_m_hit_anim
+  rotate: false
+  xy: 955, 318
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+lizard_f_hit_anim
+  rotate: false
+  xy: 973, 318
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+weapon_anime_sword
+  rotate: false
+  xy: 853, 289
+  size: 12, 30
+  orig: 12, 30
+  offset: 0, 0
+  index: -1
+weapon_lavish_sword
+  rotate: false
+  xy: 751, 33
+  size: 10, 30
+  orig: 10, 30
+  offset: 0, 0
+  index: -1
+weapon_duel_sword
+  rotate: false
+  xy: 751, 1
+  size: 9, 30
+  orig: 9, 30
+  offset: 0, 0
+  index: -1
+lizard_m_hit_anim
+  rotate: false
+  xy: 1003, 419
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+wizzard_f_hit_anim
+  rotate: false
+  xy: 1003, 389
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+wizzard_m_hit_anim
+  rotate: false
+  xy: 1003, 359
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: -1
+weapon_green_magic_staff
+  rotate: false
+  xy: 762, 1
+  size: 8, 30
+  orig: 8, 30
+  offset: 0, 0
+  index: -1
+weapon_knight_sword
+  rotate: false
+  xy: 769, 221
+  size: 10, 29
+  orig: 10, 29
+  offset: 0, 0
+  index: -1
+crate
+  rotate: false
+  xy: 781, 237
+  size: 16, 22
+  orig: 16, 22
+  offset: 0, 0
+  index: -1
+weapon_red_magic_staff
+  rotate: false
+  xy: 769, 189
+  size: 8, 30
+  orig: 8, 30
+  offset: 0, 0
+  index: -1
+weapon_spear
+  rotate: false
+  xy: 769, 157
+  size: 6, 30
+  orig: 6, 30
+  offset: 0, 0
+  index: -1
+doors_frame_top
+  rotate: false
+  xy: 1, 4
+  size: 32, 3
+  orig: 32, 3
+  offset: 0, 0
+  index: -1
+weapon_katana
+  rotate: false
+  xy: 769, 126
+  size: 6, 29
+  orig: 6, 29
+  offset: 0, 0
+  index: -1
+weapon_saw_sword
+  rotate: false
+  xy: 991, 321
+  size: 10, 25
+  orig: 10, 25
+  offset: 0, 0
+  index: -1
+weapon_hammer
+  rotate: false
+  xy: 1003, 333
+  size: 10, 24
+  orig: 10, 24
+  offset: 0, 0
+  index: -1
+weapon_cleaver
+  rotate: false
+  xy: 1015, 338
+  size: 8, 19
+  orig: 8, 19
+  offset: 0, 0
+  index: -1
+column_mid
+  rotate: false
+  xy: 867, 293
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+column_top
+  rotate: false
+  xy: 885, 293
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+coulmn_base
+  rotate: false
+  xy: 781, 219
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+weapon_mace
+  rotate: false
+  xy: 779, 193
+  size: 10, 24
+  orig: 10, 24
+  offset: 0, 0
+  index: -1
+edge
+  rotate: false
+  xy: 903, 293
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+weapon_bow
+  rotate: false
+  xy: 791, 192
+  size: 7, 25
+  orig: 7, 25
+  offset: 0, 0
+  index: -1
+flask_big_blue
+  rotate: false
+  xy: 921, 295
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_big_green
+  rotate: false
+  xy: 799, 267
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_big_red
+  rotate: false
+  xy: 799, 249
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_big_yellow
+  rotate: false
+  xy: 817, 267
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_blue
+  rotate: false
+  xy: 799, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_green
+  rotate: false
+  xy: 817, 249
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_red
+  rotate: false
+  xy: 835, 267
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+flask_yellow
+  rotate: false
+  xy: 817, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 835, 249
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+floor
+  rotate: false
+  xy: 835, 231
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+weapon_baton_with_spikes
+  rotate: false
+  xy: 853, 265
+  size: 10, 22
+  orig: 10, 22
+  offset: 0, 0
+  index: -1
+weapon_golden_sword
+  rotate: false
+  xy: 853, 241
+  size: 10, 22
+  orig: 10, 22
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 939, 300
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+floor
+  rotate: false
+  xy: 957, 300
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+floor
+  rotate: false
+  xy: 975, 300
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+weapon_arrow
+  rotate: false
+  xy: 769, 103
+  size: 7, 21
+  orig: 7, 21
+  offset: 0, 0
+  index: -1
+weapon_machete
+  rotate: false
+  xy: 763, 77
+  size: 5, 22
+  orig: 5, 22
+  offset: 0, 0
+  index: -1
+weapon_axe
+  rotate: false
+  xy: 763, 54
+  size: 9, 21
+  orig: 9, 21
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 763, 36
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+weapon_red_gem_sword
+  rotate: false
+  xy: 770, 80
+  size: 10, 21
+  orig: 10, 21
+  offset: 0, 0
+  index: -1
+weapon_regular_sword
+  rotate: false
+  xy: 772, 13
+  size: 10, 21
+  orig: 10, 21
+  offset: 0, 0
+  index: -1
+weapon_rusty_sword
+  rotate: false
+  xy: 993, 298
+  size: 10, 21
+  orig: 10, 21
+  offset: 0, 0
+  index: -1
+floor
+  rotate: false
+  xy: 800, 213
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+floor
+  rotate: false
+  xy: 800, 195
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+floor_ladder
+  rotate: false
+  xy: 818, 213
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+hole
+  rotate: false
+  xy: 818, 195
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+skull
+  rotate: false
+  xy: 836, 213
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+ui_heart_empty
+  rotate: false
+  xy: 836, 195
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+ui_heart_full
+  rotate: false
+  xy: 774, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+ui_heart_half
+  rotate: false
+  xy: 939, 282
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_banner_blue
+  rotate: false
+  xy: 957, 282
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_banner_green
+  rotate: false
+  xy: 975, 282
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_banner_red
+  rotate: false
+  xy: 921, 277
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_banner_yellow
+  rotate: false
+  xy: 993, 280
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_column_mid
+  rotate: false
+  xy: 939, 264
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_column_top
+  rotate: false
+  xy: 957, 264
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_bottom_left
+  rotate: false
+  xy: 975, 264
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_bottom_right
+  rotate: false
+  xy: 993, 262
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_front_left
+  rotate: false
+  xy: 867, 275
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_front_right
+  rotate: false
+  xy: 885, 275
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_left
+  rotate: false
+  xy: 903, 275
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_right
+  rotate: false
+  xy: 865, 257
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_top_left
+  rotate: false
+  xy: 883, 257
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_top_right
+  rotate: false
+  xy: 901, 257
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_coulmn_base
+  rotate: false
+  xy: 865, 239
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_fountain_top
+  rotate: false
+  xy: 883, 239
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_goo
+  rotate: false
+  xy: 901, 239
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_goo_base
+  rotate: false
+  xy: 921, 259
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_hole
+  rotate: false
+  xy: 919, 241
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+wall_hole
+  rotate: false
+  xy: 939, 246
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+wall_inner_corner_l_top_left
+  rotate: false
+  xy: 957, 246
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_inner_corner_l_top_rigth
+  rotate: false
+  xy: 975, 246
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_inner_corner_mid_left
+  rotate: false
+  xy: 993, 244
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_inner_corner_mid_rigth
+  rotate: false
+  xy: 800, 177
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_inner_corner_t_top_left
+  rotate: false
+  xy: 818, 177
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_inner_corner_t_top_rigth
+  rotate: false
+  xy: 836, 177
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_left
+  rotate: false
+  xy: 782, 174
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_mid
+  rotate: false
+  xy: 777, 156
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_right
+  rotate: false
+  xy: 777, 138
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_front_left
+  rotate: false
+  xy: 795, 156
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_front_right
+  rotate: false
+  xy: 795, 138
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_mid_left
+  rotate: false
+  xy: 813, 159
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_mid_right
+  rotate: false
+  xy: 813, 141
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_top_left
+  rotate: false
+  xy: 831, 159
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_side_top_right
+  rotate: false
+  xy: 831, 141
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_top_left
+  rotate: false
+  xy: 778, 120
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_top_mid
+  rotate: false
+  xy: 796, 120
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_top_right
+  rotate: false
+  xy: 814, 123
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+weapon_knife
+  rotate: false
+  xy: 778, 105
+  size: 6, 13
+  orig: 6, 13
+  offset: 0, 0
+  index: -1
