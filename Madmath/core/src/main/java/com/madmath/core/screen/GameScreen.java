@@ -1,7 +1,7 @@
 package com.madmath.core.screen;
 
-import com.badlogic.gdx.maps.Map;
 import com.madmath.core.main.MadMath;
+import com.madmath.core.map.GameMap;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.ui.HUD;
 
@@ -9,7 +9,7 @@ public class GameScreen extends AbstractScreen{
 
     HUD hud;
 
-    Map map;
+    GameMap map;
 
     enum State{
         PAUSE,
@@ -18,6 +18,8 @@ public class GameScreen extends AbstractScreen{
 
     public GameScreen(final MadMath game, final ResourceManager manager){
         super(game, manager);
+
+        map = new GameMap(this);
 
         hud = new HUD(this, manager);
 
@@ -31,6 +33,7 @@ public class GameScreen extends AbstractScreen{
     @Override
     public void render(float v) {
         super.render(v);
+        map.render(v);
         stage.act(v);
         stage.draw();
     }
