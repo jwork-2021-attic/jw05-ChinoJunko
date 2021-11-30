@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Madmath/Madmath.iml" filepath="$PROJECT_DIR$/Madmath/Madmath.iml" />
       <module fileurl="file://$PROJECT_DIR$/Madmath/core/Madmath-core.iml" filepath="$PROJECT_DIR$/Madmath/core/Madmath-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Madmath/desktop/Madmath-desktop.iml" filepath="$PROJECT_DIR$/Madmath/desktop/Madmath-desktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/jw05-ChinoJunko.iml" filepath="$PROJECT_DIR$/.idea/jw05-ChinoJunko.iml" />
     </modules>
   </component>

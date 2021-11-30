@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.AbstractScreen;
+import com.madmath.core.screen.GameScreen;
 import com.madmath.core.screen.MainMenuScreen;
 
 public class MadMath extends Game {
@@ -30,18 +31,19 @@ public class MadMath extends Game {
 	public Label fps;
 
 	public MainMenuScreen mainMenuScreen;
+	public GameScreen gameScreen;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 
 		manager = new ResourceManager();
-		BitmapFont k = manager.font;
 		fps = new Label("", new Label.LabelStyle(manager.font, Color.YELLOW ));
 		fps.setFontScale(0.5f);
 		fps.setVisible(true);
 
 		mainMenuScreen = new MainMenuScreen(this, manager);
+		gameScreen = new GameScreen(this, manager);
 
 		setScreen(mainMenuScreen);
 	}

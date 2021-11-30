@@ -18,31 +18,26 @@ import com.madmath.core.resource.ResourceManager;
 
 public class MainMenuScreen extends AbstractScreen {
 
-    private AnimationActor player;
-
-    private Image gametitle;
-    private Image background;
-
-    private ImageButton[] buttons;
-    private Image[] buttonsFade;
-    private int buttons_num;
+    private final ImageButton[] buttons;
+    private final Image[] buttonsFade;
+    private final int buttons_num;
 
     public MainMenuScreen(final MadMath game, final ResourceManager manager){
         super(game, manager);
         camera.zoom = 0.5f;
 
-        gametitle = new Image(manager.gametitle200x100);
+        Image gametitle = new Image(manager.gametitle200x100);
         gametitle.setPosition(240,250);
         stage.addActor(gametitle);
         gametitle.setZIndex(1);
 
-        background = new Image(manager.background700x400);
+        Image background = new Image(manager.background700x400);
         background.setPosition(0,0);
         stage.addActor(background);
         background.setZIndex(0);
 
 
-        player = new AnimationActor(new CustomAnimation(0.1f,new Array<TextureRegion>(manager.player16x28[0])));
+        AnimationActor player = new AnimationActor(new CustomAnimation(0.1f, new Array<TextureRegion>(manager.player16x28[0])));
         player.setPlayMode(Animation.PlayMode.LOOP);
         player.setPosition(200,200);
         stage.addActor(player);
@@ -63,7 +58,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        //animationManager = new AnimationManager(manager.player16x28,4,0,1/4f);
+        super.show();
         resetTitle();
     }
 
@@ -110,7 +105,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     public void startGame(){
         switchScreen();
-        game.setScreen(this);
+        game.setScreen(game.gameScreen);
     }
 
     @Override

@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Madmath-desktop" />
         <module name="Madmath-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Madmath" target="1.6" />
       <module name="Madmath-core" target="1.6" />
+      <module name="Madmath-desktop" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

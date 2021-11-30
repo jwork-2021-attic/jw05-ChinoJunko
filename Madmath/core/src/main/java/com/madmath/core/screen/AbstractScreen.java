@@ -31,7 +31,6 @@ public abstract class AbstractScreen implements Screen {
         viewport = new FitViewport(MadMath.V_WIDTH, MadMath.V_HEIGHT,camera);
 
         stage = new Stage(viewport, game.batch);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -50,8 +49,10 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        game.fps.setPosition(335, 115);
+        game.fps.setPosition(MadMath.V_WIDTH-50, MadMath.V_HEIGHT-20);
         stage.addActor(game.fps);
+        game.fps.setZIndex(10);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

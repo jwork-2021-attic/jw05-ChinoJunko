@@ -920,77 +920,77 @@ wall_banner_yellow
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_column_mid
+wall_column_base
   rotate: false
   xy: 939, 264
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_column_top
+wall_column_mid
   rotate: false
   xy: 957, 264
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_bottom_left
+wall_column_top
   rotate: false
   xy: 975, 264
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_bottom_right
+wall_corner_bottom_left
   rotate: false
   xy: 993, 262
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_front_left
+wall_corner_bottom_right
   rotate: false
   xy: 867, 275
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_front_right
+wall_corner_front_left
   rotate: false
   xy: 885, 275
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_left
+wall_corner_front_right
   rotate: false
   xy: 903, 275
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_right
+wall_corner_left
   rotate: false
   xy: 865, 257
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_top_left
+wall_corner_right
   rotate: false
   xy: 883, 257
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_top_right
+wall_corner_top_left
   rotate: false
   xy: 901, 257
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_coulmn_base
+wall_corner_top_right
   rotate: false
   xy: 865, 239
   size: 16, 16
