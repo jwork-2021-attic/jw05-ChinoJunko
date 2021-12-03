@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.madmath.core.main.MadMath;
 import com.madmath.core.resource.ResourceManager;
@@ -45,7 +46,7 @@ public abstract class UI implements Disposable {
         this.gameScreen = gameScreen;
         this.manager = manager;
 
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, gameScreen.getGame().batch);
 
         shapeRenderer = new ShapeRenderer();

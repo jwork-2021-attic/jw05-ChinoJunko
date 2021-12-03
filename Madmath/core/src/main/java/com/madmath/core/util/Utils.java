@@ -1,8 +1,12 @@
-package com.madmath.core;
+package com.madmath.core.util;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
-import java.util.Random;
+import com.madmath.core.resource.ResourceManager;
+
+import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Utils {
@@ -21,6 +25,7 @@ public class Utils {
             new Vector2(StaticTile.TileSort.floor_6.ordinal(),3),
             new Vector2(StaticTile.TileSort.floor_7.ordinal(),3),
             new Vector2(StaticTile.TileSort.floor_8.ordinal(),3),
+            new Vector2(StaticTile.TileSort.hole.ordinal(),20),
     };
 
     static public Vector2[] WallSortPro = new Vector2[]{
@@ -41,6 +46,40 @@ public class Utils {
             new Vector2(StaticTile.TileSort.wall_banner_red.ordinal(),12),
             new Vector2(StaticTile.TileSort.wall_banner_yellow.ordinal(),12),
     };
+
+    static public Map<String,Integer> idMap = new HashMap<>(1000);
+
+    static private String[] aG = new String[]{
+            StaticTile.TileSort.floor_1.name(),
+            StaticTile.TileSort.floor_2.name(),
+            StaticTile.TileSort.floor_3.name(),
+            StaticTile.TileSort.floor_4.name(),
+            StaticTile.TileSort.floor_5.name(),
+            StaticTile.TileSort.floor_6.name(),
+            StaticTile.TileSort.floor_7.name(),
+            StaticTile.TileSort.floor_8.name(),
+            StaticTile.TileSort.floor_ladder.name(),
+            StaticTile.TileSort.floor_stair.name(),
+            AnimTile.TileSort.floor_spikes_anim.name(),
+    };
+
+    static public Set<Integer> accessibleG = new HashSet<>(100);
+
+    static public void initUtils(ResourceManager manager){
+        int id = 0;
+        for (; id < StaticTile.TileSort.values().length; id++) {
+            idMap.put(StaticTile.TileSort.values()[id].name(),id);
+        }
+        for (int i = 0; i < AnimTile.TileSort.values().length; i++) {
+            id += ((TextureRegion[][]) Objects.requireNonNull(manager.getAssetsByName(AnimTile.TileSort.floor_spikes_anim.name()+"16x16")))[0].length;
+            idMap.put(AnimTile.TileSort.values()[i].name(),id);
+            id++;
+        }
+        for (int i = 0; i < aG.length; i++) {
+            accessibleG.add(idMap.get(aG[i]));
+        }
+        int jk = 1;
+    }
 
     //sample: ((1,30),(2,20),(3,30),(4,100)) means 0|..1..|30|..2..|50|..3..|80|..4..|180
     static public  Callable<Float> ProbabilityGenerator(final Vector2...vet) {

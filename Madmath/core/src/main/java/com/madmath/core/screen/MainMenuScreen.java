@@ -18,6 +18,7 @@ import com.madmath.core.resource.ResourceManager;
 
 public class MainMenuScreen extends AbstractScreen {
 
+    private final Image gametitle;
     private final ImageButton[] buttons;
     private final Image[] buttonsFade;
     private final int buttons_num;
@@ -26,7 +27,7 @@ public class MainMenuScreen extends AbstractScreen {
         super(game, manager);
         camera.zoom = 0.5f;
 
-        Image gametitle = new Image(manager.gametitle200x100);
+        gametitle = new Image(manager.gametitle200x100);
         gametitle.setPosition(240,250);
         stage.addActor(gametitle);
         gametitle.setZIndex(1);
@@ -35,12 +36,6 @@ public class MainMenuScreen extends AbstractScreen {
         background.setPosition(0,0);
         stage.addActor(background);
         background.setZIndex(0);
-
-
-        AnimationActor player = new AnimationActor(new CustomAnimation(0.1f, new Array<TextureRegion>(manager.player16x28[0])));
-        player.setPlayMode(Animation.PlayMode.LOOP);
-        player.setPosition(200,200);
-        stage.addActor(player);
 
         buttons_num = 2;
         buttons = new ImageButton[buttons_num];
@@ -63,15 +58,16 @@ public class MainMenuScreen extends AbstractScreen {
     }
 
     public void resetTitle(){
+        gametitle.addAction(Actions.sequence(Actions.alpha(0f),Actions.delay(0.5f),Actions.alpha(1f,5f)));
         for (int i = 0; i < buttons_num; i++) {
-            buttons[i].addAction(Actions.sequence(
-                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.5f),
+            buttons[i].addAction(Actions.sequence(Actions.delay(0.5f),
+                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.3f),
                     Actions.addAction(Actions.forever(Actions.sequence(
                             Actions.moveBy(0,5,1f),
                             Actions.moveBy(0,-10,2f),
                             Actions.moveBy(0,5,1f))))));
-            buttonsFade[i].addAction(Actions.sequence(
-                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.5f),
+            buttonsFade[i].addAction(Actions.sequence(Actions.delay(0.5f),
+                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.3f),
                     Actions.addAction(Actions.forever(Actions.sequence(
                             Actions.alpha(0.1f,1f),
                             Actions.alpha(1f,1f),

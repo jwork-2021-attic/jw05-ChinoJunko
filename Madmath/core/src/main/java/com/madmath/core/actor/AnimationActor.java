@@ -1,16 +1,22 @@
 package com.madmath.core.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
 
 public class AnimationActor extends Image {
-    private CustomAnimation animation;
+    private AnimationManager animationManager;
     private float stateTime;
-    public AnimationActor(CustomAnimation animation){
-        super(animation.getKeyFrame(0));
+    private Vector2 currencyPosition;
+    protected boolean anim_dirt = false;//true - left | false - right
+
+    public AnimationActor(AnimationManager animationManager){
+        super(animationManager.getKeyFrame(0));
         stateTime = 0;
-        this.animation = animation;
+        this.animationManager = animationManager;
+        currencyPosition = new Vector2();
     }
 
     @Override
@@ -21,11 +27,21 @@ public class AnimationActor extends Image {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.setDrawable(animation.getKeyFrameDrawable(stateTime));
+        animationManager.setReverse(anim_dirt);
+        super.setDrawable(animationManager.getKeyFrameDrawable(stateTime));
         super.draw(batch,parentAlpha);
     }
 
-    public void setPlayMode(CustomAnimation.PlayMode playMode){
-        animation.setPlayMode(playMode);
+    public void setPosition(Vector2 position) {
+        currencyPosition.set(position);
+        super.setPosition(position.x, position.y);
+    }
+
+    public Vector2 getPosition() {
+        return currencyPosition;
+    }
+
+    public void setPlayMode(AnimationManager.PlayMode playMode){
+        animationManager.setPlayMode(playMode);
     }
 }

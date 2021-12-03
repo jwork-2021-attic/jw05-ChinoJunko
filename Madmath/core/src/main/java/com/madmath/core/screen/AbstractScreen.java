@@ -28,7 +28,7 @@ public abstract class AbstractScreen implements Screen {
         camera = new OrthographicCamera(MadMath.V_WIDTH, MadMath.V_HEIGHT);
         camera.setToOrtho(false);
 
-        viewport = new FitViewport(MadMath.V_WIDTH, MadMath.V_HEIGHT,camera);
+        viewport = new StretchViewport(MadMath.V_WIDTH, MadMath.V_HEIGHT,camera);
 
         stage = new Stage(viewport, game.batch);
     }
@@ -49,7 +49,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
-        game.fps.setPosition(MadMath.V_WIDTH-50, MadMath.V_HEIGHT-20);
+        game.fps.setPosition(MadMath.V_WIDTH-55, MadMath.V_HEIGHT-7);
         stage.addActor(game.fps);
         game.fps.setZIndex(10);
         Gdx.input.setInputProcessor(stage);
