@@ -22,6 +22,10 @@ public class TrapTile extends AnimTile{
         return knockbackFactor;
     }
 
+    public boolean isActive(){
+        return getCurrentFrameIndex() > 7 &&  getCurrentFrameIndex() < 16;
+    }
+
     public int trigger(Entity entity){
         return 1;
     }

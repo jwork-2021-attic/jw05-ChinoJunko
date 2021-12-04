@@ -106,7 +106,7 @@ public class Player extends Entity{
     public void sufferFromTrap(){
         Array<myPair> tiledMapTileVector2Pair = getTileOnFoot(getPosition());
         tiledMapTileVector2Pair.forEach(pair ->{
-            if(pair.A instanceof TrapTile){
+            if(pair.A instanceof TrapTile && ((TrapTile) pair.A).isActive()){
                 getHurt((TrapTile) pair.A,pair.B);
                 return;
             }

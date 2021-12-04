@@ -59,23 +59,28 @@ public class GameMap {
             staticTile.setId(i);
             tileSet.putTile(i,staticTile);
         }
-        StaticTile[] spikes = new StaticTile[12];
+        int stickFrameCount = 18;
+        StaticTile[] spikes = new StaticTile[stickFrameCount*2+4];
         for (int i = 0; i < manager.floor_spikes_anim16x16[0].length; i++) {
             StaticTile staticTile = new StaticTile(manager.floor_spikes_anim16x16[0][i]);
             staticTile.setId(i+StaticTile.TileSort.values().length);
             tileSet.putTile(staticTile.getId(),staticTile);
             if(i==0){
-                spikes[0]=staticTile;
-                spikes[11]=staticTile;
+                for (int j = 0; j < stickFrameCount/2; j++) {
+                    spikes[j] = staticTile;//7
+                    spikes[stickFrameCount*2+3-j] = staticTile;//32
+                }
             } else if(i==manager.floor_spikes_anim16x16[0].length-1){
-                spikes[5]=staticTile;
-                spikes[6]=staticTile;
+                for (int j = 0; j < stickFrameCount/2; j++) {
+                    spikes[j+stickFrameCount/2+4] = staticTile;
+                    spikes[stickFrameCount*2-stickFrameCount/2-j]=staticTile;
+                }
             }
-            spikes[1+i]=staticTile;
-            spikes[10-i]=staticTile;
+            spikes[stickFrameCount/2+i]=staticTile;//
+            spikes[stickFrameCount*2+4-stickFrameCount/2-i]=staticTile;
         }
         Array<StaticTiledMapTile> spikeFrameArray = new Array<>(spikes);
-        TrapTile trapTile = new TrapTile(0.2f,spikeFrameArray);
+        TrapTile trapTile = new TrapTile(0.1f,spikeFrameArray);
         trapTile.setId(Utils.idMap.get("floor_spikes_anim"));
         tileSet.putTile(trapTile.getId(),trapTile);
         return tileSet;
