@@ -9,11 +9,13 @@ import com.badlogic.gdx.utils.Array;
 import com.madmath.core.entity.Monster;
 import com.madmath.core.screen.GameScreen;
 
+import java.util.concurrent.Semaphore;
+
 public class MonsterThread implements Runnable {
 
     GameScreen gameScreen;
 
-    Array<Monster> monsters;
+    public Array<Monster> monsters;
 
     public MonsterThread(){
         monsters = new Array<>();
@@ -26,14 +28,15 @@ public class MonsterThread implements Runnable {
         while (gameScreen.getState()!= GameScreen.State.END){
             try {
                 gameScreen.monsterSemaphore.acquire();
+                //act monster
+                monsters.forEach(monster -> {
+                    monster.monsterAct(gameScreen.getCurrencyDelta());
+                });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            //act monster
-            monsters.forEach(monster -> {
-                monster.monsterAct(gameScreen.getCurrencyDelta());
-            });
+
         }
     }
 

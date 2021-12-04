@@ -35,6 +35,8 @@ public class Utils {
     static public String[] AllDefaultEquipmentSort = new String[]{
             "OddSword",
             "EvenSword",
+            "SevenSword",
+            "PrimeHammer",
     };
 
     static public Vector2[] EnterSortPro = new Vector2[]{

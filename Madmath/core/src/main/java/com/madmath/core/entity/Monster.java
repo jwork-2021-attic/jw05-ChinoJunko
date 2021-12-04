@@ -7,7 +7,9 @@ package com.madmath.core.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
@@ -30,7 +32,7 @@ public abstract class Monster extends Entity{
 
     public int level;
 
-
+    protected float knockback;
 
     static public int TextureWidth;
     static public int TextureHeight;
@@ -38,6 +40,8 @@ public abstract class Monster extends Entity{
             0.34f,          //Idle
             0.17f,           //Run
     };
+
+    protected int damage;
 
     protected Monster(AnimationManager animationManager){
         super(animationManager);
@@ -62,23 +66,64 @@ public abstract class Monster extends Entity{
 
     public void monsterAct(float delta){
         Player player = gameScreen.player;
+        if(getPosition().dst2(player.getPosition())>90000f) return;
         Vector2 direction = new Vector2(player.getX()-getX(),player.getY()-getY());
         direction.x = Math.abs(direction.x)<player.getWidth()/2?0:direction.x>0?inertia:-inertia;
         direction.y = Math.abs(direction.y)<player.getHeight()/2?0:direction.y>0?inertia:-inertia;
         addAcceleration(direction);
         move(delta);
+        attack(player);
     }
 
     @Override
     public void Die() {
         super.Die();
         clear();
+        //gameScreen.getStage().getActors().removeValue(this,true);
         gameScreen.livingEntity.removeValue(this,true);
         gameScreen.monsterManager.removeMonster(this);
         setAcceleration(new Vector2(0,0));
-        addAction(Actions.sequence(Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.run(()->{
+
+        addAction(Actions.sequence(Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.delay(1f),Actions.run(()->{
             gameScreen.getStage().getActors().removeValue(this,true);
         })));
+        
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public float getKnockback() {
+        return knockback;
+    }
+
+    public void attack(Player player){
+        Rectangle attackBox = new Rectangle(0,0,box.getWidth()*2,box.getHeight()*2).setCenter(box.getCenter(new Vector2()));
+        if(attackBox.overlaps(gameScreen.player.box)){
+            player.getHurt(this);
+        }
+    }
+
+    @Override
+    public void initSelf() {
+        super.initSelf();
+        knockback = 0.5f;
+        damage = 1;
+    }
+
+    public Monster clone(int id){
+        try {
+            return getClass().getConstructor(Integer.class,AnimationManager.class).newInstance(id,getAnimationManager().clone());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } return null;
     }
 
     static public void loadMonsters(){

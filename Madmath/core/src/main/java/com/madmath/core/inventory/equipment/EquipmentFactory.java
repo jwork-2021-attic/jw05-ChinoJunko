@@ -31,6 +31,7 @@ public class EquipmentFactory {
         Iterable<Equipment> equipmentIter = Equipment.equipmentSort.select(equipment -> {
             try {
                 return equipment.getClass().getField("alias").get(equipment).equals(name)
+                        || equipment.getClass().getName().equals(name)
                         || equipment.getClass().getName().substring(equipment.getClass().getName().lastIndexOf(".")+1).equals(name);
             } catch (IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
@@ -45,6 +46,6 @@ public class EquipmentFactory {
                 e.printStackTrace();
             }
         }
-        return Equipment.equipmentSort.get(0);
+        return Equipment.equipmentSort.get(0).copy();
     }
 }

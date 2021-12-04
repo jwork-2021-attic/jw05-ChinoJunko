@@ -13,9 +13,12 @@ public class TrapTile extends AnimTile{
 
     float knockbackFactor;
 
+    long activeFrameCount;
+
     public TrapTile(float interval, Array<StaticTiledMapTile> frameTiles) {
         super(interval, frameTiles);
         knockbackFactor = 0.5f;
+        activeFrameCount = (frameTiles.size-4)/2;
     }
 
     public float getKnockbackFactor() {
@@ -23,7 +26,7 @@ public class TrapTile extends AnimTile{
     }
 
     public boolean isActive(){
-        return getCurrentFrameIndex() > 7 &&  getCurrentFrameIndex() < 16;
+        return getCurrentFrameIndex() >  activeFrameCount/2 + 1 && getCurrentFrameIndex() < getFrameCount()-activeFrameCount/2-2 ;
     }
 
     public int trigger(Entity entity){

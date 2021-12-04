@@ -5,6 +5,7 @@
 */
 package com.madmath.core.inventory.equipment;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
@@ -22,6 +23,7 @@ import com.madmath.core.util.Utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
 public abstract class Equipment extends AnimationActor implements Item {
 
@@ -30,6 +32,8 @@ public abstract class Equipment extends AnimationActor implements Item {
     protected float swingRange;
     protected float swingSpeed;
     protected float currencySwingRange = 0;
+
+    public Color color;
 
     public Player owner = null;
 
@@ -62,11 +66,12 @@ public abstract class Equipment extends AnimationActor implements Item {
     }
 
     public void initSelf(){
-        pickBox = new Rectangle(0,0,35,35);
+        pickBox = new Rectangle(0,0,40,40);
         attackCircle = new Circle(0,0,getHeight());
         swingRange = 220;
         swingSpeed = 500;
         damage = 50;
+        color = this.getColor().cpy();
     }
 
     @Override
@@ -114,29 +119,40 @@ public abstract class Equipment extends AnimationActor implements Item {
             for (int i = 0; i < 4; i++) {
                 vector2s[i] = new Vector2();
             }
-            owner.gameScreen.livingEntity.forEach(entity -> {
-                if(entity!=owner&&!attackedTargets.contains(entity,true)){
-                    attackCircle.radius+=50;
-                    boolean temp = attackCircle.contains(entity.box.getCenter(vector2s[0]));
-                    attackCircle.radius-=50;
-                    if(!temp) return;
-                    if(Math.abs(getRotation()%360-vector2s[0].sub(owner.box.getCenter(vector2s[1])).angle())>swingRange) return;
-                    for (int i = 0; i < 4; i++) {
-                        entity.box.getPosition(vector2s[i]);
-                    }
-                    vector2s[1].add(entity.box.getWidth(),0);
-                    vector2s[2].add(0,entity.box.getHeight());
-                    vector2s[3].add(entity.box.getWidth(),entity.box.getHeight());
-                    for (int i = 0; i < 4; i++) {
-                        if(attackCircle.contains(vector2s[i])){
-                            attackedTargets.add(entity);
-                            entity.getHurt(this);
-                            //System.out.println("Attack!");
-                            return;
+            try {
+                for (int i = 0; i < (int) owner.gameScreen.livingEntity.getClass().getField("size").get(owner.gameScreen.livingEntity); i++) {
+                    try {
+                        if (Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)) != owner && !attackedTargets.contains(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)), true)) {
+                            attackCircle.radius += 50;
+                            boolean temp = attackCircle.contains(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getCenter(vector2s[0]));
+                            attackCircle.radius -= 50;
+                            if (!temp) continue;
+                            if (Math.abs(getRotation() % 360 - vector2s[0].sub(owner.box.getCenter(vector2s[1])).angle()) > swingRange)
+                                continue;
+                            for (int j = 0; j < 4; j++) {
+                                Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getPosition(vector2s[j]);
+                            }
+                            vector2s[1].add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getWidth(), 0);
+                            vector2s[2].add(0, Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getHeight());
+                            vector2s[3].add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getWidth(), Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getHeight());
+                            for (int j = 0; j < 4; j++) {
+                                if (attackCircle.contains(vector2s[j])) {
+                                    attackedTargets.add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)));
+                                    Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).getHurt(this);
+                                    //System.out.println("Attack!");
+                                    continue;
+                                }
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        continue;
                     }
                 }
-            });
+            } finally {
+                return;
+            }
         };
         if(totalCheckNum==0)    addAction(Actions.run(attack));
         addAction(Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack))));
@@ -170,6 +186,10 @@ public abstract class Equipment extends AnimationActor implements Item {
         }
     }
 
+    public Equipment copy(){
+        return owner.gameScreen.getEquipmentFactory().generateEquipmentByName(getClass().getName());
+    }
+
     static public void loadEquipment(){
         equipmentSort = new Array<>();
         for (String name: Utils.AllDefaultEquipmentSort) {
@@ -192,5 +212,7 @@ public abstract class Equipment extends AnimationActor implements Item {
             }
         }
     }
+
+
 
 }

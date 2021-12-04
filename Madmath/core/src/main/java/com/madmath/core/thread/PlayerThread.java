@@ -9,6 +9,8 @@ import com.madmath.core.control.PlayerInputProcessor;
 import com.madmath.core.entity.Player;
 import com.madmath.core.screen.GameScreen;
 
+import java.util.concurrent.Semaphore;
+
 public class PlayerThread implements Runnable {
 
     Player player;
@@ -29,10 +31,10 @@ public class PlayerThread implements Runnable {
         while (gameScreen.getState()!= GameScreen.State.END){
             try {
                 gameScreen.playerSemaphore.acquire();
+                player.move(gameScreen.getCurrencyDelta());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            player.move(gameScreen.getCurrencyDelta());
         }
     }
 

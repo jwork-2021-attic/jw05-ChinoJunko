@@ -7,20 +7,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @Email: imaizumikagerouzi@foxmail.com
  * @Date: 4/12/2021 下午4:07
  */
-public class EvenSword extends Equipment{
+public class SevenSword extends Equipment{
 
-    static public String alias = "weapon_knight_sword";
+    static public String alias = "weapon_anime_sword";
 
-    public EvenSword(Integer id, TextureRegion region) {
+    public SevenSword(Integer id, TextureRegion region) {
         super(id, region);
     }
 
     @Override
     public void initSelf() {
         super.initSelf();
-        swingRange = 220;
-        swingSpeed = 500;
-        knockbackFactor = 6;
-        damage = 100;
+        swingRange = 360;
+        swingSpeed = 360;
+        knockbackFactor = 20;
+        damage = 150;
     }
 }

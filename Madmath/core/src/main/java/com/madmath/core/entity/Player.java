@@ -23,8 +23,8 @@ import com.madmath.core.util.myPair;
 
 public class Player extends Entity{
 
-    Array<Equipment> weapon;
-    Equipment activeWeapon=null;
+    public Array<Equipment> weapon;
+    public Equipment activeWeapon=null;
 
     private boolean attackable = true;
     private boolean movable = true;
@@ -56,6 +56,7 @@ public class Player extends Entity{
     @Override
     public int getHurt(int damage, Vector2 sufferFrom, float knockbackFactor) {
         if(!attackable) return 0;
+        attackable = false;
         knockbackFactor *= (1-toughness);
         sufferFrom.sub(getPosition());
         sufferFrom.x = sufferFrom.x>0?-knockbackFactor:knockbackFactor;
@@ -101,6 +102,17 @@ public class Player extends Entity{
         if(activeWeapon!=null){
             activeWeapon.use();
         }
+    }
+
+    public int getHurt(Monster monster) {
+        return getHurt(monster.getDamage(),monster.getPosition().cpy(),monster.getKnockback());
+    }
+
+    public void switchWeapon(int offset){
+        if(weapon.size<2 || activeWeapon.isSwinging())return;
+        activeWeapon.addAction(Actions.hide());
+        activeWeapon = weapon.get(((weapon.indexOf(activeWeapon,true)+offset)+weapon.size)%weapon.size);
+        activeWeapon.addAction(Actions.show());
     }
 
     public void sufferFromTrap(){
@@ -156,8 +168,8 @@ public class Player extends Entity{
         super.initSelf();
         weapon = new Array<>(3);
         speed = 64f;
-        maxHp = 10;
-        hp = 10;
+        maxHp = 30;
+        hp = 30;
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
         //lostSpeed = 1.8f;

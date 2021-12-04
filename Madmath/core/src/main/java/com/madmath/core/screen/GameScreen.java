@@ -26,6 +26,7 @@ import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.thread.MonsterThread;
 import com.madmath.core.thread.PlayerThread;
 import com.madmath.core.ui.HUD;
+import com.madmath.core.util.Utils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
@@ -46,6 +47,8 @@ public class GameScreen extends AbstractScreen{
 
     public Semaphore playerSemaphore;
     public Semaphore monsterSemaphore;
+    public Semaphore playerFinishSemaphore;
+    public Semaphore monstersFinishSemaphore;
 
     public Player player;
     public MonsterThread monsterManager;
@@ -87,8 +90,6 @@ public class GameScreen extends AbstractScreen{
         livingEntity = new Array<>();
         livingItem = new Array<>();
 
-        hud = new HUD(this, manager);
-
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
 
@@ -99,11 +100,19 @@ public class GameScreen extends AbstractScreen{
 
         playerSemaphore = new Semaphore(0);
         monsterSemaphore = new Semaphore(0);
+        playerFinishSemaphore = new Semaphore(0);
+        monstersFinishSemaphore = new Semaphore(0);
 
         executorService = Executors.newCachedThreadPool();
         executorService.execute(new PlayerThread());
         executorService.execute(monsterManager);
         executorService.shutdown();
+
+        hud = new HUD(this, manager);
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
     }
 
     @Override
@@ -117,8 +126,9 @@ public class GameScreen extends AbstractScreen{
         CurrencyGameScreen = this;
         Gdx.input.setInputProcessor(multiplexer);
         stateTime = 0;
-        createMonsters(1);
+        createMonsters(25);
         createEquipment();
+        camera.zoom =  0.8f;
     }
 
     public void initMapTitle(){
@@ -129,11 +139,12 @@ public class GameScreen extends AbstractScreen{
     }
 
     public void updateCamera(){
-        if(camera.zoom!=1f) {
+        if(Math.abs(camera.zoom-1f)>0.01f) {
             camera.position.x = Math.min(Math.max(player.getX()+(0.5f-0.382f)*camera.zoom*stage.getViewport().getWorldWidth(), 0.5f * camera.zoom * stage.getViewport().getWorldWidth()),map.playAreaSize.x-0.5f* camera.zoom*stage.getViewport().getWorldWidth());
-            camera.position.y = Math.min(Math.max(player.getY(), 0.5f * camera.zoom * stage.getViewport().getWorldHeight()),(1-0.5f* camera.zoom)*stage.getViewport().getWorldHeight());
+            camera.position.y = Math.min(Math.max(player.getY()-(0.5f-0.382f)*camera.zoom*stage.getViewport().getWorldHeight(), 0.5f * camera.zoom * stage.getViewport().getWorldHeight()),(1-0.5f* camera.zoom)*stage.getViewport().getWorldHeight());
         }else {
             camera.position.x = Math.min(Math.max(player.getX()+(0.5f-0.382f)*stage.getViewport().getWorldWidth(), (float) stage.getViewport().getWorldWidth()/2),map.startPosition.x+map.playAreaSize.x-stage.getViewport().getWorldWidth()/2);
+            camera.position.y = viewport.getWorldHeight()/2f;
         }
         camera.update();
         //System.out.println("Playerx:"+player.getX()+"    viewportwith:"+camera.viewportWidth+"    playerArs:"+map.playAreaSize.x);
@@ -155,6 +166,9 @@ public class GameScreen extends AbstractScreen{
         update(v);
         map.render(v);
         Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() - o1.getY()));
+        for (int i = monsterManager.monsters.size-1; i >= 0 ; i--) {
+            if(monsterManager.monsters.get(i).getHp()<=0) monsterManager.monsters.get(i).Die();
+        }
         stage.act(v);
         stage.draw();
         hud.render(v);
@@ -163,7 +177,7 @@ public class GameScreen extends AbstractScreen{
     public void createMonsters(float factor) {
         if(map==null)   return;
         int totalLevel = Math.round((map.mapLevel*16 + 32) * factor);
-        int capacity = 100;
+        int capacity = 500;
         Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < capacity && totalLevel>0; i++) {
             try{
@@ -185,15 +199,17 @@ public class GameScreen extends AbstractScreen{
         return monster;
     }
 
+    public EquipmentFactory getEquipmentFactory() {
+        return equipmentFactory;
+    }
+
     public void createEquipment(){
-        Equipment equipment = equipmentFactory.generateEquipmentByName("EvenSword");
-        equipment.setPosition(player.getX()+100,player.getY()+50);
-        stage.addActor(equipment);
-        livingItem.add(equipment);
-        equipment = equipmentFactory.generateEquipmentByName("OddSword");
-        equipment.setPosition(player.getX()+100,player.getY()-50);
-        stage.addActor(equipment);
-        livingItem.add(equipment);
+        for (int i = 0; i < Utils.AllDefaultEquipmentSort.length; i++) {
+            Equipment equipment = equipmentFactory.generateEquipmentByName(Utils.AllDefaultEquipmentSort[i]);
+            equipment.setPosition(player.getX()+50+50*i/2,player.getY()+50-100*i%2);
+            stage.addActor(equipment);
+            livingItem.add(equipment);
+        }
     }
 
     public GameMap getMap() {

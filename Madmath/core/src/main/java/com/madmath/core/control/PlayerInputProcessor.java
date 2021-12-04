@@ -38,6 +38,13 @@ public class PlayerInputProcessor extends InputAdapter {
             case Input.Keys.S:
                 player.addSubjectiveDirection(new Vector2(0,-1f));
                 return true;
+            case Input.Keys.Q:
+            case Input.Keys.TAB:
+                player.switchWeapon(+1);
+                return true;
+            case Input.Keys.E:
+                player.switchWeapon(-1);
+                return true;
             default:
                 return false;
         }

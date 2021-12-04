@@ -39,11 +39,11 @@ public class MonsterFactory {
         if(monsterIter.iterator().hasNext()){
             Monster monster = monsterIter.iterator().next();
             try {
-                return monster.getClass().getConstructor(Integer.class, AnimationManager.class).newInstance(monstersNextId++,monster.getAnimationManager().clone());
+                   return monster.getClass().getConstructor(Integer.class, AnimationManager.class).newInstance(monstersNextId++,monster.getAnimationManager().clone());
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
             }
         }
-        return Monster.monsterSort.get(0);
+        return Monster.monsterSort.get(0).clone(monstersNextId++);
     }
 }

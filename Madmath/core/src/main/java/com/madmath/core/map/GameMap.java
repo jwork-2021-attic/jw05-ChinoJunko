@@ -172,7 +172,7 @@ public class GameMap {
     public Vector2 getAvailablePosition(Monster monster) throws TimeoutException {
         Random random = new Random(monster.hashCode() + System.currentTimeMillis());
         for (int i = 0; i < 5000; i++) {
-            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x)+startPosition.x,random.nextInt((int) playAreaSize.y)+startPosition.y);
+            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x-400)+startPosition.x+400,random.nextInt((int) playAreaSize.y)+startPosition.y);
             if(monster.isCanMove(position)) return position;
         }
         throw new TimeoutException("search too long!");

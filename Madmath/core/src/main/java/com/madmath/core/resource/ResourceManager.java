@@ -45,15 +45,19 @@ public class ResourceManager {
 
 
     public TextureRegion gamebackground700x128;
+    public TextureRegion flzgbackground700x128;
     public TextureRegion background700x400;
     public TextureRegion gametitle200x100;
     public TextureRegion emptybutton100x50;
     public TextureRegion ui_heart_empty16x16;
+    public TextureRegion ui_heart_half16x16;
+    public TextureRegion ui_heart_full16x16;
+    public TextureRegion contain_box_144x144;
 
     public Skin skin;
     public Skin dialogSkin;
 
-    public static BitmapFont font;
+    public BitmapFont font;
 
     public TextureRegion[][] LoadMonsterAssetsByName(String name, int width, int height){
         MonsterLoad.add(atlas.findRegion(name).split(width,height));
@@ -104,6 +108,11 @@ public class ResourceManager {
         gametitle200x100 = atlas.findRegion("gametitle");
         emptybutton100x50 = atlas.findRegion("emptybutton");
         gamebackground700x128 = atlas.findRegion("hud_background");
+        flzgbackground700x128 = atlas.findRegion("FLZG");
+        ui_heart_empty16x16 = atlas.findRegion("ui_heart_empty");
+        ui_heart_half16x16 = atlas.findRegion("ui_heart_half");
+        ui_heart_full16x16 = atlas.findRegion("ui_heart_full");
+        contain_box_144x144 = atlas.findRegion("contain_box");
 
         /*
         gamebackground192x176 = new TextureRegion[30];

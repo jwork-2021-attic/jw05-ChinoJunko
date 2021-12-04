@@ -165,11 +165,7 @@ public abstract class Entity extends AnimationActor {
         sufferFrom.y = sufferFrom.y>0?-knockbackFactor:knockbackFactor;
         setAcceleration(sufferFrom);
         hp -= damage;
-        try {
-            return damage;
-        }finally {
-            if(hp<=0)Die();
-        }
+        return damage;
     }
 
     public void Die(){
@@ -198,9 +194,9 @@ public abstract class Entity extends AnimationActor {
             }
         }
         Rectangle nextBox = new Rectangle(box).setPosition(next);
-        for (Entity entity: gameScreen.livingEntity
-        ) {
-            if(entity != this && entity.box.overlaps(nextBox))  {
+        for (int i = 0; i < gameScreen.livingEntity.size; i++) {
+            if(gameScreen.livingEntity.get(i)!=null&& gameScreen.livingEntity.get(i) != this && gameScreen.livingEntity.get(i).box.overlaps(nextBox))  {
+                //System.out.println("false:"+entity);
                 return false;
             }
         }
@@ -216,7 +212,7 @@ public abstract class Entity extends AnimationActor {
             addAccelerationOverSpeed(Direction);
             return;
         }
-        currentDirection.x = Math.min(Math.max(currentDirection.x + Direction.x,-1),1);
+        currentDirection.x = Math.min(Math.max(currentDirection.x + Direction.x,-1f),1f);
         currentDirection.y = Math.min(Math.max(currentDirection.y + Direction.y,-1f),1f);
     }
 

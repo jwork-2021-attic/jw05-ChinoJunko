@@ -45,7 +45,7 @@ public class BigDemon extends Monster{
         box = new Rectangle(0,0,22,10);
         boxOffset = new Vector2(5,0);
         inertia = 0.03f;
-        speed = 32f;
+        speed = 36f;
         level = 4;
         maxHp = 500;
         hp = 500;
