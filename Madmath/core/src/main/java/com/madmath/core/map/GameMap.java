@@ -75,9 +75,9 @@ public class GameMap {
             spikes[10-i]=staticTile;
         }
         Array<StaticTiledMapTile> spikeFrameArray = new Array<>(spikes);
-        AnimTile animTile = new AnimTile(0.2f,spikeFrameArray);
-        animTile.setId(Utils.idMap.get("floor_spikes_anim"));
-        tileSet.putTile(animTile.getId(),animTile);
+        TrapTile trapTile = new TrapTile(0.2f,spikeFrameArray);
+        trapTile.setId(Utils.idMap.get("floor_spikes_anim"));
+        tileSet.putTile(trapTile.getId(),trapTile);
         return tileSet;
     }
 
@@ -176,7 +176,7 @@ public class GameMap {
     public Vector2 getAvailablePosition(Equipment equipment) throws TimeoutException {
         Random random = new Random(equipment.hashCode() + System.currentTimeMillis());
         for (int i = 0; i < 5000; i++) {
-            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x)+startPosition.x,random.nextInt((int) playAreaSize.y)+startPosition.y);
+            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x-400)+startPosition.x+400,random.nextInt((int) playAreaSize.y)+startPosition.y);
             if(getGameScreen().player.isCanMove(position)) return position;
         }
         throw new TimeoutException("search too long!");

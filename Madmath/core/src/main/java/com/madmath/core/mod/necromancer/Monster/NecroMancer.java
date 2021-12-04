@@ -24,11 +24,11 @@ public class NecroMancer extends Monster {
     @Override
     public void initSelf() {
         super.initSelf();
-        speed = 20f;
-        maxHp = 1;
-        hp = 1;
+        speed = 22f;
+        maxHp = 100;
+        hp = 100;
         box = new Rectangle(0,0,12,5);
         boxOffset = new Vector2(2,0);
-        level = 4;
+        level = 2;
     }
 }

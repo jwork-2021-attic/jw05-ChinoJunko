@@ -21,6 +21,15 @@ public class Utils {
 
     static public String[] AllDefaultMonsterSort = new String[]{
             "BigDemon",
+            "BigZombie",
+            "Chort",
+            "IceZombie",
+            "Imp",
+            "Ogre",
+            "OrcShaman",
+            "OrcWarrior",
+            "Skelet",
+            "Swampy",
     };
 
     static public String[] AllDefaultEquipmentSort = new String[]{

@@ -24,19 +24,19 @@ public class PlayerInputProcessor extends InputAdapter {
         switch (i){
             case Input.Keys.LEFT:
             case Input.Keys.A:
-                player.addAcceleration(new Vector2(-1f,0));
+                player.addSubjectiveDirection(new Vector2(-1f,0));
                 return true;
             case Input.Keys.RIGHT:
             case Input.Keys.D:
-                player.addAcceleration(new Vector2(1f,0));
+                player.addSubjectiveDirection(new Vector2(1f,0));
                 return true;
             case Input.Keys.UP:
             case Input.Keys.W:
-                player.addAcceleration(new Vector2(0,1f));
+                player.addSubjectiveDirection(new Vector2(0,1f));
                 return true;
             case Input.Keys.DOWN:
             case Input.Keys.S:
-                player.addAcceleration(new Vector2(0,-1f));
+                player.addSubjectiveDirection(new Vector2(0,-1f));
                 return true;
             default:
                 return false;
@@ -48,19 +48,19 @@ public class PlayerInputProcessor extends InputAdapter {
         switch (i){
             case Input.Keys.LEFT:
             case Input.Keys.A:
-                player.addAcceleration(new Vector2(1f,0));
+                player.addSubjectiveDirection(new Vector2(1f,0));
                 return true;
             case Input.Keys.RIGHT:
             case Input.Keys.D:
-                player.addAcceleration(new Vector2(-1f,0));
+                player.addSubjectiveDirection(new Vector2(-1f,0));
                 return true;
             case Input.Keys.UP:
             case Input.Keys.W:
-                player.addAcceleration(new Vector2(0,-1f));
+                player.addSubjectiveDirection(new Vector2(0,-1f));
                 return true;
             case Input.Keys.DOWN:
             case Input.Keys.S:
-                player.addAcceleration(new Vector2(0,1f));
+                player.addSubjectiveDirection(new Vector2(0,1f));
                 return true;
             default:
                 return false;

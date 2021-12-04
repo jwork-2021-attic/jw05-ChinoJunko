@@ -21,5 +21,6 @@ public class EvenSword extends Equipment{
         swingRange = 360;
         swingSpeed = 360;
         knockbackFactor = 20;
+        damage = 150;
     }
 }

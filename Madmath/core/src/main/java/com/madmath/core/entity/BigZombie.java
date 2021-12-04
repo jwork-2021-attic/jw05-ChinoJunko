@@ -1,41 +1,46 @@
 /**
 *   @Author: Junko
 *   @Email: imaizumikagerouzi@foxmail.com
-*   @Date: 4/12/2021 下午3:56
+*   @Date: 4/12/2021 下午11:02
 */
 package com.madmath.core.entity;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.madmath.core.animation.AnimationManager;
-import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 
-public class BigDemon extends Monster{
+public class BigZombie extends Monster{
 
-    static public String alias = "big_demon";
+    static public String alias = "big_zombie";
 
     static public int TextureWidth = 32;
-    static public int TextureHeight = 36;
+    static public int TextureHeight = 34;
     //default frameInterval :
     //    static public float[] FrameInterval = {
     //            0.34f,          //Idle
     //            0,17f,          //Run
     //    };
+    static public float[] FrameIntervals = {
+            0.68f,          //Idle
+            0.34f,           //Run
+    };
 
-    public BigDemon(AnimationManager manager){
+
+
+    public BigZombie(AnimationManager manager){
         super(manager);
     }
 
-    public BigDemon(Integer id, AnimationManager manager){
+    public BigZombie(Integer id, AnimationManager manager){
         super(id, manager);
     }
 
-    public BigDemon(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position) {
+    public BigZombie(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position) {
         super(id, animationManager, gameScreen, position);
     }
 
-    public BigDemon(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
+    public BigZombie(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
         super(id, animationManager, gameScreen);
     }
 
@@ -44,12 +49,12 @@ public class BigDemon extends Monster{
         super.initSelf();
         box = new Rectangle(0,0,22,10);
         boxOffset = new Vector2(5,0);
-        inertia = 0.03f;
-        speed = 32f;
+        inertia = 0.05f;
+        speed = 17f;
         level = 4;
-        maxHp = 500;
-        hp = 500;
-        toughness = 0.5f;
+        maxHp = 1000;
+        hp = 1000;
+        toughness = 0.7f;
     }
 
 }

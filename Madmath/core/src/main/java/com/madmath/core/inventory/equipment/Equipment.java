@@ -57,17 +57,22 @@ public abstract class Equipment extends AnimationActor implements Item {
         addAction(Actions.forever(Actions.sequence(Actions.moveBy(0,8,1.8f),Actions.moveBy(0,-8,1.8f))));
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     public void initSelf(){
-        pickBox = new Rectangle(0,0,100,100);
+        pickBox = new Rectangle(0,0,35,35);
         attackCircle = new Circle(0,0,getHeight());
         swingRange = 220;
         swingSpeed = 500;
+        damage = 50;
     }
 
     @Override
     public void setPosition(float x, float y) {
         if(owner==null){
-            pickBox.setPosition(x, y);
+            pickBox.setCenter(new Vector2(x,y));
         }
         attackCircle.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
         super.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
@@ -101,9 +106,10 @@ public abstract class Equipment extends AnimationActor implements Item {
         if(isSwinging())    return false;
         attackedTargets.clear();
         currencySwingRange = swingRange;
-        float perAttackCheckInterval = 0.2f;
+        float perAttackCheckInterval = 0.05f;
         int totalCheckNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
-        addAction(Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(()->{
+
+        Runnable attack = () -> {
             Vector2[] vector2s = new Vector2[4];
             for (int i = 0; i < 4; i++) {
                 vector2s[i] = new Vector2();
@@ -114,7 +120,7 @@ public abstract class Equipment extends AnimationActor implements Item {
                     boolean temp = attackCircle.contains(entity.box.getCenter(vector2s[0]));
                     attackCircle.radius-=50;
                     if(!temp) return;
-                    if(Math.abs(getRotation()%360f-vector2s[0].sub(owner.box.getCenter(vector2s[1])).angle())>swingRange) return;
+                    if(Math.abs(getRotation()%360-vector2s[0].sub(owner.box.getCenter(vector2s[1])).angle())>swingRange) return;
                     for (int i = 0; i < 4; i++) {
                         entity.box.getPosition(vector2s[i]);
                     }
@@ -125,13 +131,15 @@ public abstract class Equipment extends AnimationActor implements Item {
                         if(attackCircle.contains(vector2s[i])){
                             attackedTargets.add(entity);
                             entity.getHurt(this);
-                            System.out.println("Attack!");
+                            //System.out.println("Attack!");
                             return;
                         }
                     }
                 }
             });
-        }))));
+        };
+        if(totalCheckNum==0)    addAction(Actions.run(attack));
+        addAction(Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack))));
         return true;
     }
 

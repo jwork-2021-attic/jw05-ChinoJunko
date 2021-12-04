@@ -5,8 +5,10 @@
 */
 package com.madmath.core.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
@@ -56,6 +58,9 @@ public abstract class Monster extends Entity{
     @Override
     public void act(float delta) {
         super.act(delta);
+    }
+
+    public void monsterAct(float delta){
         Player player = gameScreen.player;
         Vector2 direction = new Vector2(player.getX()-getX(),player.getY()-getY());
         direction.x = Math.abs(direction.x)<player.getWidth()/2?0:direction.x>0?inertia:-inertia;
@@ -64,6 +69,17 @@ public abstract class Monster extends Entity{
         move(delta);
     }
 
+    @Override
+    public void Die() {
+        super.Die();
+        clear();
+        gameScreen.livingEntity.removeValue(this,true);
+        gameScreen.monsterManager.removeMonster(this);
+        setAcceleration(new Vector2(0,0));
+        addAction(Actions.sequence(Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.run(()->{
+            gameScreen.getStage().getActors().removeValue(this,true);
+        })));
+    }
 
     static public void loadMonsters(){
         searchModMonster();

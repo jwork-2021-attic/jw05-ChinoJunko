@@ -5,6 +5,9 @@
 */
 package com.madmath.core.entity;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -12,13 +15,21 @@ import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
 import com.madmath.core.inventory.equipment.Equipment;
+import com.madmath.core.map.TrapTile;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
+import com.madmath.core.util.Utils;
+import com.madmath.core.util.myPair;
 
 public class Player extends Entity{
 
     Array<Equipment> weapon;
     Equipment activeWeapon=null;
+
+    private boolean attackable = true;
+    private boolean movable = true;
+
+    private Vector2 subjectiveDirection = new Vector2();
 
     public float weaponAngle;
 
@@ -38,7 +49,44 @@ public class Player extends Entity{
         if(activeWeapon!=null&& !activeWeapon.isSwinging()){
             activeWeapon.setRotation(weaponAngle);
         }
+        sufferFromTrap();
+        if(movable) currentDirection.set(subjectiveDirection);
     }
+
+    @Override
+    public int getHurt(int damage, Vector2 sufferFrom, float knockbackFactor) {
+        if(!attackable) return 0;
+        knockbackFactor *= (1-toughness);
+        sufferFrom.sub(getPosition());
+        sufferFrom.x = sufferFrom.x>0?-knockbackFactor:knockbackFactor;
+        sufferFrom.y = sufferFrom.y>0?-knockbackFactor:knockbackFactor;
+        currentDirection.set(sufferFrom);
+        movable = false;
+        sufferFrom.scl(-0.08f,-0.08f);
+        addAction(Actions.sequence(Actions.color(hurtColor.cpy()),Actions.addAction(Actions.color(color.cpy(),0.27f)),
+                Actions.addAction(Actions.sequence(Actions.run(()->{
+                    attackable = false;
+                }),Actions.repeat(3,Actions.sequence(Actions.alpha(0.5f,0.3f),Actions.alpha(1f,0.3f))),
+                Actions.run(()->{
+                    attackable = true;
+                }))),
+                Actions.repeat(5,Actions.sequence(Actions.run(()->{
+                    addAcceleration(sufferFrom);
+                }),Actions.delay(0.05f))),
+                Actions.run(()->{
+                    setAcceleration(new Vector2(0,0));
+                }),Actions.delay(0.1f),
+                Actions.run(()->{
+                    movable = true;
+                })));
+        hp -= damage;
+        try {
+            return damage;
+        }finally {
+            if(hp<=0)Die();
+        }
+    }
+
 
     public void addWeapon(Equipment equipment){
         if(weapon.size>=3) return;
@@ -55,6 +103,16 @@ public class Player extends Entity{
         }
     }
 
+    public void sufferFromTrap(){
+        Array<myPair> tiledMapTileVector2Pair = getTileOnFoot(getPosition());
+        tiledMapTileVector2Pair.forEach(pair ->{
+            if(pair.A instanceof TrapTile){
+                getHurt((TrapTile) pair.A,pair.B);
+                return;
+            }
+        });
+    }
+
     @Override
     public boolean move(float v) {
         boolean temp = super.move(v);
@@ -65,6 +123,32 @@ public class Player extends Entity{
             }
         });
         return temp;
+    }
+
+    public void addSubjectiveDirection(Vector2 Direction){
+        subjectiveDirection.x = Math.min(Math.max(subjectiveDirection.x + Direction.x,-1),1);
+        subjectiveDirection.y = Math.min(Math.max(subjectiveDirection.y + Direction.y,-1f),1f);
+    }
+
+    @Override
+    public boolean isCanMove(Vector2 next){
+        next.add(boxOffset);
+        for (float i = next.x; i <= next.x+box.getWidth(); i += box.getWidth()) {
+            for (float j = next.y; j <= next.y+box.getHeight(); j += box.getHeight()) {
+                if(i< gameScreen.getMap().startPosition.x||i>= gameScreen.getMap().startPosition.x+ gameScreen.getMap().playAreaSize.x||j< gameScreen.getMap().startPosition.y||j>= gameScreen.getMap().startPosition.y+ gameScreen.getMap().playAreaSize.y)  return false;
+                TiledMapTileLayer layer =(TiledMapTileLayer) gameScreen.getMap().getTiledMap().getLayers().get(0);
+                TiledMapTile tile = layer.getCell((int)i/16,(int)j/16).getTile();
+                if(!Utils.accessibleG.contains(tile.getId()))   return false;
+            }
+        }
+        Rectangle nextBox = new Rectangle(box).setPosition(next);
+        for (int i = 0; i < gameScreen.livingEntity.size; i++) {
+            if(gameScreen.livingEntity.get(i)!=null&& gameScreen.livingEntity.get(i) != this && gameScreen.livingEntity.get(i).box.overlaps(nextBox))  {
+                //System.out.println("false:"+entity);
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

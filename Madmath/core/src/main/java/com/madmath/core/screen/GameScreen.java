@@ -151,6 +151,7 @@ public class GameScreen extends AbstractScreen{
         stateTime += v;
         currencyDelta = v;
         playerSemaphore.release();
+        monsterSemaphore.release();
         update(v);
         map.render(v);
         Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() - o1.getY()));

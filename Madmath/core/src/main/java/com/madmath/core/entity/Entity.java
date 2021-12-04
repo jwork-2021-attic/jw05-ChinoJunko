@@ -5,16 +5,21 @@
 */
 package com.madmath.core.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
 import com.madmath.core.actor.AnimationActor;
 import com.madmath.core.inventory.equipment.Equipment;
+import com.madmath.core.map.TrapTile;
 import com.madmath.core.util.Utils;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.screen.GameScreen;
+import com.madmath.core.util.myPair;
+
 
 public abstract class Entity extends AnimationActor {
 
@@ -32,11 +37,15 @@ public abstract class Entity extends AnimationActor {
     protected Vector2 currentDirection = new Vector2(0,0);
 
     public float inertia;
+    public float toughness;
 
     //if move set it to 16, reduce by half per frame
     //public int lastMove;
 
     public boolean canMove = true;
+
+    Color color;
+    Color hurtColor;
 
     protected float speed;
     //protected float lostSpeed;
@@ -124,6 +133,9 @@ public abstract class Entity extends AnimationActor {
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
         inertia = 0.1f;
+        toughness = 0f;
+        color = this.getColor().cpy();
+        hurtColor = Color.RED.cpy();
     }
 
     @Override
@@ -137,12 +149,42 @@ public abstract class Entity extends AnimationActor {
         return State.Stand;
     }
 
+    public int getHurt(TrapTile tile,Vector2 position){
+        return getHurt(tile.trigger(this),new Vector2(position).sub(new Vector2(1,1)),tile.getKnockbackFactor());
+    }
+
     public int getHurt(Equipment equipment){
-        Vector2 vector2 = new Vector2(equipment.owner.getPosition()).sub(getPosition());
-        vector2.x = vector2.x>0?-equipment.getKnockbackFactor():equipment.getKnockbackFactor();
-        vector2.y = vector2.y>0?-equipment.getKnockbackFactor():equipment.getKnockbackFactor();
-        setAcceleration(vector2);
-        return 1;
+        return getHurt(equipment.getDamage(),new Vector2(equipment.owner.getPosition()),equipment.getKnockbackFactor());
+    }
+
+    public int getHurt(int damage, Vector2 sufferFrom, float knockbackFactor){
+        knockbackFactor *= (1-toughness);
+        addAction(Actions.sequence(Actions.color(Color.RED),Actions.color(color,0.4f)));
+        sufferFrom.sub(getPosition());
+        sufferFrom.x = sufferFrom.x>0?-knockbackFactor:knockbackFactor;
+        sufferFrom.y = sufferFrom.y>0?-knockbackFactor:knockbackFactor;
+        setAcceleration(sufferFrom);
+        hp -= damage;
+        try {
+            return damage;
+        }finally {
+            if(hp<=0)Die();
+        }
+    }
+
+    public void Die(){
+
+    }
+
+    public Array<myPair> getTileOnFoot(Vector2 position){
+        Array<myPair> tiledMapTileVector2Pair = new Array<>();
+        for (float i = position.x; i <= position.x+box.getWidth(); i += box.getWidth()) {
+            for (float j = position.y; j <= position.y+box.getHeight(); j += box.getHeight()) {
+                TiledMapTile tiles = ((TiledMapTileLayer) gameScreen.getMap().getTiledMap().getLayers().get(0)).getCell((int)i/16,(int)j/16).getTile();
+                tiledMapTileVector2Pair.add(new myPair(tiles,new Vector2(i,j)));
+            }
+        }
+        return tiledMapTileVector2Pair;
     }
 
     public boolean isCanMove(Vector2 next){

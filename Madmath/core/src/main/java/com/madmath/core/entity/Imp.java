@@ -8,48 +8,46 @@ package com.madmath.core.entity;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.madmath.core.animation.AnimationManager;
-import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 
-public class BigDemon extends Monster{
+public class Imp extends Monster{
 
-    static public String alias = "big_demon";
+    static public String alias = "imp";
 
-    static public int TextureWidth = 32;
-    static public int TextureHeight = 36;
+    static public int TextureWidth = 16;
+    static public int TextureHeight = 16;
     //default frameInterval :
     //    static public float[] FrameInterval = {
     //            0.34f,          //Idle
     //            0,17f,          //Run
     //    };
 
-    public BigDemon(AnimationManager manager){
+    public Imp(AnimationManager manager){
         super(manager);
     }
 
-    public BigDemon(Integer id, AnimationManager manager){
+    public Imp(Integer id, AnimationManager manager){
         super(id, manager);
     }
 
-    public BigDemon(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position) {
+    public Imp(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position) {
         super(id, animationManager, gameScreen, position);
     }
 
-    public BigDemon(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
+    public Imp(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
         super(id, animationManager, gameScreen);
     }
 
     @Override
     public void initSelf() {
         super.initSelf();
-        box = new Rectangle(0,0,22,10);
-        boxOffset = new Vector2(5,0);
-        inertia = 0.03f;
-        speed = 32f;
-        level = 4;
-        maxHp = 500;
-        hp = 500;
-        toughness = 0.5f;
+        box = new Rectangle(0,0,12,5);
+        boxOffset = new Vector2(2,0);
+        inertia = 0.1f;
+        speed = 30f;
+        level = 1;
+        maxHp = 100;
+        hp = 100;
     }
 
 }

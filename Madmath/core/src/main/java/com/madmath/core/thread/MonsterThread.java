@@ -6,9 +6,7 @@
 package com.madmath.core.thread;
 
 import com.badlogic.gdx.utils.Array;
-import com.madmath.core.control.PlayerInputProcessor;
 import com.madmath.core.entity.Monster;
-import com.madmath.core.entity.Player;
 import com.madmath.core.screen.GameScreen;
 
 public class MonsterThread implements Runnable {
@@ -34,12 +32,16 @@ public class MonsterThread implements Runnable {
 
             //act monster
             monsters.forEach(monster -> {
-                monster.act(gameScreen.getCurrencyDelta());
+                monster.monsterAct(gameScreen.getCurrencyDelta());
             });
         }
     }
 
     public void addMonster(Monster monster){
         monsters.add(monster);
+    }
+
+    public boolean removeMonster(Monster monster){
+        return monsters.removeValue(monster,true);
     }
 }

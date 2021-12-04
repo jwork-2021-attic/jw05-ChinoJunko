@@ -18,8 +18,8 @@ public class OddSword extends Equipment{
     @Override
     public void initSelf() {
         super.initSelf();
-        swingRange = 160;
-        swingSpeed = 720;
-        knockbackFactor = 1;
+        swingRange = 190;
+        swingSpeed = 600;
+        knockbackFactor = 4;
     }
 }
