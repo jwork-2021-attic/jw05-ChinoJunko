@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:56
+*/
 package com.madmath.core.control;
 
 import com.badlogic.gdx.Input;
@@ -73,8 +78,17 @@ public class PlayerInputProcessor extends InputAdapter {
     }
 
     @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(button == Input.Buttons.LEFT){
+            player.swingWeapon();
+        }
+        return false;
+    }
+
+    @Override
     public boolean mouseMoved(int i, int i1) {
         Vector3 point = player.gameScreen.getCamera().unproject(new Vector3(i,i1,0));
+        player.weaponAngle = new Vector2(point.x-player.getX(),point.y-player.getY()).angle();
         if(player.getState() == Entity.State.Stand){
             player.setAnimDirection(point.x < player.getX());
         }

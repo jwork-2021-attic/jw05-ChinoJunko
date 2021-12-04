@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTile;

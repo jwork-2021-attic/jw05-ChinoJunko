@@ -1,10 +1,13 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午4:08
+*/
 package com.madmath.core.thread;
 
 import com.madmath.core.control.PlayerInputProcessor;
 import com.madmath.core.entity.Player;
-import com.madmath.core.map.GameMap;
 import com.madmath.core.screen.GameScreen;
-import com.madmath.core.util.Utils;
 
 public class PlayerThread implements Runnable {
 
@@ -19,7 +22,7 @@ public class PlayerThread implements Runnable {
         gameScreen.getStage().addActor(player);
         //player.setZIndex((int) player.getY());
         gameScreen.player = player;
-        gameScreen.livingBox.add(player);
+        gameScreen.livingEntity.add(player);
 
         gameScreen.addInputProcessor(new PlayerInputProcessor(player));
 

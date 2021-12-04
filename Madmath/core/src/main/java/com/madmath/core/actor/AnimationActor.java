@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:56
+*/
 package com.madmath.core.actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,9 +12,9 @@ import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
 
 public class AnimationActor extends Image {
-    private AnimationManager animationManager;
+    private final AnimationManager animationManager;
     private float stateTime;
-    private Vector2 currencyPosition;
+    private final Vector2 currencyPosition;
     protected boolean anim_dirt = false;//true - left | false - right
 
     public AnimationActor(AnimationManager animationManager){

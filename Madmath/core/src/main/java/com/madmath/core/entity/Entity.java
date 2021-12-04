@@ -1,15 +1,20 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:56
+*/
 package com.madmath.core.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.madmath.core.actor.AnimationActor;
+import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.util.Utils;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.screen.GameScreen;
-
-import java.lang.reflect.Array;
 
 public abstract class Entity extends AnimationActor {
 
@@ -19,7 +24,7 @@ public abstract class Entity extends AnimationActor {
     protected boolean pauseAnim = false;
 
     public Rectangle box;
-    public Vector2 boxOffset;
+    protected Vector2 boxOffset;
 
     public GameScreen gameScreen;
 
@@ -132,6 +137,14 @@ public abstract class Entity extends AnimationActor {
         return State.Stand;
     }
 
+    public int getHurt(Equipment equipment){
+        Vector2 vector2 = new Vector2(equipment.owner.getPosition()).sub(getPosition());
+        vector2.x = vector2.x>0?-equipment.getKnockbackFactor():equipment.getKnockbackFactor();
+        vector2.y = vector2.y>0?-equipment.getKnockbackFactor():equipment.getKnockbackFactor();
+        setAcceleration(vector2);
+        return 1;
+    }
+
     public boolean isCanMove(Vector2 next){
         next.add(boxOffset);
         for (float i = next.x; i <= next.x+box.getWidth(); i += box.getWidth()) {
@@ -143,7 +156,7 @@ public abstract class Entity extends AnimationActor {
             }
         }
         Rectangle nextBox = new Rectangle(box).setPosition(next);
-        for (Entity entity: gameScreen.livingBox
+        for (Entity entity: gameScreen.livingEntity
         ) {
             if(entity != this && entity.box.overlaps(nextBox))  {
                 return false;
@@ -157,8 +170,17 @@ public abstract class Entity extends AnimationActor {
     }
 
     public void addAcceleration(Vector2 Direction) {
+        if(Math.abs(currentDirection.x)>1||Math.abs(currentDirection.y)>1) {
+            addAccelerationOverSpeed(Direction);
+            return;
+        }
         currentDirection.x = Math.min(Math.max(currentDirection.x + Direction.x,-1),1);
         currentDirection.y = Math.min(Math.max(currentDirection.y + Direction.y,-1f),1f);
+    }
+
+    public void addAccelerationOverSpeed(Vector2 Direction){
+        currentDirection.x = (currentDirection.x + Direction.x)*0.9f;
+        currentDirection.y = (currentDirection.y + Direction.y)*0.9f;
     }
 
     public void setAcceleration(Vector2 Direction) {

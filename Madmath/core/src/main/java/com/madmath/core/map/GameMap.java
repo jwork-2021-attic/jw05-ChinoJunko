@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.entity.Monster;
+import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.util.Utils;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.resource.ResourceManager;
@@ -163,6 +169,15 @@ public class GameMap {
         for (int i = 0; i < 5000; i++) {
             Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x)+startPosition.x,random.nextInt((int) playAreaSize.y)+startPosition.y);
             if(monster.isCanMove(position)) return position;
+        }
+        throw new TimeoutException("search too long!");
+    }
+
+    public Vector2 getAvailablePosition(Equipment equipment) throws TimeoutException {
+        Random random = new Random(equipment.hashCode() + System.currentTimeMillis());
+        for (int i = 0; i < 5000; i++) {
+            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x)+startPosition.x,random.nextInt((int) playAreaSize.y)+startPosition.y);
+            if(getGameScreen().player.isCanMove(position)) return position;
         }
         throw new TimeoutException("search too long!");
     }

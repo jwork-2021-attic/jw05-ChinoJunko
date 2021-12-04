@@ -1,16 +1,26 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.entity;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
-import com.madmath.core.map.GameMap;
+import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 
 public class Player extends Entity{
+
+    Array<Equipment> weapon;
+    Equipment activeWeapon=null;
+
+    public float weaponAngle;
 
     static public String alias = "knight_f";
 
@@ -23,8 +33,44 @@ public class Player extends Entity{
     }
 
     @Override
+    public void act(float delta) {
+        super.act(delta);
+        if(activeWeapon!=null&& !activeWeapon.isSwinging()){
+            activeWeapon.setRotation(weaponAngle);
+        }
+    }
+
+    public void addWeapon(Equipment equipment){
+        if(weapon.size>=3) return;
+        weapon.add(equipment);
+        if(activeWeapon != null)    activeWeapon.addAction(Actions.hide());
+        activeWeapon = equipment;
+        equipment.equippedBy(this);
+        gameScreen.livingItem.removeValue(equipment,true);
+    }
+
+    public void swingWeapon(){
+        if(activeWeapon!=null){
+            activeWeapon.use();
+        }
+    }
+
+    @Override
+    public boolean move(float v) {
+        boolean temp = super.move(v);
+        Vector2 cPoisition = new Vector2();
+        gameScreen.livingItem.forEach(item -> {
+            if(item.canPickUp(box.getCenter(cPoisition))&& item instanceof Equipment){
+                addWeapon((Equipment) item);
+            }
+        });
+        return temp;
+    }
+
+    @Override
     public void initSelf() {
         super.initSelf();
+        weapon = new Array<>(3);
         speed = 64f;
         maxHp = 10;
         hp = 10;

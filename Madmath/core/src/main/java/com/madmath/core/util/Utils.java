@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:58
+*/
 package com.madmath.core.util;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +21,11 @@ public class Utils {
 
     static public String[] AllDefaultMonsterSort = new String[]{
             "BigDemon",
+    };
+
+    static public String[] AllDefaultEquipmentSort = new String[]{
+            "OddSword",
+            "EvenSword",
     };
 
     static public Vector2[] EnterSortPro = new Vector2[]{

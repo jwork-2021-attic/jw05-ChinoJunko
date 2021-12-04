@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午4:17
+*/
 package com.madmath.core.ui;
 
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;

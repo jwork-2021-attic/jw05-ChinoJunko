@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.main;
 
 import com.badlogic.gdx.Game;
@@ -6,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.madmath.core.entity.Monster;
+import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.util.Utils;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
@@ -13,7 +19,7 @@ import com.madmath.core.screen.MainMenuScreen;
 
 public class MadMath extends Game {
 
-	public static final String VERSION = "0.1";
+	public static final String VERSION = "0.7";
 	public static final String TITLE = "MadMath v"+ VERSION;
 
 	//Screen dimensions
@@ -46,6 +52,7 @@ public class MadMath extends Game {
 		gameScreen = new GameScreen(this, manager);
 
 		Monster.loadMonsters();
+		Equipment.loadEquipment();
 
 		setScreen(mainMenuScreen);
 	}

@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:56
+*/
 package com.madmath.core.entity;
 
 import com.badlogic.gdx.math.Rectangle;

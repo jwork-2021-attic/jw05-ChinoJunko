@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:58
+*/
 package com.madmath.core.render;
 
 import com.badlogic.gdx.maps.MapObject;

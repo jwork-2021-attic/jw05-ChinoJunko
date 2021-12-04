@@ -1,31 +1,33 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.entity.Monster;
 import com.madmath.core.entity.MonsterFactory;
 import com.madmath.core.entity.Player;
+import com.madmath.core.inventory.Item;
+import com.madmath.core.inventory.equipment.Equipment;
+import com.madmath.core.inventory.equipment.EquipmentFactory;
 import com.madmath.core.main.MadMath;
 import com.madmath.core.map.GameMap;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.thread.MonsterThread;
 import com.madmath.core.thread.PlayerThread;
 import com.madmath.core.ui.HUD;
-import com.madmath.core.util.Utils;
 import org.jetbrains.annotations.Nullable;
 
-import java.rmi.NoSuchObjectException;
-import java.util.Comparator;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.*;
@@ -49,13 +51,15 @@ public class GameScreen extends AbstractScreen{
     public MonsterThread monsterManager;
 
     private MonsterFactory monsterFactory;
+    private EquipmentFactory equipmentFactory;
 
     Label currencyMapMessage;
 
     State state;
 
     //collision detection
-    public Array<Entity> livingBox;
+    public Array<Entity> livingEntity;
+    public Array<Item> livingItem;
 
     float stateTime;
     float currencyDelta;
@@ -80,7 +84,8 @@ public class GameScreen extends AbstractScreen{
         map = new GameMap(this,"PRIMARY",1);
         initMapTitle();
 
-        livingBox = new Array<>();
+        livingEntity = new Array<>();
+        livingItem = new Array<>();
 
         hud = new HUD(this, manager);
 
@@ -89,6 +94,8 @@ public class GameScreen extends AbstractScreen{
 
         monsterFactory = new MonsterFactory(manager,this);
         monsterManager = new MonsterThread();
+
+        equipmentFactory = new EquipmentFactory(manager, this);
 
         playerSemaphore = new Semaphore(0);
         monsterSemaphore = new Semaphore(0);
@@ -111,6 +118,7 @@ public class GameScreen extends AbstractScreen{
         Gdx.input.setInputProcessor(multiplexer);
         stateTime = 0;
         createMonsters(1);
+        createEquipment();
     }
 
     public void initMapTitle(){
@@ -172,8 +180,19 @@ public class GameScreen extends AbstractScreen{
         monsterManager.addMonster(monster);
         stage.addActor(monster);
         //monster.setZIndex((int) monster.getY());
-        livingBox.add(monster);
+        livingEntity.add(monster);
         return monster;
+    }
+
+    public void createEquipment(){
+        Equipment equipment = equipmentFactory.generateEquipmentByName("EvenSword");
+        equipment.setPosition(player.getX()+100,player.getY()+50);
+        stage.addActor(equipment);
+        livingItem.add(equipment);
+        equipment = equipmentFactory.generateEquipmentByName("OddSword");
+        equipment.setPosition(player.getX()+100,player.getY()-50);
+        stage.addActor(equipment);
+        livingItem.add(equipment);
     }
 
     public GameMap getMap() {

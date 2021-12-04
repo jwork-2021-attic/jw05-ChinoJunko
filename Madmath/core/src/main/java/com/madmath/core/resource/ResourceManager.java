@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:58
+*/
 package com.madmath.core.resource;
 
 import com.badlogic.gdx.Gdx;
@@ -25,6 +30,7 @@ public class ResourceManager {
     //public TextureAtlas back;
 
     public Array<TextureRegion[][]> MonsterLoad;
+    public Array<TextureRegion> EquipmentLoad;
 
     //public TextureRegion[][] big_demon_idle_anim16x28;
     //public TextureRegion[][] big_demon_run_anim16x28;
@@ -59,6 +65,11 @@ public class ResourceManager {
         return MonsterLoad.get(MonsterLoad.size-1);
     }
 
+    public TextureRegion LoadEquipmentAssetsByName(String name){
+        EquipmentLoad.add(atlas.findRegion(name));
+        return EquipmentLoad.get(EquipmentLoad.size-1);
+    }
+
     @Nullable
     public Object getAssetsByName(String name) {
         try{
@@ -84,6 +95,7 @@ public class ResourceManager {
         assetManager.finishLoading();
 
         MonsterLoad = new Array<>();
+        EquipmentLoad = new Array<>();
 
         atlas = assetManager.get("Texture.atlas",TextureAtlas.class);
         //back = assetManager.get("back.atlas",TextureAtlas.class);

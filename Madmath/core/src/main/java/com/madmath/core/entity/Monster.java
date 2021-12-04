@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:57
+*/
 package com.madmath.core.entity;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -77,7 +82,6 @@ public abstract class Monster extends Entity{
                                 new Array<>(ResourceManager.defaultManager.LoadMonsterAssetsByName(c.getField("alias").get(null) +"_run_anim",
                                         (int)c.getField("TextureWidth").get(null),
                                         (int)c.getField("TextureHeight").get(null))[0])))));
-                System.out.println(((float[]) c.getField("FrameIntervals").get(null))[0]);
             } catch (ClassNotFoundException e) {
                 System.out.println("Not Found A Monster Named '" +name+'\'');
             } catch (NoSuchFieldException e){
@@ -151,10 +155,6 @@ public abstract class Monster extends Entity{
         ) {
             System.out.println("ModLoadMonsterTexture:"+path);
         }
-    }
-
-    public enum Sort{
-        BigDemon
     }
 
 

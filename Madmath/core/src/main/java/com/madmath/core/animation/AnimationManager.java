@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午3:56
+*/
 package com.madmath.core.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,6 +15,24 @@ public class AnimationManager {
     CustomAnimation[] animations;
     PlayMode playMode;
     boolean reverse = false;
+
+    public static TextureRegion[][] castRegionToArray2(TextureRegion region){
+        TextureRegion[][] regions = new TextureRegion[PlayMode.values().length][1];
+        for (int i = 0; i < regions.length; i++) {
+            regions[i][0] = region;
+        }
+        return regions;
+    }
+
+    public static float[] copyDurationToArray2(float frameDuration){
+        float[] Durations = new float[PlayMode.values().length];
+        Arrays.fill(Durations, frameDuration);
+        return Durations;
+    }
+
+    public AnimationManager(TextureRegion region, float frameDuration){
+        this(castRegionToArray2(region),copyDurationToArray2(frameDuration));
+    }
 
     public AnimationManager(TextureRegion[][] regions, float[] frameDurations){
         CustomAnimation[] customAnimations = new CustomAnimation[regions.length];

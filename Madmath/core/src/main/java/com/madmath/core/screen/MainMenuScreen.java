@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午4:07
+*/
 package com.madmath.core.screen;
 
 import com.badlogic.gdx.graphics.g2d.Animation;

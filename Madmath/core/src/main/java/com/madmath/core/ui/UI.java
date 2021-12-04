@@ -1,3 +1,8 @@
+/**
+*   @Author: Junko
+*   @Email: imaizumikagerouzi@foxmail.com
+*   @Date: 4/12/2021 下午4:12
+*/
 package com.madmath.core.ui;
 
 import com.badlogic.gdx.Gdx;
