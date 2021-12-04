@@ -72,7 +72,7 @@ public class Utils {
 
     static public LinkedList<String> ModLoadMonsterPath = new LinkedList<>();
 
-    static public LinkedList<Texture> ModLoadMonsterTexture = new LinkedList<>();
+    static public LinkedList<String> ModLoadMonsterTexture = new LinkedList<>();
 
     static public Set<Integer> accessibleG = new HashSet<>(100);
 

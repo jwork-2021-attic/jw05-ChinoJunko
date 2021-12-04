@@ -1,15 +1,29 @@
 package com.madmath.core.mod.necromancer.Monster;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.entity.Monster;
 
 public class NecroMancer extends Monster {
-    protected NecroMancer(int id, AnimationManager animationManager) {
+
+    static public String alias = "necro_mancer";
+
+    static public int TextureWidth = 16;
+    static public int TextureHeight = 20;
+
+    public NecroMancer(Integer id, AnimationManager animationManager) {
         super(id, animationManager);
     }
 
     @Override
     public void initSelf() {
-
+        super.initSelf();
+        speed = 20f;
+        maxHp = 1;
+        hp = 1;
+        box = new Rectangle(0,0,12,5);
+        boxOffset = new Vector2(2,0);
+        level = 4;
     }
 }

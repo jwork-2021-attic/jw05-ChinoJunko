@@ -26,6 +26,8 @@ public abstract class Entity extends AnimationActor {
     //positive right and up
     protected Vector2 currentDirection = new Vector2(0,0);
 
+    public float inertia;
+
     //if move set it to 16, reduce by half per frame
     //public int lastMove;
 
@@ -111,9 +113,12 @@ public abstract class Entity extends AnimationActor {
     }
 
     public void initSelf() {
-        box = new Rectangle(0,0,14,7);
-        boxOffset = new Vector2(0,0);
-        speed = 16;
+        speed = 16f;
+        maxHp = 1;
+        hp = 1;
+        box = new Rectangle(0,0,12,7);
+        boxOffset = new Vector2(2,0);
+        inertia = 0.1f;
     }
 
     @Override
@@ -141,8 +146,6 @@ public abstract class Entity extends AnimationActor {
         for (Entity entity: gameScreen.livingBox
         ) {
             if(entity != this && entity.box.overlaps(nextBox))  {
-                System.out.println(entity+"  Box:"+box+"  Position:"+entity.getPosition());
-                System.out.println(this+"  Box:"+box+"  Position:"+getPosition());
                 return false;
             }
         }
@@ -156,6 +159,10 @@ public abstract class Entity extends AnimationActor {
     public void addAcceleration(Vector2 Direction) {
         currentDirection.x = Math.min(Math.max(currentDirection.x + Direction.x,-1),1);
         currentDirection.y = Math.min(Math.max(currentDirection.y + Direction.y,-1f),1f);
+    }
+
+    public void setAcceleration(Vector2 Direction) {
+        currentDirection.set(Direction);
     }
 
     public int getId() {

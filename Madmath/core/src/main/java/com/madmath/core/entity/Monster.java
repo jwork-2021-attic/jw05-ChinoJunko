@@ -23,10 +23,14 @@ public abstract class Monster extends Entity{
 
     public int level;
 
+
+
     static public int TextureWidth;
     static public int TextureHeight;
-    static public float FrameIdleInterval = 0.34f;
-    static public float FrameRunInterval = 0.17f;
+    static public float[] FrameIntervals = {
+            0.34f,          //Idle
+            0.17f,           //Run
+    };
 
     protected Monster(AnimationManager animationManager){
         super(animationManager);
@@ -49,6 +53,8 @@ public abstract class Monster extends Entity{
         super.act(delta);
         Player player = gameScreen.player;
         Vector2 direction = new Vector2(player.getX()-getX(),player.getY()-getY());
+        direction.x = Math.abs(direction.x)<player.getWidth()/2?0:direction.x>0?inertia:-inertia;
+        direction.y = Math.abs(direction.y)<player.getHeight()/2?0:direction.y>0?inertia:-inertia;
         addAcceleration(direction);
         move(delta);
     }
@@ -60,19 +66,18 @@ public abstract class Monster extends Entity{
         for (String name: Utils.AllDefaultMonsterSort) {
             try {
                 Class<?> c = Class.forName("com.madmath.core.entity."+name);
-                System.out.println(1);
                 Constructor<?> con = c.getConstructor(Integer.class,AnimationManager.class);
                 monsterSort.add((Monster) con.newInstance(500+ResourceManager.defaultManager.MonsterLoad.size,
                         new AnimationManager(
-                        new CustomAnimation((float) c.getField("FrameIdleInterval").get(null),
+                        new CustomAnimation(((float[]) c.getField("FrameIntervals").get(null))[0],
                                 new Array<>(ResourceManager.defaultManager.LoadMonsterAssetsByName(c.getField("alias").get(null) +"_idle_anim",
                                         (int)c.getField("TextureWidth").get(null),
                                         (int)c.getField("TextureHeight").get(null))[0])),
-                        new CustomAnimation((float) c.getField("FrameRunInterval").get(null),
+                        new CustomAnimation(((float[]) c.getField("FrameIntervals").get(null))[1],
                                 new Array<>(ResourceManager.defaultManager.LoadMonsterAssetsByName(c.getField("alias").get(null) +"_run_anim",
                                         (int)c.getField("TextureWidth").get(null),
                                         (int)c.getField("TextureHeight").get(null))[0])))));
-                //monsterSort.add();
+                System.out.println(((float[]) c.getField("FrameIntervals").get(null))[0]);
             } catch (ClassNotFoundException e) {
                 System.out.println("Not Found A Monster Named '" +name+'\'');
             } catch (NoSuchFieldException e){
@@ -87,9 +92,31 @@ public abstract class Monster extends Entity{
                 e.printStackTrace();
             }
         }
-        monsterSort.sort((monster1,monster2)->{
-            return monster2.level - monster1.level;
-        });
+        for (int i = 0; i < Utils.ModLoadMonsterPath.size(); i++) {
+            try {
+                Class<?> c = Class.forName(Utils.ModLoadMonsterPath.get(i));
+                Constructor<?> con = c.getConstructor(Integer.class,AnimationManager.class);
+                monsterSort.add((Monster) con.newInstance(500+ResourceManager.defaultManager.MonsterLoad.size,
+                        new AnimationManager(ResourceManager.defaultManager.LoadMonsterAssetsByPath(Utils.ModLoadMonsterTexture.get(i),
+                                                (int)c.getField("TextureWidth").get(null),
+                                                (int)c.getField("TextureHeight").get(null)),
+                                (float[]) c.getField("FrameIntervals").get(null))));
+                //monsterSort.add();
+            } catch (ClassNotFoundException e) {
+                System.out.println("Not Found A Monster Path '" +Utils.ModLoadMonsterPath.get(i)+'\'');
+            } catch (NoSuchFieldException e){
+                System.out.println("Not Such Field :'" +e.getMessage()+'\'');
+            } catch (IllegalAccessException e){
+                System.out.println("IllegalAccessField :'" +e.getMessage()+'\'');
+            } catch (NoSuchMethodException e){
+                System.out.println("Not Such Method :'" +e.getMessage()+'\'');
+                e.printStackTrace();
+            }
+            catch (InvocationTargetException | InstantiationException e) {
+                e.printStackTrace();
+            }
+        }
+        monsterSort.sort((monster1,monster2)-> monster2.level - monster1.level);
     }
 
     public static void searchModMonster(){
@@ -102,10 +129,13 @@ public abstract class Monster extends Entity{
                     if(file.isDirectory())  list.add(file);
                     else {
                         if(file.getParent().substring(file.getParent().lastIndexOf("\\")+1).equals("Monster")){
-                            Utils.ModLoadMonsterPath.add(file.getAbsolutePath());
+                            String s = file.getPath().substring(file.getPath().indexOf("com"),file.getPath().lastIndexOf(".java")).replaceAll("\\\\",".");
+                            System.out.println(s);
+
+                            Utils.ModLoadMonsterPath.add(s);
                         }
                         else if(file.getParent().substring(file.getParent().lastIndexOf("\\")+1).equals("Texture")){
-                            Utils.ModLoadMonsterTexture.add(new Texture(file.getPath()));
+                            Utils.ModLoadMonsterTexture.add(file.getPath());
                             //System.out.println(Utils.ModLoadMonsterTexture.getLast().getHeight());
                         }
                     }
@@ -115,7 +145,11 @@ public abstract class Monster extends Entity{
 
         for (String path: Utils.ModLoadMonsterPath
         ) {
-            System.out.println(path);
+            System.out.println("ModLoadMonsterPath:"+path);
+        }
+        for (String path: Utils.ModLoadMonsterTexture
+        ) {
+            System.out.println("ModLoadMonsterTexture:"+path);
         }
     }
 

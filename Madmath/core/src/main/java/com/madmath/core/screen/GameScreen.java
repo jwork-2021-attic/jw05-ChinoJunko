@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.rmi.NoSuchObjectException;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.*;
 
 public class GameScreen extends AbstractScreen{
@@ -154,9 +155,10 @@ public class GameScreen extends AbstractScreen{
         if(map==null)   return;
         int totalLevel = Math.round((map.mapLevel*16 + 32) * factor);
         int capacity = 100;
+        Random random = new Random(System.currentTimeMillis());
         for (int i = 0; i < capacity && totalLevel>0; i++) {
             try{
-                totalLevel -= Objects.requireNonNull(generateMonster((String) Monster.monsterSort.first().getClass().getField("alias").get(null))).level;
+                totalLevel -= Objects.requireNonNull(generateMonster((String) Monster.monsterSort.get(random.nextInt(Monster.monsterSort.size)).getClass().getField("alias").get(null))).level;
             } catch (NoSuchFieldException | IllegalAccessException | TimeoutException e) {
                 e.printStackTrace();
             }

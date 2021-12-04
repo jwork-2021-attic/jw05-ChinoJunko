@@ -2,6 +2,7 @@ package com.madmath.core.animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
 
@@ -9,6 +10,19 @@ public class AnimationManager {
     CustomAnimation[] animations;
     PlayMode playMode;
     boolean reverse = false;
+
+    public AnimationManager(TextureRegion[][] regions, float[] frameDurations){
+        CustomAnimation[] customAnimations = new CustomAnimation[regions.length];
+        for (int i = 0; i < regions.length; i++) {
+            customAnimations[i] = new CustomAnimation(frameDurations[i],new Array<>(regions[i]));
+        }
+        animations = new CustomAnimation[customAnimations.length*2];
+        for (int i = 0; i < customAnimations.length; i++) {
+            animations[i] = customAnimations[i];
+            animations[i+customAnimations.length] = customAnimations[i].getReverse();
+        }
+        playMode = PlayMode.Stand;
+    }
 
     public AnimationManager(CustomAnimation...customAnimations){
         animations = new CustomAnimation[customAnimations.length*2];
