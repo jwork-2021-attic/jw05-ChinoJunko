@@ -2,23 +2,32 @@ package com.madmath.core.resource;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.AssetLoader;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class ResourceManager {
+    public static ResourceManager defaultManager;
     public AssetManager assetManager;
 
     public TextureAtlas atlas;
     //public TextureAtlas back;
 
+    public Array<TextureRegion[][]> MonsterLoad;
+
+    //public TextureRegion[][] big_demon_idle_anim16x28;
+    //public TextureRegion[][] big_demon_run_anim16x28;
     public TextureRegion[][] knight_f_idle_anim16x28;
     public TextureRegion[][] knight_f_run_anim16x28;
     public TextureRegion[][] startbutton100x50;
@@ -40,31 +49,31 @@ public class ResourceManager {
 
     public static BitmapFont font;
 
-    public TextureRegion[][] getFloor_spikes_anim16x16() {
-        return floor_spikes_anim16x16;
+    public TextureRegion[][] LoadMonsterAssetsByName(String name, int width, int height){
+        MonsterLoad.add(atlas.findRegion(name).split(width,height));
+        return MonsterLoad.get(MonsterLoad.size-1);
     }
 
-    public TextureRegion[][] getFountain_red16x48() {
-        return fountain_red16x48;
+    public TextureRegion[][] LoadMonsterAssetsByPath(String path, int width, int height){
+        MonsterLoad.add(new TextureRegion(new Texture(path)).split(width,height));
+        return MonsterLoad.get(MonsterLoad.size-1);
     }
 
     @Nullable
     public Object getAssetsByName(String name) {
-        String setter = "get" + String.valueOf(name.charAt(0)).toUpperCase() + name.substring(1);
         try{
-            Method method = getClass().getMethod(setter);
-            return method.invoke(this);
-        } catch (NoSuchMethodException e){
-            System.out.println("Not Such Object");
-            return null;
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            System.out.println("Not Such Method");
+            Field field = this.getClass().getField(name);
+            return field.get(this);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            System.out.println("Not Such Field"+name);
             e.printStackTrace();
             return null;
         }
     }
 
     public ResourceManager(){
+        defaultManager = this;
+
         assetManager = new AssetManager();
 
         assetManager.load("Texture.atlas",TextureAtlas.class);
@@ -73,6 +82,8 @@ public class ResourceManager {
         assetManager.load("skins/dialog.atlas", TextureAtlas.class);
 
         assetManager.finishLoading();
+
+        MonsterLoad = new Array<>();
 
         atlas = assetManager.get("Texture.atlas",TextureAtlas.class);
         //back = assetManager.get("back.atlas",TextureAtlas.class);

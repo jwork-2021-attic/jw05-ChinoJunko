@@ -32,6 +32,10 @@ public class AnimationActor extends Image {
         super.draw(batch,parentAlpha);
     }
 
+    public AnimationManager getAnimationManager() {
+        return animationManager;
+    }
+
     public void setPosition(Vector2 position) {
         currencyPosition.set(position);
         super.setPosition(position.x, position.y);

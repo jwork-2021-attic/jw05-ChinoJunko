@@ -9,6 +9,8 @@ import com.madmath.core.util.Utils;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.screen.GameScreen;
 
+import java.lang.reflect.Array;
+
 public abstract class Entity extends AnimationActor {
 
     protected int id;
@@ -17,6 +19,7 @@ public abstract class Entity extends AnimationActor {
     protected boolean pauseAnim = false;
 
     public Rectangle box;
+    public Vector2 boxOffset;
 
     public GameScreen gameScreen;
 
@@ -32,25 +35,29 @@ public abstract class Entity extends AnimationActor {
     //protected float lostSpeed;
     //protected Vector2 acceleration=new Vector2(0,0);
 
+
     //RPG
     protected int maxHp;
     protected int hp;
 
-    public Entity(int id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position){
+    protected Entity(AnimationManager animationManager){
+        this(-1,animationManager);
+    }
+
+    protected Entity(Integer id, AnimationManager animationManager){
+        this(id,animationManager,GameScreen.getCurrencyGameScreen());
+    }
+
+    public Entity(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position){
         super(animationManager);
         this.id = id;
         this.gameScreen = gameScreen;
-        box = new Rectangle(0,0,14,7);
-        //lastMove = 0;
+        initSelf();
         setPosition(position);
     }
 
-    public Entity(int id, AnimationManager animationManager, GameScreen gameScreen){
-        super(animationManager);
-        this.id = id;
-        this.gameScreen = gameScreen;
-        box = new Rectangle(0,0,14,7);
-        //lastMove = 0;
+    public Entity(Integer id, AnimationManager animationManager, GameScreen gameScreen){
+        this(id,animationManager,gameScreen,new Vector2(0,0));
     }
 
     @Override
@@ -103,10 +110,16 @@ public abstract class Entity extends AnimationActor {
         return false;
     }
 
+    public void initSelf() {
+        box = new Rectangle(0,0,14,7);
+        boxOffset = new Vector2(0,0);
+        speed = 16;
+    }
+
     @Override
     public void setPosition(Vector2 position) {
         box.setPosition(position);
-        super.setPosition(position);
+        super.setPosition(position.sub(boxOffset));
     }
 
     public State getState(){
@@ -115,12 +128,22 @@ public abstract class Entity extends AnimationActor {
     }
 
     public boolean isCanMove(Vector2 next){
+        next.add(boxOffset);
         for (float i = next.x; i <= next.x+box.getWidth(); i += box.getWidth()) {
             for (float j = next.y; j <= next.y+box.getHeight(); j += box.getHeight()) {
                 if(i< gameScreen.getMap().startPosition.x||i>= gameScreen.getMap().startPosition.x+ gameScreen.getMap().playAreaSize.x||j< gameScreen.getMap().startPosition.y||j>= gameScreen.getMap().startPosition.y+ gameScreen.getMap().playAreaSize.y)  return false;
                 TiledMapTileLayer layer =(TiledMapTileLayer) gameScreen.getMap().getTiledMap().getLayers().get(0);
                 TiledMapTile tile = layer.getCell((int)i/16,(int)j/16).getTile();
                 if(!Utils.accessibleG.contains(tile.getId()))   return false;
+            }
+        }
+        Rectangle nextBox = new Rectangle(box).setPosition(next);
+        for (Entity entity: gameScreen.livingBox
+        ) {
+            if(entity != this && entity.box.overlaps(nextBox))  {
+                System.out.println(entity+"  Box:"+box+"  Position:"+entity.getPosition());
+                System.out.println(this+"  Box:"+box+"  Position:"+getPosition());
+                return false;
             }
         }
         return true;

@@ -17,8 +17,9 @@ public class PlayerThread implements Runnable {
         gameScreen = GameScreen.getCurrencyGameScreen();
         player = new Player(1000,Player.initPlayerAnim(gameScreen.getGame().manager),gameScreen,gameScreen.getMap().getPlayerSpawnPoint());
         gameScreen.getStage().addActor(player);
-        player.setZIndex(1);
+        //player.setZIndex((int) player.getY());
         gameScreen.player = player;
+        gameScreen.livingBox.add(player);
 
         gameScreen.addInputProcessor(new PlayerInputProcessor(player));
 

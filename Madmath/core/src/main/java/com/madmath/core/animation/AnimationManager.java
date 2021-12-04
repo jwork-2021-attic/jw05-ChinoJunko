@@ -3,6 +3,8 @@ package com.madmath.core.animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import java.util.Arrays;
+
 public class AnimationManager {
     CustomAnimation[] animations;
     PlayMode playMode;
@@ -31,6 +33,12 @@ public class AnimationManager {
 
     public void setReverse(boolean reverse) {
         this.reverse = reverse;
+    }
+
+    public AnimationManager clone(){
+        CustomAnimation[] newAnimations = new CustomAnimation[animations.length/2];
+        System.arraycopy(animations, 0, newAnimations, 0, newAnimations.length);
+        return new AnimationManager(newAnimations);
     }
 
     public enum PlayMode{

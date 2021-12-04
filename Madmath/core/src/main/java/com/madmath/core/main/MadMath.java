@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.madmath.core.entity.Monster;
 import com.madmath.core.util.Utils;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
@@ -43,6 +44,8 @@ public class MadMath extends Game {
 
 		mainMenuScreen = new MainMenuScreen(this, manager);
 		gameScreen = new GameScreen(this, manager);
+
+		Monster.loadMonsters();
 
 		setScreen(mainMenuScreen);
 	}

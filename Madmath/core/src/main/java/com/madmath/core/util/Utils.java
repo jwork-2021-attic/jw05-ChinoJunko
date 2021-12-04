@@ -1,7 +1,10 @@
 package com.madmath.core.util;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.madmath.core.entity.BigDemon;
+import com.madmath.core.entity.Monster;
 import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
 import com.madmath.core.resource.ResourceManager;
@@ -10,6 +13,10 @@ import java.util.*;
 import java.util.concurrent.Callable;
 
 public class Utils {
+
+    static public String[] AllDefaultMonsterSort = new String[]{
+            "BigDemon",
+    };
 
     static public Vector2[] EnterSortPro = new Vector2[]{
             new Vector2(StaticTile.TileSort.floor_ladder.ordinal(),50),
@@ -62,6 +69,10 @@ public class Utils {
             StaticTile.TileSort.floor_stair.name(),
             AnimTile.TileSort.floor_spikes_anim.name(),
     };
+
+    static public LinkedList<String> ModLoadMonsterPath = new LinkedList<>();
+
+    static public LinkedList<Texture> ModLoadMonsterTexture = new LinkedList<>();
 
     static public Set<Integer> accessibleG = new HashSet<>(100);
 

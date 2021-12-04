@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
+import com.madmath.core.entity.Monster;
 import com.madmath.core.util.Utils;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.resource.ResourceManager;
@@ -16,6 +17,7 @@ import com.madmath.core.screen.GameScreen;
 
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
 
 public class GameMap {
     GameScreen gameScreen;
@@ -87,7 +89,7 @@ public class GameMap {
 
         for (int i = 0; i < backgroundNum; i++) {
             background[i] = new Image(manager.gamebackground700x128);
-            float moveTime = 40f;
+            float moveTime = 200f;
             float moveDistance = 690f;
             background[i].addAction(Actions.sequence(Actions.moveTo(moveDistance *i,0),Actions.moveTo(-moveDistance,0,(i+1)* moveTime / backgroundNum),Actions.forever(Actions.sequence(Actions.moveTo((backgroundNum -1)* moveDistance,0),Actions.moveTo(-moveDistance,0, moveTime)))));
             getGameScreen().getStage().addActor(background[i]);
@@ -154,6 +156,15 @@ public class GameMap {
             }
         }
         tiledMap.getLayers().add(tiledMapTileLayer);
+    }
+
+    public Vector2 getAvailablePosition(Monster monster) throws TimeoutException {
+        Random random = new Random(monster.hashCode() + System.currentTimeMillis());
+        for (int i = 0; i < 5000; i++) {
+            Vector2 position = new Vector2(random.nextInt((int) playAreaSize.x)+startPosition.x,random.nextInt((int) playAreaSize.y)+startPosition.y);
+            if(monster.isCanMove(position)) return position;
+        }
+        throw new TimeoutException("search too long!");
     }
 
     public void initEntities(){

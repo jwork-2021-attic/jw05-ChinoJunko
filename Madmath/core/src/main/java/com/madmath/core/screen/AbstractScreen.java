@@ -51,7 +51,7 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
         game.fps.setPosition(MadMath.V_WIDTH-55, MadMath.V_HEIGHT-7);
         stage.addActor(game.fps);
-        game.fps.setZIndex(10);
+        game.fps.setZIndex(1000);
         Gdx.input.setInputProcessor(stage);
     }
 

@@ -9,17 +9,25 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Sort;
+import com.madmath.core.entity.Entity;
+import com.madmath.core.entity.Monster;
+import com.madmath.core.entity.MonsterFactory;
 import com.madmath.core.entity.Player;
 import com.madmath.core.main.MadMath;
 import com.madmath.core.map.GameMap;
 import com.madmath.core.resource.ResourceManager;
+import com.madmath.core.thread.MonsterThread;
 import com.madmath.core.thread.PlayerThread;
 import com.madmath.core.ui.HUD;
+import com.madmath.core.util.Utils;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.rmi.NoSuchObjectException;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.concurrent.*;
 
 public class GameScreen extends AbstractScreen{
 
@@ -34,12 +42,19 @@ public class GameScreen extends AbstractScreen{
     ExecutorService executorService;
 
     public Semaphore playerSemaphore;
+    public Semaphore monsterSemaphore;
 
     public Player player;
+    public MonsterThread monsterManager;
+
+    private MonsterFactory monsterFactory;
 
     Label currencyMapMessage;
 
     State state;
+
+    //collision detection
+    public Array<Entity> livingBox;
 
     float stateTime;
     float currencyDelta;
@@ -64,15 +79,22 @@ public class GameScreen extends AbstractScreen{
         map = new GameMap(this,"PRIMARY",1);
         initMapTitle();
 
+        livingBox = new Array<>();
+
         hud = new HUD(this, manager);
 
         multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(stage);
 
+        monsterFactory = new MonsterFactory(manager,this);
+        monsterManager = new MonsterThread();
+
         playerSemaphore = new Semaphore(0);
+        monsterSemaphore = new Semaphore(0);
 
         executorService = Executors.newCachedThreadPool();
         executorService.execute(new PlayerThread());
+        executorService.execute(monsterManager);
         executorService.shutdown();
     }
 
@@ -82,23 +104,19 @@ public class GameScreen extends AbstractScreen{
         hud.getStage().addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
         currencyMapMessage.setPosition(stage.getViewport().getWorldWidth()/2-50, MadMath.V_HEIGHT-20);
         stage.addActor(currencyMapMessage);
-        currencyMapMessage.setZIndex(20);
+        currencyMapMessage.setZIndex(1000);
         state = State.RUNING;
         CurrencyGameScreen = this;
         Gdx.input.setInputProcessor(multiplexer);
         stateTime = 0;
+        createMonsters(1);
     }
 
     public void initMapTitle(){
         currencyMapMessage = new Label("LEVEL "+map.mapLevel+"  "+map.name, new Label.LabelStyle(manager.font, Color.YELLOW ));
         currencyMapMessage.setFontScale(0.5f);
         currencyMapMessage.setVisible(true);
-        currencyMapMessage.addAction(Actions.sequence(Actions.delay(6f),Actions.run(new Runnable() {
-            @Override
-            public void run() {
-                currencyMapMessage.setText("   GOOD LUCK!   ");
-            }
-        })));
+        currencyMapMessage.addAction(Actions.sequence(Actions.delay(5f),Actions.run(() -> currencyMapMessage.setText("   GOOD LUCK!   "))));
     }
 
     public void updateCamera(){
@@ -126,9 +144,34 @@ public class GameScreen extends AbstractScreen{
         playerSemaphore.release();
         update(v);
         map.render(v);
+        Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() - o1.getY()));
         stage.act(v);
         stage.draw();
         hud.render(v);
+    }
+
+    public void createMonsters(float factor) {
+        if(map==null)   return;
+        int totalLevel = Math.round((map.mapLevel*16 + 32) * factor);
+        int capacity = 100;
+        for (int i = 0; i < capacity && totalLevel>0; i++) {
+            try{
+                totalLevel -= Objects.requireNonNull(generateMonster((String) Monster.monsterSort.first().getClass().getField("alias").get(null))).level;
+            } catch (NoSuchFieldException | IllegalAccessException | TimeoutException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Nullable
+    public Monster generateMonster(String name) throws TimeoutException {//alias
+        Monster monster = monsterFactory.generateMonsterByName(name);
+        monster.setPosition(map.getAvailablePosition(monster));
+        monsterManager.addMonster(monster);
+        stage.addActor(monster);
+        //monster.setZIndex((int) monster.getY());
+        livingBox.add(monster);
+        return monster;
     }
 
     public GameMap getMap() {
