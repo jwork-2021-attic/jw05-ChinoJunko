@@ -5,9 +5,12 @@
 */
 package com.madmath.core.map;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
+import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapRenderer;
+import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
@@ -41,7 +44,6 @@ public class GameMap {
 
     Image[] background;
 
-    Array<Entity> entities;
     //Array
 
     public GameMap(GameScreen gameScreen,String name , int mapLevel, float difficultyFactor){
@@ -117,6 +119,7 @@ public class GameMap {
 
     public void initButtomLayer(){
         TiledMapTileLayer tiledMapTileLayer = new TiledMapTileLayer(120,25,16,16);
+        tiledMapTileLayer.setName("Buttom");
         Callable<Float> floorCallable = Utils.ProbabilityGenerator(Utils.FloorSortPro);
         Callable<Float> wallCallable = Utils.ProbabilityGenerator(Utils.WallSortPro);
         Callable<Float> bannerCallable = Utils.ProbabilityGenerator(Utils.WallWithBannerSortPro);
@@ -195,8 +198,15 @@ public class GameMap {
         throw new TimeoutException("search too long!");
     }
 
+    public void initObstacle(){
+        Random random = new Random();
+        for (int i = random.nextInt(8); i < playAreaSize.x; i+=random.nextInt(8)+1) {
+            tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal());
+            //gameScreen.livingO.add(gameScreen.getObstacleFactory().generateObstacleByName(""));
+        }
+    }
+
     public void initEntities(){
-        entities = new Array<>();
         getGameScreen().createMonsters(difficultyFactor);
     }
 
@@ -212,8 +222,17 @@ public class GameMap {
         return tiledMap;
     }
 
+    private void setDefaultTile(int x,int y){
+        ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x/16,y/16).setTile(tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal()));
+    }
+
     public void render(float v){
         renderer.setView(gameScreen.getCamera());
         renderer.render();
+    }
+
+    public void dispose(){
+        renderer.dispose();
+        tiledMap.dispose();
     }
 }

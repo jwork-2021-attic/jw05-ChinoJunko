@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.madmath.core.entity.Creature;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.entity.Player;
 
@@ -119,7 +120,7 @@ public class PlayerInputProcessor extends InputAdapter {
     public boolean mouseMoved(int i, int i1) {
         Vector3 point = player.gameScreen.getCamera().unproject(new Vector3(i,i1,0));
         player.weaponAngle = new Vector2(point.x-player.getX(),point.y-player.getY()).angle();
-        if(player.getState() == Entity.State.Stand){
+        if(player.getState() == Creature.State.Stand){
             player.setAnimDirection(point.x < player.getX());
         }
         return false;

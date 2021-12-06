@@ -26,7 +26,7 @@ import com.madmath.core.util.myPair;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Player extends Entity{
+public class Player extends Creature{
 
     public Array<Equipment> weapon;
     public Equipment activeWeapon=null;
@@ -223,6 +223,7 @@ public class Player extends Entity{
     @Override
     public void initSelf() {
         super.initSelf();
+        System.out.println(1);
         score = 0;
         weapon = new Array<>(3);
         speed = 64f;

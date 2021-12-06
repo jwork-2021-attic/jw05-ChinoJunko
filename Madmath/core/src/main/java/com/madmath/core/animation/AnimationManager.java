@@ -8,6 +8,7 @@ package com.madmath.core.animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.madmath.core.actor.AnimationActor;
 
 import java.util.Arrays;
 

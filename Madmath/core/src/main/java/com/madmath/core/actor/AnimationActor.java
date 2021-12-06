@@ -5,7 +5,9 @@
 */
 package com.madmath.core.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.madmath.core.animation.AnimationManager;
@@ -17,11 +19,22 @@ public class AnimationActor extends Image {
     private final Vector2 currencyPosition;
     protected boolean anim_dirt = false;//true - left | false - right
 
+    public Rectangle box;
+    protected Vector2 boxOffset;
+
     public AnimationActor(AnimationManager animationManager){
         super(animationManager.getKeyFrame(0));
+        initSelfBox();
         stateTime = 0;
         this.animationManager = animationManager;
         currencyPosition = new Vector2();
+
+    }
+
+    public void initSelfBox() {
+        System.out.println(4);
+        box = new Rectangle(0,0,12,7);
+        boxOffset = new Vector2(2,0);
     }
 
     @Override
@@ -43,8 +56,10 @@ public class AnimationActor extends Image {
 
     public void setPosition(Vector2 position) {
         currencyPosition.set(position);
+        box.setPosition(position);
         super.setPosition(position.x, position.y);
     }
+
 
     public Vector2 getPosition() {
         return currencyPosition;

@@ -85,6 +85,7 @@ public abstract class AbstractScreen implements Screen {
     public void show() {
         state = State.RUNING;
         music.play();
+        music.setLooping(true);
         game.fps.setPosition(MadMath.V_WIDTH-55, MadMath.V_HEIGHT-7);
         stage.addActor(game.fps);
         game.fps.setZIndex(1000);

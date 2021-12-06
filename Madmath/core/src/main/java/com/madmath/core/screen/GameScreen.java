@@ -23,6 +23,7 @@ import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.inventory.equipment.EquipmentFactory;
 import com.madmath.core.main.MadMath;
 import com.madmath.core.map.GameMap;
+import com.madmath.core.obstacle.ObstacleFactory;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.thread.MonsterThread;
 import com.madmath.core.thread.PlayerThread;
@@ -58,6 +59,7 @@ public class GameScreen extends AbstractScreen{
 
     private MonsterFactory monsterFactory;
     private EquipmentFactory equipmentFactory;
+    private ObstacleFactory obstacleFactory;
 
     Label currencyMapMessage;
 
@@ -83,6 +85,8 @@ public class GameScreen extends AbstractScreen{
         monsterManager = new MonsterThread();
 
         equipmentFactory = new EquipmentFactory(manager, this);
+
+        obstacleFactory = new ObstacleFactory(manager, this);
 
         multiplexer = new InputMultiplexer();
         hud = new HUD(this, manager);
@@ -207,6 +211,10 @@ public class GameScreen extends AbstractScreen{
 
     public EquipmentFactory getEquipmentFactory() {
         return equipmentFactory;
+    }
+
+    public ObstacleFactory getObstacleFactory(){
+        return obstacleFactory;
     }
 
     public void createEquipment(){

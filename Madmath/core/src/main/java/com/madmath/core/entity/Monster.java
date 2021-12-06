@@ -30,7 +30,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-public abstract class Monster extends Entity{
+public abstract class Monster extends Creature{
 
     static public String alias;
 

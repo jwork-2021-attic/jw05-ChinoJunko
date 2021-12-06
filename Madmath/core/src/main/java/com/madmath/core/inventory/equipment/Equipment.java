@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.actor.AnimationActor;
 import com.madmath.core.animation.AnimationManager;
+import com.madmath.core.entity.Creature;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.entity.Player;
 import com.madmath.core.expression.Expression;
@@ -142,23 +143,24 @@ public abstract class Equipment extends Item {
             try {
                 for (int i = 0; i < (int) owner.gameScreen.livingEntity.getClass().getField("size").get(owner.gameScreen.livingEntity); i++) {
                     try {
-                        if (Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)) != owner && !attackedTargets.contains(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)), true)) {
+                        if (owner.gameScreen.livingEntity.get(i)instanceof Creature && Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)) != owner && !attackedTargets.contains(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)), true)) {
                             attackCircle.radius += 50;
                             boolean temp = attackCircle.contains(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getCenter(vector2s[0]));
                             attackCircle.radius -= 50;
+                            Creature creature =(Creature) owner.gameScreen.livingEntity.get(i);
                             if (!temp) continue;
                             if (Math.abs(getRotation() % 360 - vector2s[0].sub(owner.box.getCenter(vector2s[1])).angle()) > swingRange)
                                 continue;
                             for (int j = 0; j < 4; j++) {
-                                Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getPosition(vector2s[j]);
+                                Objects.requireNonNull(creature).box.getPosition(vector2s[j]);
                             }
-                            vector2s[1].add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getWidth(), 0);
-                            vector2s[2].add(0, Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getHeight());
-                            vector2s[3].add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getWidth(), Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).box.getHeight());
+                            vector2s[1].add(Objects.requireNonNull(creature).box.getWidth(), 0);
+                            vector2s[2].add(0, Objects.requireNonNull(creature).box.getHeight());
+                            vector2s[3].add(Objects.requireNonNull(creature).box.getWidth(), Objects.requireNonNull(creature).box.getHeight());
                             for (int j = 0; j < 4; j++) {
                                 if (attackCircle.contains(vector2s[j])) {
-                                    attackedTargets.add(Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)));
-                                    Objects.requireNonNull(owner.gameScreen.livingEntity.get(i)).getHurt(this);
+                                    attackedTargets.add(Objects.requireNonNull(creature));
+                                    Objects.requireNonNull(creature).getHurt(this);
                                     //System.out.println("Attack!");
                                     continue;
                                 }
@@ -182,10 +184,6 @@ public abstract class Equipment extends Item {
                 Actions.addAction(Actions.repeat(totalAttackNum,Actions.sequence(Actions.delay(perAttackMakeInternal),Actions.run(attackClear)))),
                 Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack)))));
         return true;
-    }
-
-    public TextureRegion getTextureRegionForClone(){
-        return textureRegionForClone;
     }
 
     public int getKnockbackFactor() {
@@ -215,6 +213,10 @@ public abstract class Equipment extends Item {
             setOrigin(anim_dirt?getWidth():0,0);
             super.setRotation(anim_dirt? degrees-180:degrees);
         }
+    }
+
+    public TextureRegion getTextureRegionForClone(){
+        return textureRegionForClone;
     }
 
     public Equipment copy(){

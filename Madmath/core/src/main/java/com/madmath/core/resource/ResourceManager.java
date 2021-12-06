@@ -36,6 +36,7 @@ public class ResourceManager {
 
     public Array<TextureRegion[][]> MonsterLoad;
     public Array<TextureRegion> EquipmentLoad;
+    public Array<TextureRegion[][]> ObstacleLoad;
     public Array<Sound> weaponSound;
     public Sound defaultWeaponSound;
 
@@ -91,6 +92,12 @@ public class ResourceManager {
         return EquipmentLoad.get(EquipmentLoad.size-1);
     }
 
+    public TextureRegion[][] LoadObstacleAssetsByName(String name,int width, int height){
+        ObstacleLoad.add(atlas.findRegion(name).split(width,height));
+        System.out.println("Obstacle Load : "+name);
+        return ObstacleLoad.get(ObstacleLoad.size-1);
+    }
+
     public Sound getSoundByName(String name){
         try {
             assetManager.load("sfx/"+name+"_sound.wav",Sound.class);
@@ -138,6 +145,7 @@ public class ResourceManager {
         weaponSound = new Array<>();
         MonsterLoad = new Array<>();
         EquipmentLoad = new Array<>();
+        ObstacleLoad = new Array<>();
 
         defaultWeaponSound = assetManager.get("sfx/default_melee_sound.wav",Sound.class);
         titleMusic = assetManager.get("music/Juhani Junkala Title Screen.wav",Music.class);

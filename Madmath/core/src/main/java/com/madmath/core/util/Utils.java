@@ -46,6 +46,10 @@ public class Utils {
             "PrimeHammer",
     };
 
+    static public String[] AllDefaultObstacleSort = new String[]{
+            "RedFountain",
+    };
+
     static public Vector2[] EnterSortPro = new Vector2[]{
             new Vector2(StaticTile.TileSort.floor_ladder.ordinal(),50),
             new Vector2(StaticTile.TileSort.floor_stair.ordinal(),50),
@@ -136,4 +140,5 @@ public class Utils {
             return vet[vet.length-1].y;
         };
     }
+
 }
