@@ -43,7 +43,7 @@ public class PlayerInputProcessor extends InputAdapter {
                 player.switchWeapon(+1);
                 return true;
             case Input.Keys.E:
-                player.switchWeapon(-1);
+                player.pickUp();
                 return true;
             case Input.Keys.SHIFT_LEFT:
                 player.setSprint(true);

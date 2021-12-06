@@ -7,6 +7,7 @@ package com.madmath.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -28,6 +29,8 @@ public abstract class AbstractScreen implements Screen {
     protected Stage stage;
 
     protected State state;
+
+    protected Music music;
 
     public enum State{
         READY,
@@ -52,6 +55,10 @@ public abstract class AbstractScreen implements Screen {
         viewport = new StretchViewport(MadMath.V_WIDTH, MadMath.V_HEIGHT,camera);
 
         stage = new Stage(viewport, game.batch);
+
+        music = manager.creditMusic;
+        music.setLooping(true);
+        music.setVolume(15);
     }
 
     @Override
@@ -65,6 +72,7 @@ public abstract class AbstractScreen implements Screen {
 
     public void switchScreen(Screen screen){
         state = State.PAUSE;
+        music.stop();
         game.setScreen(screen);
     }
 
@@ -76,6 +84,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void show() {
         state = State.RUNING;
+        music.play();
         game.fps.setPosition(MadMath.V_WIDTH-55, MadMath.V_HEIGHT-7);
         stage.addActor(game.fps);
         game.fps.setZIndex(1000);
@@ -95,6 +104,10 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resume() {
 
+    }
+
+    public ResourceManager getManager() {
+        return manager;
     }
 
     public Viewport getViewport() {

@@ -57,6 +57,7 @@ public abstract class Entity extends AnimationActor {
     protected int maxHp;
     protected int hp;
 
+
     protected Entity(AnimationManager animationManager){
         this(-1,animationManager);
     }
@@ -88,8 +89,8 @@ public abstract class Entity extends AnimationActor {
         currentDirection.x = Math.min(Math.max(currentDirection.x + 3*acceleration.x*delta,-1),1);
         currentDirection.y = Math.min(Math.max(currentDirection.y + 3*acceleration.y*delta,-1),1);
          */
+        setAnimDirection(currentDirection.x < 0 || (currentDirection.x == 0 && anim_dirt));
         if(getState()==State.Move){
-            anim_dirt = currentDirection.x < 0 || (currentDirection.x == 0 && anim_dirt);
             setPlayMode(AnimationManager.PlayMode.Moving);
         }else {
             setPlayMode(AnimationManager.PlayMode.Stand);
@@ -105,7 +106,7 @@ public abstract class Entity extends AnimationActor {
     }
 
     public boolean move(float v){
-        if(getState()!=State.Move) return false;
+        if(getState()==State.Stand) return false;
         float moveDistance = speed * v;
         Vector2 next1 = new Vector2(getPosition());
         Vector2 next2 = new Vector2(getPosition());
@@ -146,7 +147,7 @@ public abstract class Entity extends AnimationActor {
     }
 
     public State getState(){
-        if(currentDirection.len2()>0.1) return State.Move;
+        if(currentDirection.len2()>0.1) return canMove?State.Move:State.Hit;
         return State.Stand;
     }
 
@@ -159,6 +160,8 @@ public abstract class Entity extends AnimationActor {
     }
 
     public int getHurt(int damage, Vector2 sufferFrom, float knockbackFactor){
+        canMove = false;
+        addAction(Actions.sequence(Actions.delay(0.4f*(1-toughness)),Actions.run(()->{canMove = true;})));
         knockbackFactor *= (1-toughness);
         addAction(Actions.sequence(Actions.color(Color.RED),Actions.color(color,0.4f)));
         sufferFrom.sub(getPosition());
@@ -205,7 +208,7 @@ public abstract class Entity extends AnimationActor {
     }
 
     public void setAnimDirection(boolean direction){
-        anim_dirt = direction;
+        anim_dirt = (getState() == State.Hit) != direction;
     }
 
     public void addAcceleration(Vector2 Direction) {
@@ -237,5 +240,6 @@ public abstract class Entity extends AnimationActor {
     public enum State{
         Stand,
         Move,
+        Hit,
     }
 }

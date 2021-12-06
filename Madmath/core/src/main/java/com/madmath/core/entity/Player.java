@@ -5,22 +5,26 @@
 */
 package com.madmath.core.entity;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
+import com.madmath.core.inventory.Item;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.map.TrapTile;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
-import com.madmath.core.screen.ScoreScreen;
 import com.madmath.core.util.Utils;
 import com.madmath.core.util.myPair;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Player extends Entity{
 
@@ -35,6 +39,10 @@ public class Player extends Entity{
     public float weaponAngle;
 
     public int score;
+
+    private Image pickArrow;
+
+    private Item pickItem;
 
     protected boolean sprint = false;
 
@@ -61,6 +69,10 @@ public class Player extends Entity{
         }
         sufferFromTrap();
         if(movable) currentDirection.set(subjectiveDirection);
+        pickArrow.setVisible(pickItem!=null);
+        if(pickItem!=null){
+            pickArrow.setPosition(pickItem.getX()+pickItem.getHeight()*0.135f,pickItem.getY()+pickItem.getHeight()*0.7f);
+        }
     }
 
     @Override
@@ -91,20 +103,21 @@ public class Player extends Entity{
                     movable = true;
                 })));
         hp -= damage;
-        try {
-            return damage;
-        }finally {
-            if(hp<=0)Die();
-        }
+        return damage;
     }
 
 
     public void addWeapon(Equipment equipment){
-        if(weapon.size>=3) return;
-        weapon.add(equipment);
-        if(activeWeapon != null)    activeWeapon.addAction(Actions.hide());
+        if(weapon.size<3){
+            weapon.add(equipment);
+            if(activeWeapon != null)    activeWeapon.setVisible(false);
+        }else {
+            weapon.removeValue(activeWeapon,true);
+            weapon.add(equipment);
+            activeWeapon.beThrown();
+        }
         activeWeapon = equipment;
-        equipment.equippedBy(this);
+        activeWeapon.equippedBy(this);
         gameScreen.livingItem.removeValue(equipment,true);
     }
 
@@ -120,16 +133,16 @@ public class Player extends Entity{
 
     public void switchWeapon(int offset){
         if(weapon.size<2 || activeWeapon.isSwinging())return;
-        activeWeapon.addAction(Actions.hide());
+        activeWeapon.setVisible(false);
         activeWeapon = weapon.get(((weapon.indexOf(activeWeapon,true)+offset)+weapon.size)%weapon.size);
-        activeWeapon.addAction(Actions.show());
+        activeWeapon.setVisible(true);
     }
 
     public void setWeapon(int index){
         if(weapon.size>index){
-            activeWeapon.addAction(Actions.hide());
+            activeWeapon.setVisible(false);
             activeWeapon = weapon.get(index);
-            activeWeapon.addAction(Actions.show());
+            activeWeapon.setVisible(true);
         }
     }
 
@@ -151,11 +164,18 @@ public class Player extends Entity{
     public boolean move(float v) {
         boolean temp = super.move(sprint?2*v:v);
         Vector2 cPoisition = new Vector2();
-        gameScreen.livingItem.forEach(item -> {
-            if(item.canPickUp(box.getCenter(cPoisition))&& item instanceof Equipment){
-                addWeapon((Equipment) item);
+        Item item = null;
+        float distance = 0;
+        for (int i = 0; i<gameScreen.livingItem.size;i++){
+            if(gameScreen.livingItem.get(i).canPickUp(box.getCenter(cPoisition))){
+                float itDistance = Vector2.dst2(gameScreen.livingItem.get(i).getItemPosition().x,gameScreen.livingItem.get(i).getItemPosition().y,getX(),getY());
+                if(item == null || itDistance < distance){
+                    distance = itDistance;
+                        item = gameScreen.livingItem.get(i);
+                }
             }
-        });
+        }
+        pickItem = item;
         return temp;
     }
 
@@ -164,6 +184,14 @@ public class Player extends Entity{
         super.Die();
         hp = maxHp;
         gameScreen.switchScreen(gameScreen.getGame().scoreScreen);
+    }
+
+    public void pickUp(){
+        if(pickItem == null )return;
+        if(pickItem instanceof Equipment){
+            addWeapon((Equipment) pickItem);
+        }
+        pickItem = null;
     }
 
     public void addSubjectiveDirection(Vector2 Direction){
@@ -202,7 +230,14 @@ public class Player extends Entity{
         hp = 6;
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
+        pickArrow = new Image(new TextureRegionDrawable(gameScreen.getManager().arrow21x21));
         //lostSpeed = 1.8f;
+    }
+
+    @Override
+    protected void setStage(Stage stage) {
+        stage.addActor(pickArrow);
+        super.setStage(stage);
     }
 
     public void freshSelf(){

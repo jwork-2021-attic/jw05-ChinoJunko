@@ -8,6 +8,8 @@ package com.madmath.core.resource;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AssetLoader;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +36,12 @@ public class ResourceManager {
 
     public Array<TextureRegion[][]> MonsterLoad;
     public Array<TextureRegion> EquipmentLoad;
+    public Array<Sound> weaponSound;
+    public Sound defaultWeaponSound;
+
+    public Music[] levelMusic;
+    public Music titleMusic;
+    public Music creditMusic;
 
     //public TextureRegion[][] big_demon_idle_anim16x28;
     //public TextureRegion[][] big_demon_run_anim16x28;
@@ -59,6 +68,7 @@ public class ResourceManager {
     public TextureRegion ui_heart_half16x16;
     public TextureRegion ui_heart_full16x16;
     public TextureRegion contain_box_144x144;
+    public TextureRegion arrow21x21;
 
     public Skin skin;
     public Skin dialogSkin;
@@ -77,7 +87,22 @@ public class ResourceManager {
 
     public TextureRegion LoadEquipmentAssetsByName(String name){
         EquipmentLoad.add(atlas.findRegion(name));
+        System.out.println("Equipment Load : "+name);
         return EquipmentLoad.get(EquipmentLoad.size-1);
+    }
+
+    public Sound getSoundByName(String name){
+        try {
+            assetManager.load("sfx/"+name+"_sound.wav",Sound.class);
+            assetManager.finishLoading();
+            weaponSound.add(assetManager.get("sfx/"+name+"_sound.wav",Sound.class));
+        }catch (GdxRuntimeException e){
+            //System.out.println("sfx/weapon_knight_sword_sound.wav".equals("sfx/"+name+"_sound.wav"));
+            //System.out.println("sfx/"+name+"_sound.wav"+" can not be loaded!");
+            return defaultWeaponSound;
+        }
+        System.out.println("Sound Load : sfx/"+name+"_sound.wav");
+        return weaponSound.get(weaponSound.size-1);
     }
 
     @Nullable
@@ -101,11 +126,26 @@ public class ResourceManager {
         //assetManager.load("back.atlas",TextureAtlas.class);
         assetManager.load("skins/ui.atlas", TextureAtlas.class);
         assetManager.load("skins/dialog.atlas", TextureAtlas.class);
+        assetManager.load("sfx/default_melee_sound.wav",Sound.class);
+        assetManager.load("music/Juhani Junkala Title Screen.wav",Music.class);
+        assetManager.load("music/Juhani Junkala Ending.wav",Music.class);
+        assetManager.load("music/Juhani Junkala Level 1.wav",Music.class);
+        assetManager.load("music/Juhani Junkala Level 2.wav",Music.class);
+        assetManager.load("music/Juhani Junkala Level 3.wav",Music.class);
 
         assetManager.finishLoading();
 
+        weaponSound = new Array<>();
         MonsterLoad = new Array<>();
         EquipmentLoad = new Array<>();
+
+        defaultWeaponSound = assetManager.get("sfx/default_melee_sound.wav",Sound.class);
+        titleMusic = assetManager.get("music/Juhani Junkala Title Screen.wav",Music.class);
+        creditMusic = assetManager.get("music/Juhani Junkala Ending.wav",Music.class);
+        levelMusic = new Music[3];
+        for (int i = 0; i < 3; i++) {
+            levelMusic[i] = assetManager.get("music/Juhani Junkala Level "+(i+1)+".wav",Music.class);
+        }
 
         atlas = assetManager.get("Texture.atlas",TextureAtlas.class);
         //back = assetManager.get("back.atlas",TextureAtlas.class);
@@ -119,6 +159,7 @@ public class ResourceManager {
         ui_heart_half16x16 = atlas.findRegion("ui_heart_half");
         ui_heart_full16x16 = atlas.findRegion("ui_heart_full");
         contain_box_144x144 = atlas.findRegion("contain_box");
+        arrow21x21 = atlas.findRegion("arrow");
 
         scorebackground = new TextureRegion(new Texture(Gdx.files.internal("scorebackground.png")));
         /*

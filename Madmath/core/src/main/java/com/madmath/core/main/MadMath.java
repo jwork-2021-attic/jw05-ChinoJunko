@@ -21,7 +21,7 @@ import com.madmath.core.screen.MainMenuScreen;
 
 public class MadMath extends Game {
 
-	public static final String VERSION = "0.7";
+	public static final String VERSION = "0.9";
 	public static final String TITLE = "MadMath v"+ VERSION;
 
 	//Screen dimensions

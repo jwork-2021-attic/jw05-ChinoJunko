@@ -5,6 +5,8 @@
 */
 package com.madmath.core.inventory.equipment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,7 +28,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
-public abstract class Equipment extends AnimationActor implements Item {
+public abstract class Equipment extends Item {
 
     public int id;
 
@@ -35,6 +37,8 @@ public abstract class Equipment extends AnimationActor implements Item {
     protected float currencySwingRange = 0;
 
     public Color color;
+
+    private Sound sound;
 
     public Player owner = null;
 
@@ -52,11 +56,15 @@ public abstract class Equipment extends AnimationActor implements Item {
 
     TextureRegion textureRegionForClone;
 
+    public Equipment(Integer id, Equipment equipment){
+        this(id, equipment.getTextureRegionForClone(),equipment.sound);
+    }
 
-    public Equipment(Integer id, TextureRegion region){
+    public Equipment(Integer id, TextureRegion region, Sound sound){
         super(new AnimationManager(region,1f));
         initSelf();
         this.id = id;
+        this.sound = sound;
         textureRegionForClone = region;
         setRotation(-45);
         addAction(Actions.forever(Actions.sequence(Actions.moveBy(0,8,1.8f),Actions.moveBy(0,-8,1.8f))));
@@ -79,9 +87,11 @@ public abstract class Equipment extends AnimationActor implements Item {
     public void setPosition(float x, float y) {
         if(owner==null){
             pickBox.setCenter(new Vector2(x,y));
+            super.setPosition(x, y);
+        } else {
+            attackCircle.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
+            super.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
         }
-        attackCircle.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
-        super.setPosition(anim_dirt?x-owner.box.getWidth():x, y);
     }
 
     @Override
@@ -95,6 +105,11 @@ public abstract class Equipment extends AnimationActor implements Item {
             currencySwingRange -= swing;
             rotateBy(anim_dirt?swing:-swing);
         }
+    }
+
+    @Override
+    public Vector2 getItemPosition() {
+        return getPosition();
     }
 
     @Override
@@ -116,9 +131,9 @@ public abstract class Equipment extends AnimationActor implements Item {
         if(isSwinging())    return false;
         attackedTargets.clear();
         currencySwingRange = swingRange;
-        float perAttackCheckInterval = 0.05f;
+        float perAttackCheckInterval = 1f/ Gdx.graphics.getFramesPerSecond();
         int totalCheckNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
-
+        sound.play();
         Runnable attack = () -> {
             Vector2[] vector2s = new Vector2[4];
             for (int i = 0; i < 4; i++) {
@@ -159,8 +174,13 @@ public abstract class Equipment extends AnimationActor implements Item {
                 return;
             }
         };
+        float perAttackMakeInternal = 0.2f;
+        int totalAttackNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
+        Runnable attackClear = ()-> attackedTargets.clear();
         if(totalCheckNum==0)    addAction(Actions.run(attack));
-        addAction(Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack))));
+        addAction(Actions.sequence(
+                Actions.addAction(Actions.repeat(totalAttackNum,Actions.sequence(Actions.delay(perAttackMakeInternal),Actions.run(attackClear)))),
+                Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack)))));
         return true;
     }
 
@@ -175,6 +195,12 @@ public abstract class Equipment extends AnimationActor implements Item {
     public void equippedBy(Player player){
         clearActions();
         owner = player;
+    }
+
+    public void beThrown(){
+        owner.gameScreen.livingItem.add(this);
+        owner = null;
+        setPosition(getX(),getY());
     }
 
     public boolean isSwinging(){
@@ -200,8 +226,8 @@ public abstract class Equipment extends AnimationActor implements Item {
         for (String name: Utils.AllDefaultEquipmentSort) {
             try {
                 Class<?> c = Class.forName("com.madmath.core.inventory.equipment."+name);
-                Constructor<?> con = c.getConstructor(Integer.class, TextureRegion.class);
-                equipmentSort.add((Equipment) con.newInstance(300+Equipment.equipmentSort.size,ResourceManager.defaultManager.LoadEquipmentAssetsByName((String) c.getField("alias").get(null))));
+                Constructor<?> con = c.getConstructor(Integer.class, TextureRegion.class, Sound.class);
+                equipmentSort.add((Equipment) con.newInstance(300+Equipment.equipmentSort.size,ResourceManager.defaultManager.LoadEquipmentAssetsByName((String) c.getField("alias").get(null)), ResourceManager.defaultManager.getSoundByName((String) c.getField("alias").get(null))));
             } catch (ClassNotFoundException e) {
                 System.out.println("Not Found A Equipment Named '" +name+'\'');
             } catch (NoSuchFieldException e){

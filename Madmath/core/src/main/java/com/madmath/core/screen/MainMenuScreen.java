@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -23,23 +24,26 @@ import com.madmath.core.resource.ResourceManager;
 
 public class MainMenuScreen extends AbstractScreen {
 
+    private Table table;
     private final Image gametitle;
     private final ImageButton[] buttons;
     private final int buttons_num;
 
     public MainMenuScreen(final MadMath game, final ResourceManager manager){
         super(game, manager);
+
         camera.zoom = 0.5f;
+
+        table = new Table();
+        table.setBackground(new TextureRegionDrawable(manager.scorebackground));
+        table.setFillParent(true);
+        stage.addActor(table);
 
         gametitle = new Image(manager.gametitle200x100);
         gametitle.setPosition(240,250);
         stage.addActor(gametitle);
         gametitle.setZIndex(1);
 
-        Image background = new Image(manager.background700x400);
-        background.setPosition(0,0);
-        stage.addActor(background);
-        background.setZIndex(0);
 
         buttons_num = 2;
         buttons = new ImageButton[buttons_num];
@@ -51,6 +55,8 @@ public class MainMenuScreen extends AbstractScreen {
             buttons[i].setSize(100,50);
             stage.addActor(buttons[i]);
         }
+
+        music = manager.titleMusic;
     }
 
     @Override
@@ -91,8 +97,8 @@ public class MainMenuScreen extends AbstractScreen {
             buttons[i].setVisible(false);
         }
         gametitle.setVisible(false);
-        if(game.gameScreen.getState()==State.READY) game.setScreen(game.selectScreen);
-        else game.setScreen(game.gameScreen);
+        if(game.gameScreen.getState()==State.READY) switchScreen(getGame().selectScreen);
+        else switchScreen(getGame().gameScreen);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.madmath.core.inventory.equipment;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.madmath.core.expression.Expression;
 
@@ -12,8 +13,12 @@ public class OddSword extends Equipment{
 
     static public String alias = "weapon_duel_sword";
 
-    public OddSword(Integer id, TextureRegion region) {
-        super(id, region);
+    public OddSword(Integer id, Equipment equipment) {
+        super(id, equipment);
+    }
+
+    public OddSword(Integer id, TextureRegion textureRegion, Sound sound) {
+        super(id, textureRegion, sound);
     }
 
     @Override

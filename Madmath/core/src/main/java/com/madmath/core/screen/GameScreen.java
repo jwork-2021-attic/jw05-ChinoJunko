@@ -54,6 +54,8 @@ public class GameScreen extends AbstractScreen{
     public Player player;
     public MonsterThread monsterManager;
 
+    private int battleLevel;
+
     private MonsterFactory monsterFactory;
     private EquipmentFactory equipmentFactory;
 
@@ -97,6 +99,12 @@ public class GameScreen extends AbstractScreen{
         executorService.execute(monsterManager);
         executorService.shutdown();
 
+        setBattleLevel(1);
+    }
+
+    public void setBattleLevel(int battleLevel) {
+        this.battleLevel = battleLevel;
+        music = manager.levelMusic[battleLevel-1];
     }
 
     @Override
@@ -114,7 +122,7 @@ public class GameScreen extends AbstractScreen{
         CurrencyGameScreen = this;
         Gdx.input.setInputProcessor(multiplexer);
         stateTime = 0;
-        camera.zoom =  0.8f;
+        camera.zoom =  0.7f;
     }
 
     public void initMapTitle(){
@@ -164,6 +172,7 @@ public class GameScreen extends AbstractScreen{
         for (int i = monsterManager.monsters.size-1; i >= 0 ; i--) {
             if(monsterManager.monsters.get(i).getHp()<=0) monsterManager.monsters.get(i).Die();
         }
+        if(player.getHp()<=0) player.Die();
         stage.act(v);
         stage.draw();
         hud.render(v);
@@ -223,6 +232,7 @@ public class GameScreen extends AbstractScreen{
 
     @Override
     public void switchScreen(Screen screen) {
+
         getViewport().update();
         super.switchScreen(screen);
     }

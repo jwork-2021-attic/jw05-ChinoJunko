@@ -25,7 +25,7 @@ public class ScoreScreen extends AbstractScreen{
         super(game, manager);
         table = new Table();
         //table.setSize(300,400);
-        table.setBackground(new TextureRegionDrawable(manager.scorebackground));
+        table.setBackground(new TextureRegionDrawable(manager.background700x400));
         table.setFillParent(true);
         label1 = new Label("Your Score is:",new Label.LabelStyle(manager.font, Color.WHITE));
         label1.setFontScale(0.5f);

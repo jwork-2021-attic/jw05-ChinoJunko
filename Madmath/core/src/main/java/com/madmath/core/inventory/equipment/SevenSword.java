@@ -1,5 +1,6 @@
 package com.madmath.core.inventory.equipment;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.madmath.core.expression.Expression;
 
@@ -12,8 +13,12 @@ public class SevenSword extends Equipment{
 
     static public String alias = "weapon_anime_sword";
 
-    public SevenSword(Integer id, TextureRegion region) {
-        super(id, region);
+    public SevenSword(Integer id, Equipment equipment) {
+        super(id, equipment);
+    }
+
+    public SevenSword(Integer id, TextureRegion textureRegion, Sound sound) {
+        super(id, textureRegion, sound);
     }
 
     @Override
@@ -25,8 +30,8 @@ public class SevenSword extends Equipment{
     public void initSelf() {
         super.initSelf();
         swingRange = 360;
-        swingSpeed = 360;
+        swingSpeed = 410;
         knockbackFactor = 20;
-        damage = 150;
+        damage = 50;
     }
 }

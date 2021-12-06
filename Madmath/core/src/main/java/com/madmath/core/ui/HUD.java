@@ -34,7 +34,10 @@ public class HUD extends UI{
     int maxHeart = 30;
     Label Health;
 
-    Label MonsterCount;
+    Label monsterCount;
+    Label currentScore;
+
+    VerticalGroup verticalGroup;
 
     Table table;
 
@@ -64,7 +67,7 @@ public class HUD extends UI{
         for (int i = 0; i < 3; i++) {
             weaponBoxs[i] =new Container<Actor>(new Image(manager.contain_box_144x144));
             weaponBoxs[i].setBackground(new TextureRegionDrawable(manager.contain_box_144x144));
-            table.add(weaponBoxs[i]).space(48);
+            table.add(weaponBoxs[i]).space(30);
         }
 
         fullHeart = new Image[maxHeart];
@@ -92,8 +95,14 @@ public class HUD extends UI{
 
         stage.addActor(table);
 
-        MonsterCount = new Label("",new Label.LabelStyle(manager.font, Color.WHITE));
-        table.add(MonsterCount).row();
+        monsterCount = new Label("",new Label.LabelStyle(manager.font, new Color(1f,0.3f,1f,1f)));
+        monsterCount.setFontScale(0.8f);
+        currentScore = new Label("",new Label.LabelStyle(manager.font,new Color(1f,0.3f,1f,1f)));
+        currentScore.setFontScale(0.8f);
+        verticalGroup = new VerticalGroup();
+        verticalGroup.addActor(monsterCount);
+        verticalGroup.addActor(currentScore);
+        table.add(verticalGroup).expand().left();
         //dialog.setSize();
         //Health = new Label("",new Label.LabelStyle(manager.font, Color.WHITE ));
         //Health.setFontScale(0.5f);
@@ -109,7 +118,8 @@ public class HUD extends UI{
     @Override
     public void update(float dt) {
         //Health.setText(Integer.toString(player.getHp()));
-        MonsterCount.setText("Monster number: "+(gameScreen.livingEntity.size-1));
+        monsterCount.setText("Monster number: "+(gameScreen.livingEntity.size-1));
+        currentScore.setText("Current Score: "+(player.score));
         for (int i = 0; i < maxHeart; i++) {
             emptyHeart[i].setVisible((player.getMaxHp() + 1) / 2 > i);
             halfHeart[i].setVisible((player.getHp() + 1) / 2 > i);

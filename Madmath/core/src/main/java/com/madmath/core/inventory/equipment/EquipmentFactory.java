@@ -41,7 +41,7 @@ public class EquipmentFactory {
         if(equipmentIter.iterator().hasNext()){
             Equipment equipment = equipmentIter.iterator().next();
             try {
-                return equipment.getClass().getConstructor(Integer.class,TextureRegion.class).newInstance(equipmentNextId++,equipment.getTextureRegionForClone());
+                return equipment.getClass().getConstructor(Integer.class,Equipment.class).newInstance(equipmentNextId++,equipment);
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
             }

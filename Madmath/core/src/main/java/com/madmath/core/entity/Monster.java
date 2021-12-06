@@ -5,6 +5,7 @@
 */
 package com.madmath.core.entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -111,15 +112,12 @@ public abstract class Monster extends Entity{
     @Override
     public void Die() {
         super.Die();
-        clear();
         gameScreen.player.score+=(level*5+gameScreen.map.mapLevel)*gameScreen.map.difficultyFactor;
         //gameScreen.getStage().getActors().removeValue(this,true);
         //gameScreen.getStage().getActors().removeValue(label,true);
-        gameScreen.livingEntity.removeValue(this,true);
         gameScreen.monsterManager.removeMonster(this);
-        setAcceleration(new Vector2(0,0));
-
-        addAction(Actions.sequence(Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.delay(1f),Actions.run(()->{
+        addAction(Actions.sequence(Actions.addAction(Actions.forever(Actions.sequence(Actions.run(()->{addAcceleration(new Vector2(0,0));move(1f/Gdx.graphics.getFramesPerSecond());}),Actions.delay(1f/Gdx.graphics.getFramesPerSecond())))),Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.delay(1f),Actions.run(()->{
+            gameScreen.livingEntity.removeValue(this,true);
             gameScreen.getStage().getActors().removeValue(this,true);
         })));
 
@@ -171,6 +169,7 @@ public abstract class Monster extends Entity{
                                 new Array<>(ResourceManager.defaultManager.LoadMonsterAssetsByName(c.getField("alias").get(null) +"_run_anim",
                                         (int)c.getField("TextureWidth").get(null),
                                         (int)c.getField("TextureHeight").get(null))[0])))));
+                System.out.println("Monster Load : "+ name);
             } catch (ClassNotFoundException e) {
                 System.out.println("Not Found A Monster Named '" +name+'\'');
             } catch (NoSuchFieldException e){
@@ -208,6 +207,7 @@ public abstract class Monster extends Entity{
             catch (InvocationTargetException | InstantiationException e) {
                 e.printStackTrace();
             }
+            System.out.println("Mod Monster Load : "+ monsterSort.get(monsterSort.size-1));
         }
         monsterSort.sort((monster1,monster2)-> monster2.level - monster1.level);
     }

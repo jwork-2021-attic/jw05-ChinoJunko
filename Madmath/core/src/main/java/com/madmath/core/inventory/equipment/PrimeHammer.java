@@ -1,5 +1,6 @@
 package com.madmath.core.inventory.equipment;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.madmath.core.expression.Expression;
 
@@ -14,8 +15,12 @@ public class PrimeHammer extends Equipment{
 
     static public String alias = "weapon_big_hammer";
 
-    public PrimeHammer(Integer id, TextureRegion region) {
-        super(id, region);
+    public PrimeHammer(Integer id, Equipment equipment) {
+        super(id, equipment);
+    }
+
+    public PrimeHammer(Integer id, TextureRegion textureRegion, Sound sound) {
+        super(id, textureRegion, sound);
     }
 
     private HashSet<Integer> Prime;
@@ -28,8 +33,8 @@ public class PrimeHammer extends Equipment{
     @Override
     public void initSelf() {
         super.initSelf();
-        swingRange = 1200;
-        swingSpeed = 900;
+        swingRange = 4800;
+        swingSpeed = 2400;
         knockbackFactor = 12;
         damage = 120;
         initPrime();
