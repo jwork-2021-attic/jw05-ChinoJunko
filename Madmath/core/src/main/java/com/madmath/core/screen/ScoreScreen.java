@@ -37,6 +37,7 @@ public class ScoreScreen extends AbstractScreen{
         againButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.gameScreen.resetGame();
                 switchScreen(game.gameScreen);
             }
         });

@@ -65,7 +65,7 @@ public class Player extends Creature{
         if(activeWeapon!=null&& !activeWeapon.isSwinging()){
             activeWeapon.setRotation(weaponAngle);
         }
-        sufferFromTrap();
+        affectedByTile();
         if(movable) currentDirection.set(subjectiveDirection);
         pickArrow.setVisible(pickItem!=null);
         if(pickItem!=null){
@@ -144,12 +144,15 @@ public class Player extends Creature{
         }
     }
 
-    public void sufferFromTrap(){
+    public void affectedByTile(){
         Array<myPair> tiledMapTileVector2Pair = getTileOnFoot(getPosition());
         tiledMapTileVector2Pair.forEach(pair ->{
             if(pair.A instanceof TrapTile && ((TrapTile) pair.A).isActive()){
                 getHurt((TrapTile) pair.A,pair.B);
                 return;
+            }
+            if(Utils.entryG.contains(pair.A.getId())){
+                gameScreen.nextMap();
             }
         });
     }
@@ -182,6 +185,7 @@ public class Player extends Creature{
         super.Die();
         hp = maxHp;
         gameScreen.switchScreen(gameScreen.getGame().scoreScreen);
+        gameScreen.resetGame();
     }
 
     public void pickUp(){

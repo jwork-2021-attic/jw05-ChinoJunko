@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.entity.creature.Monster;
+import com.madmath.core.entity.obstacle.Obstacle;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.util.Utils;
 import com.madmath.core.resource.ResourceManager;
@@ -93,6 +94,7 @@ public class GameMap {
         tiledMap = new TiledMap();
         tiledMap.getTileSets().addTileSet(getNewTileSet());
         initButtomLayer();
+        initObstacle();
         initEntities();
         initItem();
         int backgroundNum = 4;
@@ -194,9 +196,13 @@ public class GameMap {
 
     public void initObstacle(){
         Random random = new Random();
-        for (int i = random.nextInt(8); i < playAreaSize.x; i+=random.nextInt(8)+1) {
-            tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal());
-            //gameScreen.livingO.add(gameScreen.getObstacleFactory().generateObstacleByName(""));
+        int y = (int) (playAreaSize.y/16 - 1);
+        for (int x = random.nextInt(8); x < playAreaSize.x/16; x+=random.nextInt(8)+1) {
+            setDefaultTile(x,y);
+            Obstacle obstacle = gameScreen.getObstacleFactory().generateObstacleByName(Utils.AllDefaultObstacleSort[random.nextInt(Utils.AllDefaultObstacleSort.length)]);
+            obstacle.setPosition(16*x+startPosition.x,16*y+startPosition.y);
+            gameScreen.livingEntity.add(obstacle);
+            gameScreen.getStage().addActor(obstacle);
         }
     }
 
@@ -217,7 +223,7 @@ public class GameMap {
     }
 
     private void setDefaultTile(int x,int y){
-        ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x/16,y/16).setTile(tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal()));
+        ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x,y).setTile(tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal()));
     }
 
     public void render(float v){

@@ -45,6 +45,7 @@ public class Utils {
 
     static public String[] AllDefaultObstacleSort = new String[]{
             "RedFountain",
+            "BlueFountain",
     };
 
     static public Vector2[] EnterSortPro = new Vector2[]{
@@ -99,11 +100,18 @@ public class Utils {
             AnimTile.TileSort.floor_spikes_anim.name(),
     };
 
+    static private String[] eG = new String[]{
+            StaticTile.TileSort.floor_ladder.name(),
+            StaticTile.TileSort.floor_stair.name(),
+    };
+
     static public LinkedList<String> ModLoadMonsterPath = new LinkedList<>();
 
     static public LinkedList<String> ModLoadMonsterTexture = new LinkedList<>();
 
     static public Set<Integer> accessibleG = new HashSet<>(100);
+
+    static public Set<Integer> entryG = new HashSet<>(10);
 
     static public void initUtils(ResourceManager manager){
         int id = 0;
@@ -118,7 +126,9 @@ public class Utils {
         for (int i = 0; i < aG.length; i++) {
             accessibleG.add(idMap.get(aG[i]));
         }
-        int jk = 1;
+        for (int i = 0; i < eG.length; i++) {
+            entryG.add(idMap.get(eG[i]));
+        }
     }
 
     //sample: ((1,30),(2,20),(3,30),(4,100)) means 0|..1..|30|..2..|50|..3..|80|..4..|180

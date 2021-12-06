@@ -1,5 +1,6 @@
 package com.madmath.core.entity.obstacle;
 
+import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public class ObstacleFactory {
         if(obstacleIter.iterator().hasNext()){
             Obstacle obstacle = obstacleIter.iterator().next();
             try {
-                return obstacle.getClass().getConstructor(Obstacle.class).newInstance(obstacle.copy());
+                return obstacle.getClass().getConstructor(AnimationManager.class).newInstance(obstacle.getAnimationManager().clone());
             } catch (InvocationTargetException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
                 e.printStackTrace();
             }

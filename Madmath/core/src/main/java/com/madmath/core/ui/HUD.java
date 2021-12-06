@@ -144,6 +144,14 @@ public class HUD extends UI{
         //stage.act();
     }
 
+    public void reset(){
+        for (int i = 0; i < 3; i++) {
+            if(weaponBoxs[i].getActor()!=null){
+                weaponBoxs[i].removeActor(weaponBoxs[i].getActor());
+            }
+        }
+    }
+
     @Override
     public void render(float dt) {
         super.render(dt);

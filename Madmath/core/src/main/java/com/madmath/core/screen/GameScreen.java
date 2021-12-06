@@ -114,12 +114,13 @@ public class GameScreen extends AbstractScreen{
     @Override
     public void show() {
         if(state==State.READY){
+            resetMap();
+            player.freshSelf();
             new GameMap(this,"PRIMARY",1,factor);
             initMapTitle();
         }
         super.show();
         hud.show();
-        player.freshSelf();
         currencyMapMessage.setPosition(stage.getViewport().getWorldWidth()/2-50, MadMath.V_HEIGHT-20);
         currencyMapMessage.setZIndex(1000);
         state = State.RUNING;
@@ -129,6 +130,30 @@ public class GameScreen extends AbstractScreen{
         camera.zoom =  0.7f;
     }
 
+    public void nextMap(){
+        int tlevel = map.mapLevel;
+        resetMap();
+        String s = "PRIMARY";
+        if(tlevel>5) s = "ADVANCED";
+        if(tlevel>10) s = "CRAZY";
+        new GameMap(this,s,tlevel+1,factor);
+        initMapTitle();
+        currencyMapMessage.setPosition(stage.getViewport().getWorldWidth()/2-50, MadMath.V_HEIGHT-20);
+        currencyMapMessage.setZIndex(1000);
+        player.setPosition(map.playerSpawnPoint);
+    }
+
+    public void resetMap(){
+        if(map!=null){
+            map.dispose();
+            monsterManager.monsters.forEach(entity -> {stage.getActors().removeValue(entity,true);monsterManager.removeMonster(entity);});
+            livingEntity.clear();
+            livingItem.forEach(item -> {stage.getActors().removeValue(item,true);});
+            livingItem.clear();
+            livingEntity.add(player);
+        }
+    }
+
     public void initMapTitle(){
         if(currencyMapMessage!=null)    stage.getActors().removeValue(currencyMapMessage,true);
         currencyMapMessage = new Label("LEVEL "+map.mapLevel+"  "+map.name, new Label.LabelStyle(manager.font, Color.YELLOW ));
@@ -136,6 +161,14 @@ public class GameScreen extends AbstractScreen{
         currencyMapMessage.setVisible(true);
         currencyMapMessage.addAction(Actions.sequence(Actions.delay(5f),Actions.run(() -> currencyMapMessage.setText("   GOOD LUCK!   "))));
         stage.addActor(currencyMapMessage);
+    }
+
+    public void resetGame(){
+        state = State.READY;
+        player.weapon.forEach(weapon -> {stage.getActors().removeValue(weapon,true);});
+        player.weapon.clear();
+        player.activeWeapon = null;
+        hud.reset();
     }
 
     public void updateCamera(){
@@ -187,9 +220,12 @@ public class GameScreen extends AbstractScreen{
         int totalLevel = Math.round((map.mapLevel*16 + 32) * factor);
         int capacity = 500;
         Random random = new Random(System.currentTimeMillis());
-        for (int i = 0; i < capacity && totalLevel>0; i++) {
+        int monsterId = random.nextInt(Monster.monsterSort.size);
+        for (int i = 0; i < capacity && totalLevel>0; monsterId = random.nextInt(Monster.monsterSort.size)) {
             try{
-                totalLevel -= Objects.requireNonNull(generateMonster((String) Monster.monsterSort.get(random.nextInt(Monster.monsterSort.size)).getClass().getField("alias").get(null))).level;
+                if(Monster.monsterSort.get(monsterId).level>(2+totalLevel)/3)  continue;
+                totalLevel -= Objects.requireNonNull(generateMonster((String) Monster.monsterSort.get(monsterId).getClass().getField("alias").get(null))).level;
+                i++;
             } catch (NoSuchFieldException | IllegalAccessException | TimeoutException e) {
                 e.printStackTrace();
             }
@@ -240,10 +276,12 @@ public class GameScreen extends AbstractScreen{
 
     @Override
     public void switchScreen(Screen screen) {
-
-        getViewport().update();
         super.switchScreen(screen);
+        // getViewport().update();
+
     }
+
+
 
     public void addInputProcessor(InputProcessor inputProcessor){
         multiplexer.addProcessor(0,inputProcessor);
