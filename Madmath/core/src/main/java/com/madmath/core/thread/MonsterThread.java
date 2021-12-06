@@ -6,7 +6,7 @@
 package com.madmath.core.thread;
 
 import com.badlogic.gdx.utils.Array;
-import com.madmath.core.entity.Monster;
+import com.madmath.core.entity.creature.Monster;
 import com.madmath.core.screen.AbstractScreen;
 import com.madmath.core.screen.GameScreen;
 

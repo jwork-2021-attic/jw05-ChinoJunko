@@ -6,7 +6,7 @@
 package com.madmath.core.thread;
 
 import com.madmath.core.control.PlayerInputProcessor;
-import com.madmath.core.entity.Player;
+import com.madmath.core.entity.creature.Player;
 import com.madmath.core.screen.AbstractScreen;
 import com.madmath.core.screen.GameScreen;
 

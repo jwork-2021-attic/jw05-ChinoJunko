@@ -7,15 +7,12 @@ package com.madmath.core.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.madmath.core.actor.AnimationActor;
-import com.madmath.core.entity.Player;
+import com.madmath.core.entity.creature.Player;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;

@@ -5,22 +5,16 @@
 */
 package com.madmath.core.map;
 
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
-import com.madmath.core.entity.Monster;
+import com.madmath.core.entity.creature.Monster;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.util.Utils;
-import com.madmath.core.entity.Entity;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 

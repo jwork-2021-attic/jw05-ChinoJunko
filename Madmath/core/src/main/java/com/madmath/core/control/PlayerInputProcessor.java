@@ -9,9 +9,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.madmath.core.entity.Creature;
-import com.madmath.core.entity.Entity;
-import com.madmath.core.entity.Player;
+import com.madmath.core.entity.creature.Creature;
+import com.madmath.core.entity.creature.Player;
 
 public class PlayerInputProcessor extends InputAdapter {
     Player player;

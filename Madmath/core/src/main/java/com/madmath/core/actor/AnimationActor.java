@@ -32,7 +32,6 @@ public class AnimationActor extends Image {
     }
 
     public void initSelfBox() {
-        System.out.println(4);
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
     }
@@ -55,8 +54,8 @@ public class AnimationActor extends Image {
     }
 
     public void setPosition(Vector2 position) {
-        currencyPosition.set(position);
         box.setPosition(position);
+        currencyPosition.set(position.sub(boxOffset));
         super.setPosition(position.x, position.y);
     }
 

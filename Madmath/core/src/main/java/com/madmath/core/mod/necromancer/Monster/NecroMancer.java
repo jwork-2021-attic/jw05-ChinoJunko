@@ -8,7 +8,7 @@ package com.madmath.core.mod.necromancer.Monster;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.madmath.core.animation.AnimationManager;
-import com.madmath.core.entity.Monster;
+import com.madmath.core.entity.creature.Monster;
 
 public class NecroMancer extends Monster {
 

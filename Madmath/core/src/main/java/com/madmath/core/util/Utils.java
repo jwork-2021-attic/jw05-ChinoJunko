@@ -5,11 +5,8 @@
 */
 package com.madmath.core.util;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.madmath.core.entity.BigDemon;
-import com.madmath.core.entity.Monster;
 import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
 import com.madmath.core.resource.ResourceManager;

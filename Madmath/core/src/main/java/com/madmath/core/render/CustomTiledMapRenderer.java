@@ -8,8 +8,6 @@ package com.madmath.core.render;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.madmath.core.entity.Entity;
-import com.madmath.core.obstacle.Obstacle;
 
 public class CustomTiledMapRenderer extends OrthogonalTiledMapRenderer {
 

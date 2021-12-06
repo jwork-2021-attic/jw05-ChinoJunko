@@ -1,8 +1,5 @@
 package com.madmath.core.inventory.equipment;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.madmath.core.animation.AnimationManager;
-import com.madmath.core.entity.Monster;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 import org.jetbrains.annotations.Nullable;
