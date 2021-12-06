@@ -211,7 +211,11 @@ public class GameScreen extends AbstractScreen{
         monsterSemaphore.release();
         update(v);
         map.render(v);
-        Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() + (o2.getUserObject()==null?0:(int) o2.getUserObject()) -(o1.getUserObject()==null?0:(int) o1.getUserObject()) - o1.getY()));
+        Sort.instance().sort(stage.getRoot().getChildren(), (o2, o1) -> (int)(o1.getUserObject()==null?
+                (o2.getUserObject()==null?
+                        (Float.compare(o1.getY(), o2.getY())): (Float.compare(o1.getY(), o2.getY() + (int) o2.getUserObject()))):
+                o2.getUserObject()==null?
+                        (Float.compare(o1.getY()+(int)o1.getUserObject(),o2.getY())):(Float.compare(o1.getY()+(int)o1.getUserObject(),o2.getY()+(int)o2.getUserObject()))));
         for (int i = monsterManager.monsters.size-1; i >= 0 ; i--) {
             if(monsterManager.monsters.get(i).getHp()<=0) monsterManager.monsters.get(i).Die();
         }
