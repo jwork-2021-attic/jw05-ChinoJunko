@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
@@ -131,8 +132,6 @@ public abstract class Equipment extends Item {
         if(isSwinging())    return false;
         attackedTargets.clear();
         currencySwingRange = swingRange;
-        float perAttackCheckInterval = 1f/ Gdx.graphics.getFramesPerSecond();
-        int totalCheckNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
         sound.play();
         Runnable attack = () -> {
             Vector2[] vector2s = new Vector2[4];
@@ -159,6 +158,7 @@ public abstract class Equipment extends Item {
                             for (int j = 0; j < 4; j++) {
                                 if (attackCircle.contains(vector2s[j])) {
                                     attackedTargets.add(Objects.requireNonNull(creature));
+                                    owner.gameScreen.getGame().manager.punchSound.get(j).play();
                                     Objects.requireNonNull(creature).getHurt(this);
                                     //System.out.println("Attack!");
                                     continue;
@@ -175,13 +175,18 @@ public abstract class Equipment extends Item {
                 return;
             }
         };
-        float perAttackMakeInternal = 0.2f;
-        int totalAttackNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
+        float perAttackCheckInterval = 1f/ Gdx.graphics.getFramesPerSecond();
+        float perAttackMakeInterval = 0.2f;
+
+        //int totalAttackNum = (int) (swingRange/swingSpeed/perAttackCheckInterval);
         Runnable attackClear = ()-> attackedTargets.clear();
-        if(totalCheckNum==0)    addAction(Actions.run(attack));
+        Action a = Actions.forever(Actions.sequence(Actions.delay(perAttackMakeInterval),Actions.run(attackClear)));
+        Action b = Actions.forever(Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack)));
         addAction(Actions.sequence(
-                Actions.addAction(Actions.repeat(totalAttackNum,Actions.sequence(Actions.delay(perAttackMakeInternal),Actions.run(attackClear)))),
-                Actions.repeat(totalCheckNum,Actions.sequence(Actions.delay(perAttackCheckInterval),Actions.run(attack)))));
+                Actions.addAction(Actions.sequence(Actions.delay(swingRange/swingSpeed),Actions.removeAction(a),Actions.removeAction(b))),
+                Actions.addAction(a),
+                Actions.addAction(b)
+        ));
         return true;
     }
 

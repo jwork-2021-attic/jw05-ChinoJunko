@@ -5,6 +5,7 @@
 */
 package com.madmath.core.entity.obstacle;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.entity.Entity;
@@ -27,6 +28,7 @@ public class Obstacle extends Entity {
     @Override
     public void initSelf(){
         super.initSelf();
+        setUserObject(30);
     }
 
     public Obstacle copy(){
@@ -55,4 +57,10 @@ public class Obstacle extends Entity {
             }
         }
     }
+
+    @Override
+    public void setPosition(Vector2 position) {
+        super.setPosition(position);
+    }
+
 }

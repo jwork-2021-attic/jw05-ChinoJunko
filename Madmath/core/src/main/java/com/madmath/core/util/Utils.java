@@ -46,6 +46,7 @@ public class Utils {
     static public String[] AllDefaultObstacleSort = new String[]{
             "RedFountain",
             "BlueFountain",
+            "Column",
     };
 
     static public Vector2[] EnterSortPro = new Vector2[]{

@@ -36,7 +36,7 @@ public class PrimeHammer extends Equipment{
         swingRange = 4800;
         swingSpeed = 2400;
         knockbackFactor = 12;
-        damage = 120;
+        damage = 30;
         initPrime();
     }
 

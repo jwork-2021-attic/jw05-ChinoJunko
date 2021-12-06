@@ -28,7 +28,7 @@ public class HUD extends UI{
     Container[] weaponBoxs;
     Equipment[] weapons;
 
-    int maxHeart = 30;
+    int maxHeart = 70;
     Label Health;
 
     Label monsterCount;

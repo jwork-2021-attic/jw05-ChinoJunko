@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
 import com.madmath.core.expression.Add;
+import com.madmath.core.expression.Damage;
 import com.madmath.core.expression.Expression;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.resource.ResourceManager;
@@ -53,8 +54,8 @@ public abstract class Monster extends Creature{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        label.setCenterPosition(getCenterX(),getY()+getHeight()+label.getHeight());
-        label.draw(batch, parentAlpha);
+        //label.setCenterPosition(getCenterX(),getY()+getHeight()+label.getHeight());
+        //label.draw(batch, parentAlpha);
     }
 
     protected Monster(AnimationManager animationManager){
@@ -79,9 +80,10 @@ public abstract class Monster extends Creature{
         knockback = 0.5f;
         damage = 1;
         expression = new Add();
-        label = new Label("",new Label.LabelStyle(ResourceManager.defaultManager.font,Color.YELLOW));
-        label.setFontScale((getWidth()+getHeight()+100)/300f);
-        label.setText(expression.toString());
+        //label = new Label("",new Label.LabelStyle(ResourceManager.defaultManager.font,Color.YELLOW));
+        //label.setFontScale((getWidth()+getHeight()+100)/600f);
+        //label.setText(expression.toString());
+        //label.setVisible(false);
     }
 
     @Override
@@ -104,6 +106,7 @@ public abstract class Monster extends Creature{
     public int getHurt(Equipment equipment) {
         //if(!equipment.canAttack(expression)||hp<=0)  return 0;
         if(hp<=0) return 0;
+        new Damage(this,equipment.getDamage());
         return super.getHurt(equipment);
     }
 

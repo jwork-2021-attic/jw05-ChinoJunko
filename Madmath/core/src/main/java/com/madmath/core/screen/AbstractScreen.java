@@ -58,7 +58,7 @@ public abstract class AbstractScreen implements Screen {
 
         music = manager.creditMusic;
         music.setLooping(true);
-        music.setVolume(15);
+        music.setVolume(13);
     }
 
     @Override

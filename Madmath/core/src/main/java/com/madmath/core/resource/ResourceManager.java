@@ -38,7 +38,13 @@ public class ResourceManager {
     public Array<TextureRegion> EquipmentLoad;
     public Array<TextureRegion[][]> ObstacleLoad;
     public Array<Sound> weaponSound;
+    public Array<Sound> punchSound;
     public Sound defaultWeaponSound;
+    public Sound dscream;
+    public Sound click;
+    public Sound button;
+    public Sound moveSlow;
+    public Sound moveFast;
 
     public Music[] levelMusic;
     public Music titleMusic;
@@ -93,6 +99,7 @@ public class ResourceManager {
     }
 
     public TextureRegion[][] LoadObstacleAssetsByName(String name,int width, int height){
+        //System.out.println(name);
         ObstacleLoad.add(atlas.findRegion(name).split(width,height));
         System.out.println("Obstacle Load : "+name);
         return ObstacleLoad.get(ObstacleLoad.size-1);
@@ -139,8 +146,26 @@ public class ResourceManager {
         assetManager.load("music/Juhani Junkala Level 1.wav",Music.class);
         assetManager.load("music/Juhani Junkala Level 2.wav",Music.class);
         assetManager.load("music/Juhani Junkala Level 3.wav",Music.class);
+        for (int i = 0; i < 4; i++) {
+            assetManager.load("sfx/sfx_wpn_punch"+(i+1)+".wav",Sound.class);
+        }
+        assetManager.load("sfx/sfx_deathscream_android8.wav",Sound.class);
+        assetManager.load("sfx/sfx_movement_footstepsloop4_slow.wav",Sound.class);
+        assetManager.load("sfx/sfx_movement_footstepsloop4_fast.wav",Sound.class);
+        assetManager.load("sfx/button.wav",Sound.class);
+        assetManager.load("sfx/click.wav",Sound.class);
 
         assetManager.finishLoading();
+
+        punchSound = new Array<>();
+        for (int i = 0; i < 4; i++) {
+            punchSound.add(assetManager.get("sfx/sfx_wpn_punch"+(i+1)+".wav",Sound.class));
+        }
+        dscream = assetManager.get("sfx/sfx_deathscream_android8.wav",Sound.class);
+        moveSlow = assetManager.get("sfx/sfx_movement_footstepsloop4_slow.wav",Sound.class);
+        moveFast = assetManager.get("sfx/sfx_movement_footstepsloop4_fast.wav",Sound.class);
+        button = assetManager.get("sfx/button.wav",Sound.class);
+        click = assetManager.get("sfx/click.wav",Sound.class);
 
         weaponSound = new Array<>();
         MonsterLoad = new Array<>();

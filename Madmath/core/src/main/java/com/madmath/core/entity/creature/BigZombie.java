@@ -51,7 +51,8 @@ public class BigZombie extends Monster{
         boxOffset = new Vector2(5,0);
         inertia = 0.05f;
         speed = 17f;
-        level = 4;
+        damage = 6;
+        level = 6;
         maxHp = 1000;
         hp = 1000;
         toughness = 0.7f;

@@ -27,7 +27,7 @@ public class RedFountain extends Obstacle {
     @Override
     public void initSelfBox() {
         super.initSelfBox();
-        box = new Rectangle(0,0,16,4);
+        box = new Rectangle(0,0,16,16);
         boxOffset = new Vector2(0,12);
     }
 }

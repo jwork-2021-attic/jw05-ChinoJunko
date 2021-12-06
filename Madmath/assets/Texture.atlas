@@ -94,6 +94,13 @@ emptybutton
   orig: 100, 50
   offset: 0, 0
   index: -1
+column
+  rotate: false
+  xy: 1007, 971
+  size: 16, 48
+  orig: 16, 48
+  offset: 0, 0
+  index: -1
 doors_all
   rotate: false
   xy: 1, 221
@@ -255,13 +262,6 @@ masked_orc_idle_anim
   orig: 64, 20
   offset: 0, 0
   index: -1
-doors_frame_left
-  rotate: false
-  xy: 1007, 987
-  size: 16, 32
-  orig: 16, 32
-  offset: 0, 0
-  index: -1
 masked_orc_run_anim
   rotate: false
   xy: 905, 917
@@ -388,13 +388,6 @@ imp_idle_anim
   orig: 64, 16
   offset: 0, 0
   index: -1
-doors_frame_righ
-  rotate: false
-  xy: 1007, 953
-  size: 16, 32
-  orig: 16, 32
-  offset: 0, 0
-  index: -1
 imp_run_anim
   rotate: false
   xy: 753, 799
@@ -514,9 +507,23 @@ doors_leaf_open
   orig: 32, 32
   offset: 0, 0
   index: -1
+doors_frame_left
+  rotate: false
+  xy: 1007, 937
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
+doors_frame_righ
+  rotate: false
+  xy: 675, 326
+  size: 16, 32
+  orig: 16, 32
+  offset: 0, 0
+  index: -1
 weapon_big_hammer
   rotate: false
-  xy: 675, 321
+  xy: 703, 656
   size: 10, 37
   orig: 10, 37
   offset: 0, 0
@@ -537,70 +544,70 @@ coulmn_base
   index: -1
 elf_f_hit_anim
   rotate: false
-  xy: 703, 665
+  xy: 133, 228
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 elf_m_hit_anim
   rotate: false
-  xy: 133, 228
+  xy: 151, 228
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 knight_f_hit_anim
   rotate: false
-  xy: 151, 228
+  xy: 971, 905
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 knight_m_hit_anim
   rotate: false
-  xy: 971, 905
+  xy: 675, 296
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 lizard_f_hit_anim
   rotate: false
-  xy: 703, 635
+  xy: 715, 665
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 lizard_m_hit_anim
   rotate: false
-  xy: 721, 665
+  xy: 133, 198
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
-weapon_anime_sword
-  rotate: false
-  xy: 739, 663
-  size: 12, 30
-  orig: 12, 30
-  offset: 0, 0
-  index: -1
 wizzard_f_hit_anim
   rotate: false
-  xy: 721, 635
+  xy: 733, 665
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
 wizzard_m_hit_anim
   rotate: false
-  xy: 133, 198
+  xy: 133, 168
   size: 16, 28
   orig: 16, 28
   offset: 0, 0
   index: -1
+weapon_anime_sword
+  rotate: false
+  xy: 839, 837
+  size: 12, 30
+  orig: 12, 30
+  offset: 0, 0
+  index: -1
 arrow
   rotate: false
-  xy: 703, 612
+  xy: 235, 243
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
@@ -614,21 +621,21 @@ coin_anim
   index: -1
 weapon_lavish_sword
   rotate: false
-  xy: 839, 837
+  xy: 703, 624
   size: 10, 30
   orig: 10, 30
   offset: 0, 0
   index: -1
 weapon_duel_sword
   rotate: false
-  xy: 687, 328
+  xy: 715, 633
   size: 9, 30
   orig: 9, 30
   offset: 0, 0
   index: -1
 weapon_knight_sword
   rotate: false
-  xy: 675, 290
+  xy: 151, 197
   size: 10, 29
   orig: 10, 29
   offset: 0, 0
@@ -642,233 +649,219 @@ crate
   index: -1
 weapon_green_magic_staff
   rotate: false
-  xy: 989, 903
+  xy: 693, 328
   size: 8, 30
   orig: 8, 30
   offset: 0, 0
   index: -1
 weapon_red_magic_staff
   rotate: false
-  xy: 133, 166
+  xy: 989, 903
   size: 8, 30
   orig: 8, 30
   offset: 0, 0
   index: -1
 weapon_spear
   rotate: false
-  xy: 703, 580
+  xy: 133, 136
   size: 6, 30
   orig: 6, 30
   offset: 0, 0
   index: -1
 doors_frame_top
   rotate: false
-  xy: 235, 261
+  xy: 499, 287
   size: 32, 3
   orig: 32, 3
   offset: 0, 0
   index: -1
 weapon_katana
   rotate: false
-  xy: 687, 297
+  xy: 703, 593
   size: 6, 29
   orig: 6, 29
   offset: 0, 0
   index: -1
 weapon_saw_sword
   rotate: false
-  xy: 753, 664
+  xy: 726, 638
   size: 10, 25
   orig: 10, 25
   offset: 0, 0
   index: -1
 weapon_hammer
   rotate: false
-  xy: 739, 637
+  xy: 151, 171
   size: 10, 24
   orig: 10, 24
   offset: 0, 0
   index: -1
 weapon_mace
   rotate: false
-  xy: 151, 202
+  xy: 738, 639
   size: 10, 24
   orig: 10, 24
   offset: 0, 0
   index: -1
 column_mid
   rotate: false
-  xy: 499, 274
+  xy: 258, 248
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 column_top
   rotate: false
-  xy: 765, 673
+  xy: 276, 248
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 edge
   rotate: false
-  xy: 517, 274
+  xy: 294, 248
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 empty_tile
   rotate: false
-  xy: 783, 673
+  xy: 312, 248
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 flask_big_blue
   rotate: false
-  xy: 801, 673
+  xy: 330, 248
   size: 16, 16
   orig: 16, 16
-  offset: 0, 0
-  index: -1
-weapon_baton_with_spikes
-  rotate: false
-  xy: 711, 588
-  size: 10, 22
-  orig: 10, 22
-  offset: 0, 0
-  index: -1
-weapon_bow
-  rotate: false
-  xy: 133, 139
-  size: 7, 25
-  orig: 7, 25
   offset: 0, 0
   index: -1
 flask_big_green
   rotate: false
-  xy: 235, 243
+  xy: 348, 248
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-weapon_golden_sword
+weapon_bow
   rotate: false
-  xy: 726, 611
-  size: 10, 22
-  orig: 10, 22
+  xy: 693, 301
+  size: 7, 25
+  orig: 7, 25
   offset: 0, 0
   index: -1
 flask_big_red
-  rotate: false
-  xy: 1005, 935
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-flask_big_yellow
-  rotate: false
-  xy: 999, 917
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-weapon_knife
-  rotate: false
-  xy: 1017, 920
-  size: 6, 13
-  orig: 6, 13
-  offset: 0, 0
-  index: -1
-flask_blue
   rotate: false
   xy: 823, 817
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-flask_green
+flask_big_yellow
   rotate: false
   xy: 819, 799
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-flask_red
+flask_blue
   rotate: false
   xy: 819, 781
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-flask_yellow
+flask_green
   rotate: false
   xy: 819, 763
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-floor
+flask_red
   rotate: false
   xy: 819, 745
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 1
-floor
+  index: -1
+flask_yellow
   rotate: false
   xy: 819, 727
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 2
+  index: -1
 floor
   rotate: false
   xy: 819, 709
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
-  index: 3
+  index: 1
 floor
   rotate: false
   xy: 819, 691
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
+  index: 2
+floor
+  rotate: false
+  xy: 751, 673
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+floor
+  rotate: false
+  xy: 769, 673
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
   index: 4
 floor
   rotate: false
-  xy: 819, 673
+  xy: 787, 673
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 5
 floor
   rotate: false
-  xy: 169, 226
+  xy: 805, 673
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 6
 floor
   rotate: false
-  xy: 187, 226
+  xy: 169, 226
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 7
 floor
   rotate: false
-  xy: 205, 226
+  xy: 187, 226
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 8
 floor_ladder
   rotate: false
-  xy: 253, 243
+  xy: 205, 226
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+weapon_baton_with_spikes
+  rotate: false
+  xy: 141, 144
+  size: 10, 22
+  orig: 10, 22
   offset: 0, 0
   index: -1
 floor_stair
@@ -887,344 +880,358 @@ hole
   index: -1
 skull
   rotate: false
-  xy: 999, 899
+  xy: 853, 847
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-weapon_cleaver
-  rotate: false
-  xy: 989, 882
-  size: 8, 19
-  orig: 8, 19
-  offset: 0, 0
-  index: -1
 ui_heart_empty
   rotate: false
-  xy: 999, 881
+  xy: 871, 847
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 ui_heart_full
   rotate: false
-  xy: 851, 847
+  xy: 823, 673
   size: 16, 16
   orig: 16, 16
-  offset: 0, 0
-  index: -1
-ui_heart_half
-  rotate: false
-  xy: 869, 847
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-weapon_arrow
-  rotate: false
-  xy: 133, 116
-  size: 7, 21
-  orig: 7, 21
   offset: 0, 0
   index: -1
 weapon_axe
   rotate: false
-  xy: 133, 93
+  xy: 989, 880
   size: 9, 21
   orig: 9, 21
   offset: 0, 0
   index: -1
+weapon_golden_sword
+  rotate: false
+  xy: 133, 112
+  size: 10, 22
+  orig: 10, 22
+  offset: 0, 0
+  index: -1
 weapon_red_gem_sword
   rotate: false
-  xy: 133, 70
+  xy: 133, 89
   size: 10, 21
   orig: 10, 21
   offset: 0, 0
   index: -1
 weapon_regular_sword
   rotate: false
-  xy: 133, 47
+  xy: 133, 66
   size: 10, 21
   orig: 10, 21
   offset: 0, 0
   index: -1
 weapon_rusty_sword
   rotate: false
-  xy: 133, 24
+  xy: 133, 43
   size: 10, 21
   orig: 10, 21
   offset: 0, 0
   index: -1
+weapon_arrow
+  rotate: false
+  xy: 133, 20
+  size: 7, 21
+  orig: 7, 21
+  offset: 0, 0
+  index: -1
+ui_heart_half
+  rotate: false
+  xy: 499, 269
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 wall_banner_blue
   rotate: false
-  xy: 271, 248
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-wall_banner_green
-  rotate: false
-  xy: 289, 248
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-wall_banner_red
-  rotate: false
-  xy: 307, 248
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-wall_banner_yellow
-  rotate: false
-  xy: 325, 248
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-wall_column_base
-  rotate: false
-  xy: 343, 248
+  xy: 517, 269
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 weapon_machete
   rotate: false
-  xy: 703, 556
+  xy: 703, 569
   size: 5, 22
   orig: 5, 22
   offset: 0, 0
   index: -1
-wall_column_mid
-  rotate: false
-  xy: 723, 593
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-wall_column_top
+wall_banner_green
   rotate: false
   xy: 163, 208
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_bottom_left
+wall_banner_red
+  rotate: false
+  xy: 163, 190
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_banner_yellow
   rotate: false
   xy: 181, 208
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-wall_corner_bottom_right
+wall_column_base
+  rotate: false
+  xy: 163, 172
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_column_mid
+  rotate: false
+  xy: 181, 190
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_column_top
   rotate: false
   xy: 199, 208
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+wall_corner_bottom_left
+  rotate: false
+  xy: 181, 172
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_corner_bottom_right
+  rotate: false
+  xy: 199, 190
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 wall_corner_front_left
   rotate: false
-  xy: 851, 829
+  xy: 199, 172
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_corner_front_right
   rotate: false
-  xy: 869, 829
+  xy: 841, 819
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+weapon_cleaver
+  rotate: false
+  xy: 223, 223
+  size: 8, 19
+  orig: 8, 19
+  offset: 0, 0
+  index: -1
 wall_corner_left
   rotate: false
-  xy: 133, 6
+  xy: 233, 225
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_corner_right
   rotate: false
-  xy: 765, 655
+  xy: 217, 205
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_corner_top_left
   rotate: false
-  xy: 783, 655
+  xy: 217, 187
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_corner_top_right
   rotate: false
-  xy: 801, 655
+  xy: 217, 169
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_fountain_top
   rotate: false
-  xy: 819, 655
+  xy: 235, 207
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_goo
   rotate: false
-  xy: 535, 272
+  xy: 235, 189
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_goo_base
   rotate: false
-  xy: 553, 272
+  xy: 235, 171
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_hole
   rotate: false
-  xy: 571, 272
+  xy: 251, 225
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 1
 wall_hole
   rotate: false
-  xy: 589, 272
+  xy: 253, 207
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: 2
 wall_inner_corner_l_top_left
   rotate: false
-  xy: 607, 272
+  xy: 253, 189
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_inner_corner_l_top_rigth
   rotate: false
-  xy: 625, 272
+  xy: 253, 171
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_inner_corner_mid_left
   rotate: false
-  xy: 643, 272
+  xy: 269, 230
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_inner_corner_mid_rigth
   rotate: false
-  xy: 661, 272
+  xy: 287, 230
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_inner_corner_t_top_left
   rotate: false
-  xy: 143, 180
+  xy: 305, 230
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_inner_corner_t_top_rigth
   rotate: false
-  xy: 143, 162
+  xy: 323, 230
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_left
   rotate: false
-  xy: 142, 144
+  xy: 341, 230
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_mid
   rotate: false
-  xy: 142, 126
+  xy: 271, 212
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_right
   rotate: false
-  xy: 679, 272
+  xy: 271, 194
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_front_left
   rotate: false
-  xy: 703, 538
+  xy: 289, 212
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_front_right
   rotate: false
-  xy: 703, 520
+  xy: 271, 176
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_mid_left
   rotate: false
-  xy: 703, 502
+  xy: 289, 194
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_mid_right
   rotate: false
-  xy: 703, 484
+  xy: 307, 212
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_top_left
   rotate: false
-  xy: 703, 466
+  xy: 289, 176
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_side_top_right
   rotate: false
-  xy: 703, 448
+  xy: 307, 194
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top_left
   rotate: false
-  xy: 703, 430
+  xy: 325, 212
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top_mid
   rotate: false
-  xy: 703, 412
+  xy: 307, 176
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 wall_top_right
   rotate: false
-  xy: 703, 394
+  xy: 325, 194
   size: 16, 16
   orig: 16, 16
+  offset: 0, 0
+  index: -1
+weapon_knife
+  rotate: false
+  xy: 891, 868
+  size: 6, 13
+  orig: 6, 13
   offset: 0, 0
   index: -1

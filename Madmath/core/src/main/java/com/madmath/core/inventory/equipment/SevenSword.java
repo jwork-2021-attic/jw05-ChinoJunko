@@ -32,6 +32,6 @@ public class SevenSword extends Equipment{
         swingRange = 360;
         swingSpeed = 410;
         knockbackFactor = 20;
-        damage = 50;
+        damage = 100;
     }
 }

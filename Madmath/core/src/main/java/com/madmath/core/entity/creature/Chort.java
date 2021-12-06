@@ -45,6 +45,7 @@ public class Chort extends Monster{
         boxOffset = new Vector2(2,0);
         inertia = 0.13f;
         speed = 32f;
+        damage = 3;
         level = 3;
         maxHp = 200;
         hp = 200;

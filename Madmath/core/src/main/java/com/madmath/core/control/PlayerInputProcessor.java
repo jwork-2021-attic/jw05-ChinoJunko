@@ -109,6 +109,7 @@ public class PlayerInputProcessor extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        player.gameScreen.getGame().manager.click.play();
         if(button == Input.Buttons.LEFT){
             player.swingWeapon();
         }

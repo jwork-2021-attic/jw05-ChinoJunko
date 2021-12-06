@@ -197,12 +197,21 @@ public class GameMap {
     public void initObstacle(){
         Random random = new Random();
         int y = (int) (playAreaSize.y/16 - 1);
-        for (int x = random.nextInt(8); x < playAreaSize.x/16; x+=random.nextInt(8)+1) {
-            setDefaultTile(x,y);
-            Obstacle obstacle = gameScreen.getObstacleFactory().generateObstacleByName(Utils.AllDefaultObstacleSort[random.nextInt(Utils.AllDefaultObstacleSort.length)]);
-            obstacle.setPosition(16*x+startPosition.x,16*y+startPosition.y);
+        for (int x = random.nextInt(8); x < playAreaSize.x/16; x+=random.nextInt(12)+3) {
+            Obstacle obstacle = gameScreen.getObstacleFactory().generateObstacleByName(Utils.AllDefaultObstacleSort[random.nextInt(2)]);
+            setDefaultTile(x, (int) (1+y+(startPosition.y/16)));
+            obstacle.setPosition(new Vector2(16*x+startPosition.x,16*y+startPosition.y+obstacle.boxOffset.y));
             gameScreen.livingEntity.add(obstacle);
             gameScreen.getStage().addActor(obstacle);
+        }
+        for (y = 0; y < playAreaSize.y/16-1; y++) {
+            int x = random.nextInt((int) (playAreaSize.x/16)-3)+3;
+            Obstacle obstacle = gameScreen.getObstacleFactory().generateObstacleByName(Utils.AllDefaultObstacleSort[2]);
+            setDefaultTile(x,(int) (y+(startPosition.y/16)));
+            obstacle.setPosition(new Vector2(16*x+startPosition.x,16*y+startPosition.y+obstacle.boxOffset.y));
+            gameScreen.livingEntity.add(obstacle);
+            gameScreen.getStage().addActor(obstacle);
+
         }
     }
 
@@ -223,7 +232,8 @@ public class GameMap {
     }
 
     private void setDefaultTile(int x,int y){
-        ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x,y).setTile(tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal()));
+     //   TiledMapTileLayer.Cell cell = ((TiledMapTileLayer)tiledMap.getLayers().get(0)).getCell(x,y);
+        //  cell.setTile(tiledMap.getTileSets().getTile(StaticTile.TileSort.floor_1.ordinal()));
     }
 
     public void render(float v){

@@ -20,15 +20,14 @@ public class AnimationActor extends Image {
     protected boolean anim_dirt = false;//true - left | false - right
 
     public Rectangle box;
-    protected Vector2 boxOffset;
+    public Vector2 boxOffset;
 
     public AnimationActor(AnimationManager animationManager){
         super(animationManager.getKeyFrame(0));
-        initSelfBox();
+        currencyPosition = new Vector2();
         stateTime = 0;
         this.animationManager = animationManager;
-        currencyPosition = new Vector2();
-
+        initSelfBox();
     }
 
     public void initSelfBox() {
@@ -54,7 +53,7 @@ public class AnimationActor extends Image {
     }
 
     public void setPosition(Vector2 position) {
-        box.setPosition(position);
+        box.setPosition(position.cpy());
         currencyPosition.set(position.sub(boxOffset));
         super.setPosition(position.x, position.y);
     }

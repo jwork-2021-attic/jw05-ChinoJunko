@@ -18,6 +18,7 @@ import com.madmath.core.entity.Entity;
 import com.madmath.core.entity.creature.Monster;
 import com.madmath.core.entity.creature.MonsterFactory;
 import com.madmath.core.entity.creature.Player;
+import com.madmath.core.entity.obstacle.Obstacle;
 import com.madmath.core.inventory.Item;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.inventory.equipment.EquipmentFactory;
@@ -147,6 +148,11 @@ public class GameScreen extends AbstractScreen{
         if(map!=null){
             map.dispose();
             monsterManager.monsters.forEach(entity -> {stage.getActors().removeValue(entity,true);monsterManager.removeMonster(entity);});
+            livingEntity.forEach(entity -> {
+                if(entity instanceof Obstacle){
+                    stage.getActors().removeValue(entity,true);
+                }
+            });
             livingEntity.clear();
             livingItem.forEach(item -> {stage.getActors().removeValue(item,true);});
             livingItem.clear();
@@ -205,7 +211,7 @@ public class GameScreen extends AbstractScreen{
         monsterSemaphore.release();
         update(v);
         map.render(v);
-        Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() - o1.getY()));
+        Sort.instance().sort(stage.getRoot().getChildren(), (o1, o2) -> (int) (o2.getY() + (o2.getUserObject()==null?0:(int) o2.getUserObject()) -(o1.getUserObject()==null?0:(int) o1.getUserObject()) - o1.getY()));
         for (int i = monsterManager.monsters.size-1; i >= 0 ; i--) {
             if(monsterManager.monsters.get(i).getHp()<=0) monsterManager.monsters.get(i).Die();
         }
@@ -256,7 +262,7 @@ public class GameScreen extends AbstractScreen{
     public void createEquipment(){
         for (int i = 0; i < Utils.AllDefaultEquipmentSort.length; i++) {
             Equipment equipment = equipmentFactory.generateEquipmentByName(Utils.AllDefaultEquipmentSort[i]);
-            equipment.setPosition(map.playerSpawnPoint.x+50+50*i/2,map.playerSpawnPoint.y+50-100*i%2);
+            equipment.setPosition(map.playerSpawnPoint.x+50+50*(i/2),map.playerSpawnPoint.y+50-100*(i%2));
             stage.addActor(equipment);
             livingItem.add(equipment);
         }

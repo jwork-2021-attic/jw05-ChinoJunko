@@ -5,6 +5,7 @@
 */
 package com.madmath.core.entity.creature;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +21,7 @@ import com.madmath.core.inventory.Item;
 import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.map.TrapTile;
 import com.madmath.core.resource.ResourceManager;
+import com.madmath.core.screen.AbstractScreen;
 import com.madmath.core.screen.GameScreen;
 import com.madmath.core.util.Utils;
 import com.madmath.core.util.myPair;
@@ -71,12 +73,25 @@ public class Player extends Creature{
         if(pickItem!=null){
             pickArrow.setPosition(pickItem.getX()+pickItem.getHeight()*0.135f,pickItem.getY()+pickItem.getHeight()*0.7f);
         }
+        if(getState() == State.Move && gameScreen.getState()== AbstractScreen.State.RUNING){
+            if(sprint){
+                fastSound.resume(fast);
+                slowSound.pause(slow);
+            }else {
+                slowSound.resume(slow);
+                fastSound.pause(fast);
+            }
+        }else {
+            fastSound.pause(fast);
+            slowSound.pause(slow);
+        }
     }
 
     @Override
     public int getHurt(int damage, Vector2 sufferFrom, float knockbackFactor) {
         if(!attackable) return 0;
         attackable = false;
+        gameScreen.getManager().dscream.play();
         knockbackFactor *= (1-toughness);
         sufferFrom.sub(getPosition());
         sufferFrom.x = sufferFrom.x>0?-knockbackFactor:knockbackFactor;
@@ -184,6 +199,8 @@ public class Player extends Creature{
     public void Die() {
         super.Die();
         hp = maxHp;
+        slowSound.pause(slow);
+        fastSound.pause(fast);
         gameScreen.switchScreen(gameScreen.getGame().scoreScreen);
         gameScreen.resetGame();
     }
@@ -222,17 +239,30 @@ public class Player extends Creature{
         return true;
     }
 
+    long slow;
+    long fast;
+    Sound slowSound;
+    Sound fastSound;
+
     @Override
     public void initSelf() {
         super.initSelf();
         score = 0;
         weapon = new Array<>(3);
-        speed = 64f;
-        maxHp = 6;
-        hp = 6;
+        speed = 48f;
+        maxHp = 80;
+        hp = 80;
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
         pickArrow = new Image(new TextureRegionDrawable(gameScreen.getManager().arrow21x21));
+        slowSound = gameScreen.getManager().moveSlow;
+        fastSound = gameScreen.getManager().moveFast;
+        slow = slowSound.play();
+        fast = fastSound.play();
+        slowSound.setLooping(slow,true);
+        fastSound.setLooping(fast,true);
+        slowSound.pause(slow);
+        fastSound.pause(fast);
         //lostSpeed = 1.8f;
     }
 

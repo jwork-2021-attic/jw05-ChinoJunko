@@ -32,5 +32,6 @@ public class OddSword extends Equipment{
         swingRange = 190;
         swingSpeed = 600;
         knockbackFactor = 4;
+        damage = 50;
     }
 }
