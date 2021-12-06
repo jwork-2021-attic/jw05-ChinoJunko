@@ -45,6 +45,26 @@ public class PlayerInputProcessor extends InputAdapter {
             case Input.Keys.E:
                 player.switchWeapon(-1);
                 return true;
+            case Input.Keys.SHIFT_LEFT:
+                player.setSprint(true);
+                return true;
+            case Input.Keys.PLUS:
+            case Input.Keys.Z:
+                player.gameScreen.getCamera().zoom = Math.max(player.gameScreen.getCamera().zoom-0.1f,0.5f);
+                return true;
+            case Input.Keys.MINUS:
+            case Input.Keys.X:
+                player.gameScreen.getCamera().zoom = Math.min(player.gameScreen.getCamera().zoom+0.1f,1f);
+                return true;
+            case Input.Keys.NUM_1:
+                player.setWeapon(0);
+                return true;
+            case Input.Keys.NUM_2:
+                player.setWeapon(1);
+                return true;
+            case Input.Keys.NUM_3:
+                player.setWeapon(2);
+                return true;
             default:
                 return false;
         }
@@ -68,6 +88,9 @@ public class PlayerInputProcessor extends InputAdapter {
             case Input.Keys.DOWN:
             case Input.Keys.S:
                 player.addSubjectiveDirection(new Vector2(0,1f));
+                return true;
+            case Input.Keys.SHIFT_LEFT:
+                player.setSprint(false);
                 return true;
             default:
                 return false;
@@ -105,10 +128,9 @@ public class PlayerInputProcessor extends InputAdapter {
 
     @Override
     public boolean scrolled(int i) {
-        if(i==-1){
-            player.gameScreen.getCamera().zoom = Math.max(player.gameScreen.getCamera().zoom-0.03f,0.5f);
+        if(i==-1){player.switchWeapon(-1);
         }else{
-            player.gameScreen.getCamera().zoom = Math.min(player.gameScreen.getCamera().zoom+0.03f,1f);
+            player.switchWeapon(+1);
         }
         return true;
     }

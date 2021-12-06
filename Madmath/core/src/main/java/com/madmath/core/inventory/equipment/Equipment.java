@@ -17,6 +17,7 @@ import com.madmath.core.actor.AnimationActor;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.entity.Entity;
 import com.madmath.core.entity.Player;
+import com.madmath.core.expression.Expression;
 import com.madmath.core.inventory.Item;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.util.Utils;
@@ -99,6 +100,10 @@ public abstract class Equipment extends AnimationActor implements Item {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+    }
+
+    public boolean canAttack(Expression expression){
+        return true;
     }
 
     @Override

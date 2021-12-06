@@ -25,7 +25,6 @@ public class MainMenuScreen extends AbstractScreen {
 
     private final Image gametitle;
     private final ImageButton[] buttons;
-    private final Image[] buttonsFade;
     private final int buttons_num;
 
     public MainMenuScreen(final MadMath game, final ResourceManager manager){
@@ -44,14 +43,12 @@ public class MainMenuScreen extends AbstractScreen {
 
         buttons_num = 2;
         buttons = new ImageButton[buttons_num];
-        buttonsFade = new Image[buttons_num];
-        buttons[0] = new ImageButton(new TextureRegionDrawable(manager.emptybutton100x50),new TextureRegionDrawable(manager.startbutton100x50[0][0]));
-        buttons[1] = new ImageButton(new TextureRegionDrawable(manager.emptybutton100x50),new TextureRegionDrawable(manager.exitbutton100x50[0][0]));
-        buttonsFade[0] = new Image(new TextureRegionDrawable(manager.startbutton100x50[1][0]));
-        buttonsFade[1] = new Image(new TextureRegionDrawable(manager.exitbutton100x50[1][0]));
+        //buttons[0] = new ImageButton(new TextureRegionDrawable(manager.emptybutton100x50),new TextureRegionDrawable(manager.startbutton100x50[0][0]));
+        //buttons[1] = new ImageButton(new TextureRegionDrawable(manager.emptybutton100x50),new TextureRegionDrawable(manager.exitbutton100x50[0][0]));
+        buttons[0] = new ImageButton(manager.startButtonStyle);
+        buttons[1] = new ImageButton(manager.exitButtonStyle);
         for (int i = 0; i < buttons_num; i++) {
             buttons[i].setSize(100,50);
-            stage.addActor(buttonsFade[i]);
             stage.addActor(buttons[i]);
         }
     }
@@ -63,20 +60,11 @@ public class MainMenuScreen extends AbstractScreen {
     }
 
     public void resetTitle(){
-        gametitle.addAction(Actions.sequence(Actions.alpha(0f),Actions.delay(0.5f),Actions.alpha(1f,5f)));
+        gametitle.setVisible(true);
+        gametitle.addAction(Actions.sequence(Actions.alpha(0f),Actions.delay(0.1f),Actions.alpha(1f,2f)));
         for (int i = 0; i < buttons_num; i++) {
-            buttons[i].addAction(Actions.sequence(Actions.delay(0.5f),
-                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.3f),
-                    Actions.addAction(Actions.forever(Actions.sequence(
-                            Actions.moveBy(0,5,1f),
-                            Actions.moveBy(0,-10,2f),
-                            Actions.moveBy(0,5,1f))))));
-            buttonsFade[i].addAction(Actions.sequence(Actions.delay(0.5f),
-                    Actions.moveTo(300,-100),Actions.moveTo(300,185-65*i,1.3f),
-                    Actions.addAction(Actions.forever(Actions.sequence(
-                            Actions.alpha(0.1f,1f),
-                            Actions.alpha(1f,1f),
-                            Actions.delay(1.5f)))),
+            buttons[i].addAction(Actions.sequence(Actions.delay(0.1f),
+                    Actions.moveTo(300,-100),Actions.show(),Actions.moveTo(300,185-65*i,1.1f),
                     Actions.addAction(Actions.forever(Actions.sequence(
                             Actions.moveBy(0,5,1f),
                             Actions.moveBy(0,-10,2f),
@@ -97,16 +85,14 @@ public class MainMenuScreen extends AbstractScreen {
         });
     }
 
-    public void switchScreen(){
+    public void startGame(){
         for (int i = 0; i < buttons_num; i++) {
             buttons[i].clearActions();
-            buttonsFade[i].clearActions();
+            buttons[i].setVisible(false);
         }
-    }
-
-    public void startGame(){
-        switchScreen();
-        game.setScreen(game.gameScreen);
+        gametitle.setVisible(false);
+        if(game.gameScreen.getState()==State.READY) game.setScreen(game.selectScreen);
+        else game.setScreen(game.gameScreen);
     }
 
     @Override

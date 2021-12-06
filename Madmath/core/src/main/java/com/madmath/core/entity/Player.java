@@ -18,6 +18,7 @@ import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.map.TrapTile;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
+import com.madmath.core.screen.ScoreScreen;
 import com.madmath.core.util.Utils;
 import com.madmath.core.util.myPair;
 
@@ -33,19 +34,28 @@ public class Player extends Entity{
 
     public float weaponAngle;
 
+    public int score;
+
+    protected boolean sprint = false;
+
     static public String alias = "knight_f";
 
     static public AnimationManager initPlayerAnim(ResourceManager manager){
-        return new AnimationManager(new CustomAnimation(0.34f,new Array<>(manager.knight_f_idle_anim16x28[0])),new CustomAnimation(0.17f,new Array<>(manager.knight_f_run_anim16x28[0])));
+        return new AnimationManager(new CustomAnimation(0.34f,new Array<>(manager.knight_f_idle_anim16x28[0])),new CustomAnimation(0.17f,new Array<>(manager.knight_f_run_anim16x28[0])),new CustomAnimation(0.09f,new Array<>(manager.knight_f_run_anim16x28[0])));
     }
 
     public Player(Integer id, AnimationManager animationManager, GameScreen gameScreen, Vector2 position) {
         super(id, animationManager, gameScreen, position);
     }
 
+    public Player(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
+        super(id, animationManager, gameScreen);
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
+        if(sprint) setPlayMode(AnimationManager.PlayMode.Sprint);
         if(activeWeapon!=null&& !activeWeapon.isSwinging()){
             activeWeapon.setRotation(weaponAngle);
         }
@@ -115,6 +125,14 @@ public class Player extends Entity{
         activeWeapon.addAction(Actions.show());
     }
 
+    public void setWeapon(int index){
+        if(weapon.size>index){
+            activeWeapon.addAction(Actions.hide());
+            activeWeapon = weapon.get(index);
+            activeWeapon.addAction(Actions.show());
+        }
+    }
+
     public void sufferFromTrap(){
         Array<myPair> tiledMapTileVector2Pair = getTileOnFoot(getPosition());
         tiledMapTileVector2Pair.forEach(pair ->{
@@ -125,9 +143,13 @@ public class Player extends Entity{
         });
     }
 
+    public void setSprint(boolean sprint){
+        this.sprint = sprint;
+    }
+
     @Override
     public boolean move(float v) {
-        boolean temp = super.move(v);
+        boolean temp = super.move(sprint?2*v:v);
         Vector2 cPoisition = new Vector2();
         gameScreen.livingItem.forEach(item -> {
             if(item.canPickUp(box.getCenter(cPoisition))&& item instanceof Equipment){
@@ -135,6 +157,13 @@ public class Player extends Entity{
             }
         });
         return temp;
+    }
+
+    @Override
+    public void Die() {
+        super.Die();
+        hp = maxHp;
+        gameScreen.switchScreen(gameScreen.getGame().scoreScreen);
     }
 
     public void addSubjectiveDirection(Vector2 Direction){
@@ -166,13 +195,19 @@ public class Player extends Entity{
     @Override
     public void initSelf() {
         super.initSelf();
+        score = 0;
         weapon = new Array<>(3);
         speed = 64f;
-        maxHp = 30;
-        hp = 30;
+        maxHp = 6;
+        hp = 6;
         box = new Rectangle(0,0,12,7);
         boxOffset = new Vector2(2,0);
         //lostSpeed = 1.8f;
+    }
+
+    public void freshSelf(){
+        setAcceleration(new Vector2(0,0));
+        score = 0;
     }
 
 }

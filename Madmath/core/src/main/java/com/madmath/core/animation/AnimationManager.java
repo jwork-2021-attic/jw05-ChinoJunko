@@ -16,6 +16,7 @@ public class AnimationManager {
     PlayMode playMode;
     boolean reverse = false;
 
+    /*
     public static TextureRegion[][] castRegionToArray2(TextureRegion region){
         TextureRegion[][] regions = new TextureRegion[PlayMode.values().length][1];
         for (int i = 0; i < regions.length; i++) {
@@ -30,8 +31,11 @@ public class AnimationManager {
         return Durations;
     }
 
+     */
+
     public AnimationManager(TextureRegion region, float frameDuration){
-        this(castRegionToArray2(region),copyDurationToArray2(frameDuration));
+        this(new CustomAnimation(frameDuration,region));
+        //this(castRegionToArray2(region),copyDurationToArray2(frameDuration));
     }
 
     public AnimationManager(TextureRegion[][] regions, float[] frameDurations){
@@ -57,11 +61,11 @@ public class AnimationManager {
     }
 
     public TextureRegion getKeyFrame(float stateTime){
-        return animations[reverse? playMode.ordinal() + PlayMode.values().length: playMode.ordinal()].getKeyFrame(stateTime);
+        return animations[reverse? playMode.ordinal() + animations.length/2: playMode.ordinal()].getKeyFrame(stateTime);
     }
 
     public TextureRegionDrawable getKeyFrameDrawable(float stateTime){
-        return animations[reverse? playMode.ordinal() + PlayMode.values().length:playMode.ordinal()].getKeyFrameDrawable(stateTime);
+        return animations[reverse? playMode.ordinal() + animations.length/2:playMode.ordinal()].getKeyFrameDrawable(stateTime);
     }
 
     public void setPlayMode(PlayMode playMode) {
@@ -81,5 +85,6 @@ public class AnimationManager {
     public enum PlayMode{
         Stand,
         Moving,
+        Sprint,
     }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -26,9 +27,24 @@ public abstract class AbstractScreen implements Screen {
     protected Viewport viewport;
     protected Stage stage;
 
+    protected State state;
+
+    public enum State{
+        READY,
+        RUNING,
+        PAUSE,
+        END,
+    }
+
+    public State getState() {
+        return state;
+    }
+
     public AbstractScreen(final MadMath game, final ResourceManager manager){
         this.game = game;
         this.manager = manager;
+
+        state = State.READY;
 
         camera = new OrthographicCamera(MadMath.V_WIDTH, MadMath.V_HEIGHT);
         camera.setToOrtho(false);
@@ -47,6 +63,11 @@ public abstract class AbstractScreen implements Screen {
 
     public void update(float v) {}
 
+    public void switchScreen(Screen screen){
+        state = State.PAUSE;
+        game.setScreen(screen);
+    }
+
     @Override
     public void resize(int i, int i1) {
         stage.getViewport().update(i, i1);
@@ -54,6 +75,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void show() {
+        state = State.RUNING;
         game.fps.setPosition(MadMath.V_WIDTH-55, MadMath.V_HEIGHT-7);
         stage.addActor(game.fps);
         game.fps.setZIndex(1000);
@@ -75,9 +97,14 @@ public abstract class AbstractScreen implements Screen {
 
     }
 
+    public Viewport getViewport() {
+        return viewport;
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
+        state = State.END;
     }
 
     public Stage getStage() {

@@ -39,6 +39,7 @@ public abstract class Entity extends AnimationActor {
     public float inertia;
     public float toughness;
 
+
     //if move set it to 16, reduce by half per frame
     //public int lastMove;
 

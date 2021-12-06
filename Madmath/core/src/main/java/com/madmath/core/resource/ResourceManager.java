@@ -12,7 +12,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.map.AnimTile;
 import com.madmath.core.map.StaticTile;
@@ -36,14 +38,18 @@ public class ResourceManager {
     //public TextureRegion[][] big_demon_run_anim16x28;
     public TextureRegion[][] knight_f_idle_anim16x28;
     public TextureRegion[][] knight_f_run_anim16x28;
-    public TextureRegion[][] startbutton100x50;
-    public TextureRegion[][] exitbutton100x50;
     public TextureRegion[][] fountain_red16x48;
     public TextureRegion[][] floor_spikes_anim16x16;
+
+    public TextureRegion[][] startbutton100x50;
+    public TextureRegion[][] exitbutton100x50;
+    public ImageButton.ImageButtonStyle startButtonStyle;
+    public ImageButton.ImageButtonStyle exitButtonStyle;
 
     public TextureRegion[] tiles16x16;
 
 
+    public TextureRegion scorebackground;
     public TextureRegion gamebackground700x128;
     public TextureRegion flzgbackground700x128;
     public TextureRegion background700x400;
@@ -114,6 +120,7 @@ public class ResourceManager {
         ui_heart_full16x16 = atlas.findRegion("ui_heart_full");
         contain_box_144x144 = atlas.findRegion("contain_box");
 
+        scorebackground = new TextureRegion(new Texture(Gdx.files.internal("scorebackground.png")));
         /*
         gamebackground192x176 = new TextureRegion[30];
         for (int i = 0; i < 30; i++) {
@@ -139,6 +146,13 @@ public class ResourceManager {
         exitbutton100x50 = atlas.findRegion("exitbutton").split(100,50);
         fountain_red16x48 = atlas.findRegion("wall_fountain_red_anim").split(16,48);
         floor_spikes_anim16x16 = atlas.findRegion(AnimTile.TileSort.floor_spikes_anim.name()).split(16,16);
+
+        startButtonStyle = new ImageButton.ImageButtonStyle(null,null,null,new TextureRegionDrawable(startbutton100x50[1][0]),new TextureRegionDrawable(startbutton100x50[0][0]),new TextureRegionDrawable(startbutton100x50[0][0]));
+        startButtonStyle.imageOver = new TextureRegionDrawable(startbutton100x50[0][0]);
+        startButtonStyle.pressedOffsetY = -5;
+        exitButtonStyle = new ImageButton.ImageButtonStyle(null,null,null,new TextureRegionDrawable(exitbutton100x50[1][0]),new TextureRegionDrawable(exitbutton100x50[0][0]),new TextureRegionDrawable(exitbutton100x50[0][0]));
+        exitButtonStyle.imageOver = new TextureRegionDrawable(exitbutton100x50[0][0]);
+        exitButtonStyle.pressedOffsetY = -5;
 
         font = new BitmapFont(Gdx.files.internal("font/font.fnt"), atlas.findRegion("font/font.fnt"), false);
         font.setUseIntegerPositions(false);

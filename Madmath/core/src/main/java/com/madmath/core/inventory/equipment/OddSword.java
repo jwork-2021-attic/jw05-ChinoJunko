@@ -1,6 +1,7 @@
 package com.madmath.core.inventory.equipment;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.madmath.core.expression.Expression;
 
 /**
  * @Author: Junko
@@ -13,6 +14,11 @@ public class OddSword extends Equipment{
 
     public OddSword(Integer id, TextureRegion region) {
         super(id, region);
+    }
+
+    @Override
+    public boolean canAttack(Expression expression) {
+        return expression.getValue()%2==1;
     }
 
     @Override

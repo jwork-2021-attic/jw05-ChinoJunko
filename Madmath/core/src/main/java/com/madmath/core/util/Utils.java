@@ -19,6 +19,13 @@ import java.util.concurrent.Callable;
 
 public class Utils {
 
+    static public String[] DifficultyName = new String[]{
+            "Todwise",
+            "Elementary Mathematics",
+            "Advanced Mathematics",
+            "P=NP?",
+    };
+
     static public String[] AllDefaultMonsterSort = new String[]{
             "BigDemon",
             "BigZombie",

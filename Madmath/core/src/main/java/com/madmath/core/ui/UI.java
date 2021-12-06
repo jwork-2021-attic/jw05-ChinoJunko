@@ -40,7 +40,7 @@ public abstract class UI implements Disposable {
         this.game = game;
         this.manager = manager;
 
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        viewport = new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, game.batch);
 
         shapeRenderer = new ShapeRenderer();
@@ -51,15 +51,22 @@ public abstract class UI implements Disposable {
         this.gameScreen = gameScreen;
         this.manager = manager;
 
-        viewport = new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
+        viewport = new StretchViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        //viewport = gameScreen.getViewport();
         stage = new Stage(viewport, gameScreen.getGame().batch);
+        resize(gameScreen.getViewport().getViewportWidth(),gameScreen.getViewport().getViewportHeight());
 
         shapeRenderer = new ShapeRenderer();
     }
 
     public abstract void update(float dt);
 
-    public abstract void render(float dt);
+    public void resize(int i, int i1){
+        stage.getViewport().update(i, i1);
+    }
+
+    public void render(float dt){
+    };
 
     public Stage getStage() {
         return stage;

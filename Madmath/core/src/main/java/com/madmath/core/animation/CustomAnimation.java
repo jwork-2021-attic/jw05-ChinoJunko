@@ -14,6 +14,15 @@ public class CustomAnimation extends Animation {
     private TextureRegionDrawable[] keyFrames;
     private Array<? extends TextureRegion > textureRegions;
 
+    static Array<? extends  TextureRegion> castToArray(TextureRegion textureRegion){
+        Array<TextureRegion> array = new Array<>();
+        array.add(textureRegion);
+        return array;
+    }
+    public CustomAnimation(float frameDuration, TextureRegion originKeyFrame){
+        this(frameDuration,castToArray(originKeyFrame));
+    }
+
     public CustomAnimation(float frameDuration, Array<? extends TextureRegion > originKeyFrames){
         super(frameDuration,originKeyFrames);
         textureRegions = originKeyFrames;

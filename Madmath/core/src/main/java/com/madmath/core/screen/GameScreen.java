@@ -8,6 +8,7 @@ package com.madmath.core.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -39,7 +40,7 @@ public class GameScreen extends AbstractScreen{
 
     HUD hud;
 
-    GameMap map;
+    public GameMap map;
 
     InputMultiplexer multiplexer;
 
@@ -58,7 +59,6 @@ public class GameScreen extends AbstractScreen{
 
     Label currencyMapMessage;
 
-    State state;
 
     //collision detection
     public Array<Entity> livingEntity;
@@ -66,37 +66,26 @@ public class GameScreen extends AbstractScreen{
 
     float stateTime;
     float currencyDelta;
+    float factor=1f;
 
-    public State getState() {
-        return state;
-    }
-
-    public enum State{
-        PAUSE,
-        RUNING,
-        END,
-    }
 
     public GameScreen(final MadMath game, final ResourceManager manager){
         super(game, manager);
 
-        state = State.PAUSE;
-
         CurrencyGameScreen = this;
-
-        map = new GameMap(this,"PRIMARY",1);
-        initMapTitle();
 
         livingEntity = new Array<>();
         livingItem = new Array<>();
-
-        multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(stage);
 
         monsterFactory = new MonsterFactory(manager,this);
         monsterManager = new MonsterThread();
 
         equipmentFactory = new EquipmentFactory(manager, this);
+
+        multiplexer = new InputMultiplexer();
+        hud = new HUD(this, manager);
+        multiplexer.addProcessor(hud.getStage());
+        multiplexer.addProcessor(stage);
 
         playerSemaphore = new Semaphore(0);
         monsterSemaphore = new Semaphore(0);
@@ -108,34 +97,33 @@ public class GameScreen extends AbstractScreen{
         executorService.execute(monsterManager);
         executorService.shutdown();
 
-        hud = new HUD(this, manager);
-    }
-
-    public ExecutorService getExecutorService() {
-        return executorService;
     }
 
     @Override
     public void show() {
+        if(state==State.READY){
+            new GameMap(this,"PRIMARY",1,factor);
+            initMapTitle();
+        }
         super.show();
-        hud.getStage().addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
+        hud.show();
+        player.freshSelf();
         currencyMapMessage.setPosition(stage.getViewport().getWorldWidth()/2-50, MadMath.V_HEIGHT-20);
-        stage.addActor(currencyMapMessage);
         currencyMapMessage.setZIndex(1000);
         state = State.RUNING;
         CurrencyGameScreen = this;
         Gdx.input.setInputProcessor(multiplexer);
         stateTime = 0;
-        createMonsters(25);
-        createEquipment();
         camera.zoom =  0.8f;
     }
 
     public void initMapTitle(){
+        if(currencyMapMessage!=null)    stage.getActors().removeValue(currencyMapMessage,true);
         currencyMapMessage = new Label("LEVEL "+map.mapLevel+"  "+map.name, new Label.LabelStyle(manager.font, Color.YELLOW ));
         currencyMapMessage.setFontScale(0.5f);
         currencyMapMessage.setVisible(true);
         currencyMapMessage.addAction(Actions.sequence(Actions.delay(5f),Actions.run(() -> currencyMapMessage.setText("   GOOD LUCK!   "))));
+        stage.addActor(currencyMapMessage);
     }
 
     public void updateCamera(){
@@ -148,6 +136,13 @@ public class GameScreen extends AbstractScreen{
         }
         camera.update();
         //System.out.println("Playerx:"+player.getX()+"    viewportwith:"+camera.viewportWidth+"    playerArs:"+map.playAreaSize.x);
+    }
+
+
+    @Override
+    public void resize(int i, int i1) {
+        super.resize(i, i1);
+        hud.resize(i,i1);
     }
 
     @Override
@@ -194,6 +189,8 @@ public class GameScreen extends AbstractScreen{
         monster.setPosition(map.getAvailablePosition(monster));
         monsterManager.addMonster(monster);
         stage.addActor(monster);
+        //Label label = new Label("",new Label.LabelStyle(manager.font,Color.YELLOW));
+        //label.
         //monster.setZIndex((int) monster.getY());
         livingEntity.add(monster);
         return monster;
@@ -206,7 +203,7 @@ public class GameScreen extends AbstractScreen{
     public void createEquipment(){
         for (int i = 0; i < Utils.AllDefaultEquipmentSort.length; i++) {
             Equipment equipment = equipmentFactory.generateEquipmentByName(Utils.AllDefaultEquipmentSort[i]);
-            equipment.setPosition(player.getX()+50+50*i/2,player.getY()+50-100*i%2);
+            equipment.setPosition(map.playerSpawnPoint.x+50+50*i/2,map.playerSpawnPoint.y+50-100*i%2);
             stage.addActor(equipment);
             livingItem.add(equipment);
         }
@@ -220,6 +217,16 @@ public class GameScreen extends AbstractScreen{
         return currencyDelta;
     }
 
+    public void changeDifficulty(float factor){
+        this.factor = factor;
+    }
+
+    @Override
+    public void switchScreen(Screen screen) {
+        getViewport().update();
+        super.switchScreen(screen);
+    }
+
     public void addInputProcessor(InputProcessor inputProcessor){
         multiplexer.addProcessor(0,inputProcessor);
     }
@@ -227,4 +234,5 @@ public class GameScreen extends AbstractScreen{
     public static GameScreen getCurrencyGameScreen() {
         return CurrencyGameScreen;
     }
+
 }

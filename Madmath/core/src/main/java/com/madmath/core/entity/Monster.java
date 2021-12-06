@@ -7,13 +7,18 @@ package com.madmath.core.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.animation.AnimationManager;
 import com.madmath.core.animation.CustomAnimation;
+import com.madmath.core.expression.Add;
+import com.madmath.core.expression.Expression;
+import com.madmath.core.inventory.equipment.Equipment;
 import com.madmath.core.resource.ResourceManager;
 import com.madmath.core.screen.GameScreen;
 import com.madmath.core.util.Utils;
@@ -34,6 +39,9 @@ public abstract class Monster extends Entity{
 
     protected float knockback;
 
+    Expression expression;
+    Label label;
+
     static public int TextureWidth;
     static public int TextureHeight;
     static public float[] FrameIntervals = {
@@ -42,6 +50,13 @@ public abstract class Monster extends Entity{
     };
 
     protected int damage;
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        label.setCenterPosition(getCenterX(),getY()+getHeight()+label.getHeight());
+        label.draw(batch, parentAlpha);
+    }
 
     protected Monster(AnimationManager animationManager){
         super(animationManager);
@@ -57,6 +72,17 @@ public abstract class Monster extends Entity{
 
     public Monster(Integer id, AnimationManager animationManager, GameScreen gameScreen) {
         super(id, animationManager, gameScreen);
+    }
+
+    @Override
+    public void initSelf() {
+        super.initSelf();
+        knockback = 0.5f;
+        damage = 1;
+        expression = new Add();
+        label = new Label("",new Label.LabelStyle(ResourceManager.defaultManager.font,Color.YELLOW));
+        label.setFontScale((getWidth()+getHeight()+100)/300f);
+        label.setText(expression.toString());
     }
 
     @Override
@@ -76,10 +102,19 @@ public abstract class Monster extends Entity{
     }
 
     @Override
+    public int getHurt(Equipment equipment) {
+        //if(!equipment.canAttack(expression)||hp<=0)  return 0;
+        if(hp<=0) return 0;
+        return super.getHurt(equipment);
+    }
+
+    @Override
     public void Die() {
         super.Die();
         clear();
+        gameScreen.player.score+=(level*5+gameScreen.map.mapLevel)*gameScreen.map.difficultyFactor;
         //gameScreen.getStage().getActors().removeValue(this,true);
+        //gameScreen.getStage().getActors().removeValue(label,true);
         gameScreen.livingEntity.removeValue(this,true);
         gameScreen.monsterManager.removeMonster(this);
         setAcceleration(new Vector2(0,0));
@@ -87,7 +122,7 @@ public abstract class Monster extends Entity{
         addAction(Actions.sequence(Actions.color(Color.RED.cpy()),Actions.addAction(Actions.color(Color.WHITE.cpy(),0.5f)),Actions.fadeOut(1f),Actions.delay(1f),Actions.run(()->{
             gameScreen.getStage().getActors().removeValue(this,true);
         })));
-        
+
     }
 
     public int getDamage() {
@@ -99,17 +134,10 @@ public abstract class Monster extends Entity{
     }
 
     public void attack(Player player){
-        Rectangle attackBox = new Rectangle(0,0,box.getWidth()*2,box.getHeight()*2).setCenter(box.getCenter(new Vector2()));
+        Rectangle attackBox = new Rectangle(0,0,box.getWidth()+10,box.getHeight()+10).setCenter(box.getCenter(new Vector2()));
         if(attackBox.overlaps(gameScreen.player.box)){
             player.getHurt(this);
         }
-    }
-
-    @Override
-    public void initSelf() {
-        super.initSelf();
-        knockback = 0.5f;
-        damage = 1;
     }
 
     public Monster clone(int id){
@@ -195,7 +223,7 @@ public abstract class Monster extends Entity{
                     else {
                         if(file.getParent().substring(file.getParent().lastIndexOf("\\")+1).equals("Monster")){
                             String s = file.getPath().substring(file.getPath().indexOf("com"),file.getPath().lastIndexOf(".java")).replaceAll("\\\\",".");
-                            System.out.println(s);
+                            //System.out.println(s);
 
                             Utils.ModLoadMonsterPath.add(s);
                         }

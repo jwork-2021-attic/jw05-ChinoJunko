@@ -7,7 +7,12 @@ package com.madmath.core.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.madmath.core.actor.AnimationActor;
 import com.madmath.core.entity.Player;
@@ -20,6 +25,8 @@ public class HUD extends UI{
     Image[] fullHeart;
     Image[] halfHeart;
     Image[] emptyHeart;
+
+    ImageButton exitButton;
 
     Container[] weaponBoxs;
     Equipment[] weapons;
@@ -40,6 +47,17 @@ public class HUD extends UI{
         table.setBackground(new TextureRegionDrawable(manager.flzgbackground700x128));
         table.setPosition(0,0);
         table.setSize(700,128);
+
+        exitButton = new ImageButton(manager.exitButtonStyle);
+        exitButton.setSize(100,50);
+        exitButton.setPosition(viewport.getViewportWidth()-exitButton.getWidth(), viewport.getViewportHeight()-exitButton.getHeight() );
+        exitButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameScreen.switchScreen(game.mainMenuScreen);
+            }
+        });
+        stage.addActor(exitButton);
 
         weaponBoxs = new Container[3];
         weapons = new Equipment[3];
@@ -71,7 +89,6 @@ public class HUD extends UI{
             halfHeart[i].setZIndex(2);
             fullHeart[i].setZIndex(3);
         }
-        player = gameScreen.player;
 
         stage.addActor(table);
 
@@ -82,6 +99,11 @@ public class HUD extends UI{
         //Health.setFontScale(0.5f);
         //Health.setPosition(0,120);
         //stage.addActor(Health);
+    }
+
+    public void show(){
+        player = gameScreen.player;
+        getStage().addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f)));
     }
 
     @Override
@@ -98,7 +120,7 @@ public class HUD extends UI{
                 if(!(weaponBoxs[i].getActor() instanceof Equipment) || weaponBoxs[i].getActor().getClass().getField("alias").get(null)!=player.weapon.get(i).getClass().getField("alias").get(null)){
                     weapons[i] = player.weapon.get(i).copy();
                     weaponBoxs[i].setActor(weapons[i]);
-                    System.out.println("cc:"+i);
+                    //System.out.println("cc:"+i);
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -106,18 +128,21 @@ public class HUD extends UI{
 
             if(i== player.weapon.indexOf(player.activeWeapon,true)){
                 weaponBoxs[i].setColor(player.activeWeapon.color.cpy());
+                weaponBoxs[i].getActor().setColor(player.activeWeapon.color.cpy());
             }else {
-                weaponBoxs[i].setColor(Color.LIGHT_GRAY.cpy());
+                weaponBoxs[i].setColor(Color.GRAY.cpy());
+                weaponBoxs[i].getActor().setColor(Color.GRAY.cpy());
             }
-
-
         }
+        //stage.act();
     }
 
     @Override
     public void render(float dt) {
+        super.render(dt);
         update(dt);
         stage.act();
+        //viewport.update();
         stage.draw();
     }
 

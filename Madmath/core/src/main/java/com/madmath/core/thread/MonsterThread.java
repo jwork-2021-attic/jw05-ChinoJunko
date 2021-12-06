@@ -7,9 +7,8 @@ package com.madmath.core.thread;
 
 import com.badlogic.gdx.utils.Array;
 import com.madmath.core.entity.Monster;
+import com.madmath.core.screen.AbstractScreen;
 import com.madmath.core.screen.GameScreen;
-
-import java.util.concurrent.Semaphore;
 
 public class MonsterThread implements Runnable {
 
@@ -25,7 +24,7 @@ public class MonsterThread implements Runnable {
     public void run() {
         gameScreen = GameScreen.getCurrencyGameScreen();
 
-        while (gameScreen.getState()!= GameScreen.State.END){
+        while (true || gameScreen.getState()!= AbstractScreen.State.END){
             try {
                 gameScreen.monsterSemaphore.acquire();
                 //act monster

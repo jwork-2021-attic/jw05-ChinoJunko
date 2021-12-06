@@ -7,9 +7,8 @@ package com.madmath.core.thread;
 
 import com.madmath.core.control.PlayerInputProcessor;
 import com.madmath.core.entity.Player;
+import com.madmath.core.screen.AbstractScreen;
 import com.madmath.core.screen.GameScreen;
-
-import java.util.concurrent.Semaphore;
 
 public class PlayerThread implements Runnable {
 
@@ -20,7 +19,7 @@ public class PlayerThread implements Runnable {
     @Override
     public void run() {
         gameScreen = GameScreen.getCurrencyGameScreen();
-        player = new Player(1000,Player.initPlayerAnim(gameScreen.getGame().manager),gameScreen,gameScreen.getMap().getPlayerSpawnPoint());
+        player = new Player(1000,Player.initPlayerAnim(gameScreen.getGame().manager),gameScreen);
         gameScreen.getStage().addActor(player);
         //player.setZIndex((int) player.getY());
         gameScreen.player = player;
@@ -28,7 +27,7 @@ public class PlayerThread implements Runnable {
 
         gameScreen.addInputProcessor(new PlayerInputProcessor(player));
 
-        while (gameScreen.getState()!= GameScreen.State.END){
+        while (true || gameScreen.getState()!= AbstractScreen.State.END){
             try {
                 gameScreen.playerSemaphore.acquire();
                 player.move(gameScreen.getCurrencyDelta());

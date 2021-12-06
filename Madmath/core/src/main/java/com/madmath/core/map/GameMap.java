@@ -33,6 +33,7 @@ public class GameMap {
 
     public String name;
     public int mapLevel;
+    public float difficultyFactor;
 
     public Vector2 startPosition;
     public Vector2 playAreaSize;
@@ -43,10 +44,12 @@ public class GameMap {
     Array<Entity> entities;
     //Array
 
-    public GameMap(GameScreen gameScreen,String name , int mapLevel){
+    public GameMap(GameScreen gameScreen,String name , int mapLevel, float difficultyFactor){
         this.gameScreen = gameScreen;
+        gameScreen.map = this;
         this.name = name;
         this.mapLevel = mapLevel;
+        this.difficultyFactor = difficultyFactor;
         manager = gameScreen.getGame().manager;
         initTileMap();
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
@@ -90,11 +93,12 @@ public class GameMap {
         startPosition = new Vector2(0,8*16);
         playAreaSize = new Vector2(120*16,14*16);
         playerSpawnPoint = new Vector2(1+16,15*16+7);
+        gameScreen.player.setPosition(playerSpawnPoint);
         tiledMap = new TiledMap();
         tiledMap.getTileSets().addTileSet(getNewTileSet());
         initButtomLayer();
         initEntities();
-
+        initItem();
         int backgroundNum = 4;
         background = new Image[backgroundNum];
 
@@ -105,6 +109,10 @@ public class GameMap {
             background[i].addAction(Actions.sequence(Actions.moveTo(moveDistance *i,0),Actions.moveTo(-moveDistance,0,(i+1)* moveTime / backgroundNum),Actions.forever(Actions.sequence(Actions.moveTo((backgroundNum -1)* moveDistance,0),Actions.moveTo(-moveDistance,0, moveTime)))));
             getGameScreen().getStage().addActor(background[i]);
         }
+    }
+
+    public void initItem(){
+        getGameScreen().createEquipment();
     }
 
     public void initButtomLayer(){
@@ -189,6 +197,7 @@ public class GameMap {
 
     public void initEntities(){
         entities = new Array<>();
+        getGameScreen().createMonsters(difficultyFactor);
     }
 
     public Vector2 getPlayerSpawnPoint() {
